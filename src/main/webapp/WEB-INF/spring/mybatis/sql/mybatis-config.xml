@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="useGeneratedKeys" value="true"/>
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- 배치 처리 -->
+	</settings>
+	
+	<typeAliases>
+		<typeAlias alias="String" type="java.lang.String" />
+		<typeAlias alias="Integer" type="java.lang.Integer" />
+		<typeAlias alias="HashMap" type="java.util.HashMap"/>		
+		<typeAlias alias="List" type="java.util.List"/>		
+	</typeAliases>
+<!-- 
+	<plugins>
+		<plugin interceptor="com.example.spring.common.MybatisLogInterceptor"></plugin>
+	</plugins>
+ -->	
+	<mappers>
+		<!-- StudentManager 를 위한 쿼리 -->
+		<mapper resource="com/project/manager/student/studentMapper.xml"/>
+		
+	</mappers>
+	
+		
+</configuration>

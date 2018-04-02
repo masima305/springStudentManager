@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans 
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+
+	<!-- SpEL 설정 -->	
+	<!-- <util:properties id="comm" location="/WEB-INF/conf/${server.mode}/properties.xml" /> -->
+	<util:properties id="comm" location="/WEB-INF/conf/local/properties.xml" />
+	
+	
+	<beans:bean id="dataSourceSpied" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">  
+        
+<!-- 일반 -->	
+        <beans:property name="driverClassName"	value="#{comm['dbms.driverClassName']}" />
+        <beans:property name="url"				value="#{comm['dbms.url']}" />
+        <beans:property name="username"			value="#{comm['dbms.username']}" />
+        <beans:property name="password"			value="#{comm['dbms.password']}" />
+        
+        <beans:property name="initialSize"		value="#{comm['dbms.initialSize']}" />
+        <!-- <beans:property name="maxActive"		value="#{comm['dbms.maxActive']}" /> -->
+        <beans:property name="maxTotal"		value="#{comm['dbms.maxActive']}" />
+        <beans:property name="maxIdle"			value="#{comm['dbms.maxIdle']}" />
+        <beans:property name="maxWaitMillis"			value="#{comm['dbms.maxWait']}" />
+
+        <!-- 커넥션 풀에서 만료된 커넥션을 끊어준다. -->        
+        <beans:property name="removeAbandonedOnBorrow"    value="true"/>
+        <!-- 60초 이상 사용하지 않은 커넥션은 끊는다. -->
+        <beans:property name="removeAbandonedTimeout"  value="60"/>
+
+        
+		<!-- validationQuery:유효 검사용 쿼리( 1개 이상의 row를 반환하는 쿼리를 넣어주면 된다. ) --> 
+		<beans:property name="validationQuery" value="select 1 from dual"/>
+		<!-- testWhileIdle:컨넥션이 놀고 있을때 validationQuery 를 이용해서 유효성 검사를 할지 여부. -->
+		<beans:property name="testWhileIdle" value="true"/>
+		<!-- timeBetweenEvictionRunsMillis:해당 밀리초마다 validationQuery 를 이용하여 유효성 검사 진행 -->
+		<beans:property name="timeBetweenEvictionRunsMillis" value="#{comm['dbms.timeBERM']}" />
+		
+    </beans:bean>
+    
+    <beans:bean id="dataSource2" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+
+        <!-- 내가 쓰고자 하는 데이터베이스의 경로를  "dataSourceSpied" 안에 붙여주자-->
+        <beans:constructor-arg ref="dataSourceSpied" />
+
+		<beans:property name="logFormatter">
+
+            <beans:bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+
+                <beans:property name="loggingType" value="MULTI_LINE" />
+
+                <beans:property name="sqlPrefix" value="SQL         :  "/>
+
+            </beans:bean>
+
+        </beans:property>
+
+    </beans:bean>
+    
+    <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<beans:property name="dataSource" ref="dataSource2"></beans:property>
+        <!-- <beans:property name="configLocation" value="/WEB-INF/spring/mybatis/sql/mybatis-config.xml"></beans:property> -->
+        <beans:property name="configLocation" value="/WEB-INF/spring/mybatis/sql/mybatis-config.xml"></beans:property>
+    </beans:bean>
+    
+    <beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <beans:constructor-arg ref="sqlSessionFactory"></beans:constructor-arg>
+    </beans:bean>
+    
+    <!-- transaction manager -->
+	<beans:bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource2"></beans:property>
+	</beans:bean>
+	
+
+	
+
+</beans:beans>

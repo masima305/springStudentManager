@@ -1,0 +1,16 @@
+<!--?xml version="1.0" encoding="UTF-8"? -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="test">
+	<select id="testList" parameterType="HashMap" resultType="HashMap">
+		<!-- /* /test/testMapper.xml - testList ( 테스트 조회 ) */ -->
+		SELECT
+				DEPTNO AS deptNo                                   <!--   /* 부서코드 */ -->
+				<!-- ,DNAME AS dName -->                                   <!--   /* DNAME_ID */ -->
+				<!-- ,LOC AS loc -->                                   <!--   /* LOC */ -->
+		FROM    DEPT          <!-- /* DEPT Table */ -->
+		<!-- /*WHERE DEPTNO = #{deptNo}*/ -->
+	
+	</select>
+</mapper>
