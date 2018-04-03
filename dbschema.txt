@@ -1,0 +1,100 @@
+DROP TABLE STUDENT cascade constraint;
+DROP TABLE EXPERIENCE cascade constraint;
+DROP TABLE STUDENT_FEE cascade constraint;
+DROP TABLE COMMON cascade constraint;
+commit;
+
+
+
+CREATE TABLE STUDENT (
+
+stuNumber VARCHAR2(12) PRIMARY KEY,
+stuName VARCHAR2(10) NOT NULL,
+stuBirthday VARCHAR2(10) NOT NULL,
+stuPhone VARCHAR2(15) NOT NULL,
+stuEmail VARCHAR2(50) NOT NULL,
+stuEnterance VARCHAR2(10) NOT NULL,
+stuAuthority NUMBER(3) NOT NULL,
+stuGender VARCHAR2(4) NOT NULL,
+stuPassword VARCHAR2(20) NOT NULL
+);
+
+
+CREATE TABLE EXPERIENCE (
+
+stuNumber VARCHAR2(12),
+expYear NUMBER(4) NOT NULL,
+expsemester NUMBER(1) NOT NULL,
+expContent VARCHAR2(100) NOT NULL
+);
+
+
+
+CREATE TABLE STUDENT_FEE (
+
+stuNumber VARCHAR2(12) PRIMARY KEY,
+feePaidDate VARCHAR2(8) NOT NULL,
+feeTotalAmount NUMBER(6) NOT NULL,
+feePaidAmount NUMBER(6) NOT NULL,
+feePaidMethod VARCHAR2(10) NOT NULL,
+feePaidStatus VARCHAR2(10) NOT NULL,
+feeContent VARCHAR2(150)
+);
+
+
+
+
+CREATE TABLE COMMON (
+
+commonCategory VARCHAR2(20) NOT NULL,
+commonCode NUMBER(2) NOT NULL,
+commonValue VARCHAR2(20) NOT NULL
+);
+
+commit;
+
+
+
+----------------복합 PK 설정------------------------
+ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(commonCategory,commonCode);
+ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(stuNumber,expYear,expsemester);
+
+
+------------------FK 설정----------------------
+ALTER TABLE EXPERIENCE ADD (CONSTRAINT EXPERIENCE_RE FOREIGN KEY (stuNumber) REFERENCES STUDENT (stuNumber));
+ALTER TABLE STUDENT_FEE ADD (CONSTRAINT STUDENT_FEE_RE FOREIGN KEY (stuNumber) REFERENCES STUDENT (stuNumber));
+commit;
+
+
+------------------common 테이블 insert----------------
+
+insert into COMMON values('stuEnterance',01,'수시');
+insert into COMMON values('stuEnterance',02,'정시');
+insert into COMMON values('stuEnterance',03,'추합');
+insert into COMMON values('stuEnterance',04,'특별');
+
+insert into COMMON values('stuAuthority',01,'회장');
+insert into COMMON values('stuAuthority',02,'부회장');
+insert into COMMON values('stuAuthority',03,'집행부팀장');
+insert into COMMON values('stuAuthority',04,'집행부원');
+insert into COMMON values('stuAuthority',05,'예비역회장');
+insert into COMMON values('stuAuthority',06,'학회장');
+insert into COMMON values('stuAuthority',07,'일반');
+
+
+insert into COMMON values('stuGender',01,'여자');
+insert into COMMON values('stuGender',02,'남자');
+
+
+insert into COMMON values('expsemester',01,'1학기');
+insert into COMMON values('expsemester',02,'2학기');
+
+
+insert into COMMON values('feePaidMethod',01,'계좌이체');
+insert into COMMON values('feePaidMethod',02,'현금');
+
+
+insert into COMMON values('feePaidStatus',01,'입금완료');
+insert into COMMON values('feePaidStatus',02,'분할입금');
+insert into COMMON values('feePaidStatus',03,'미납');
+commit;
