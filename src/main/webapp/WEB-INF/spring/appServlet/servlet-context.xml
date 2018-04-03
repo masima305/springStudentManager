@@ -17,6 +17,10 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 
+	<!-- resources 에서 view 페이지로 갈때 -->
+	<mvc:view-controller path="/adminMain" view-name="main/adminMain" />
+
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
