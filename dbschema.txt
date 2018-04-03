@@ -13,9 +13,9 @@ stuName VARCHAR2(10) NOT NULL,
 stuBirthday VARCHAR2(10) NOT NULL,
 stuPhone VARCHAR2(15) NOT NULL,
 stuEmail VARCHAR2(50) NOT NULL,
-stuEnterance VARCHAR2(10) NOT NULL,
-stuAuthority NUMBER(3) NOT NULL,
-stuGender VARCHAR2(4) NOT NULL,
+stuEnterance NUMBER(2) NOT NULL,
+stuAuthority NUMBER(2) NOT NULL,
+stuGender NUMBER(4) NOT NULL,
 stuPassword VARCHAR2(20) NOT NULL
 );
 
@@ -36,8 +36,8 @@ stuNumber VARCHAR2(12) PRIMARY KEY,
 feePaidDate VARCHAR2(8) NOT NULL,
 feeTotalAmount NUMBER(6) NOT NULL,
 feePaidAmount NUMBER(6) NOT NULL,
-feePaidMethod VARCHAR2(10) NOT NULL,
-feePaidStatus VARCHAR2(10) NOT NULL,
+feePaidMethod NUMBER(1) NOT NULL,
+feePaidStatus NUMBER(1) NOT NULL,
 feeContent VARCHAR2(150)
 );
 
@@ -97,4 +97,51 @@ insert into COMMON values('feePaidMethod',02,'현금');
 insert into COMMON values('feePaidStatus',01,'입금완료');
 insert into COMMON values('feePaidStatus',02,'분할입금');
 insert into COMMON values('feePaidStatus',03,'미납');
+commit;
+
+
+--------------------------DUMMY DATA---------------------
+
+--------------------insert DUMMY STUDENT-----------
+insert into STUDENT values('2005042465','이정훈','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,1,'000000');
+insert into STUDENT values('2007042422','신세휘','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,2,'000000');
+insert into STUDENT values('2011042461','김형곤','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,1,'000000');
+insert into STUDENT values('2013042474','이만재','19941201','01012535486','mfjvn442@naver.com'         ,4,4,2,'000000');
+insert into STUDENT values('2013042451','강효미','19960312','01098822256','llhhh3005@naver.com'        ,3,5,1,'000000');
+insert into STUDENT values('2011042495','이슬기','19990110','01078256217','aksentlaa@lycos.com'        ,2,6,2,'000000');
+insert into STUDENT values('2012042453','서원희','19970421','01033649782','gsmdnnl4244@gmail.com'      ,3,7,1,'000000');
+insert into STUDENT values('2014042477','안광모','19940921','01015514568','lknnj_39@gmail.com'         ,2,7,2,'000000');
+insert into STUDENT values('2015042408','전일환','19960827','01088752564','kevin4144@hanmail.net'      ,3,6,1,'000000');
+insert into STUDENT values('2016042418','신정환','19950626','01054682158','dddoovm0024@hanmail.net'    ,4,5,2,'000000');
+
+
+-------------------insert DUMMY EXPERIENCE ----------
+insert into EXPERIENCE values ('2013042451',2014,1,'학생회');
+insert into EXPERIENCE values ('2013042451',2015,2,'연극학회장');
+insert into EXPERIENCE values ('2013042451',2016,1,'16년도학생회 부회장');
+insert into EXPERIENCE values ('2013042451',2016,1,'연극학회 부회장');
+
+insert into EXPERIENCE values ('2007042422',2013,1,'학생회');
+insert into EXPERIENCE values ('2007042422',2014,2,'축구학회장');
+insert into EXPERIENCE values ('2007042422',2015,1,'15년도학생회 부회장');
+insert into EXPERIENCE values ('2007042422',2015,1,'축구학회 부회장');
+
+insert into EXPERIENCE values ('2015042408',2017,1,'학생회');
+insert into EXPERIENCE values ('2015042408',2017,2,'축구학회장');
+insert into EXPERIENCE values ('2015042408',2018,1,'18년도학생회 부회장');
+insert into EXPERIENCE values ('2015042408',2018,1,'축구학회 부회장');
+commit;
+
+-------------------insert DUMMY STUDENT_FEE ----------
+insert into STUDENT_FEE values ('2005042465',20050516,150000,150000,1,1,'');
+insert into STUDENT_FEE values ('2007042422',20070316,170000,170000,1,1,'');
+insert into STUDENT_FEE values ('2011042461',20110806,170000,130000,2,2,'2회차입금');
+insert into STUDENT_FEE values ('2013042474',20130516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2013042451',20130516,150000,150000,2,1,'');
+insert into STUDENT_FEE values ('2011042495',20110516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2012042453',20120516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2014042477',20140516,150000,150000,2,1,'');
+insert into STUDENT_FEE values ('2015042408',20150516,170000,130000,2,2,'1회차입금');
+insert into STUDENT_FEE values ('2016042418',20160516,150000,150000,1,1,'');
+
 commit;
