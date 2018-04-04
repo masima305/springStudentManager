@@ -89,7 +89,7 @@
       <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>&nbsp
       
         
-      <span class="navbar-brand" id="sideNavTitle">학생관리</span>
+      <span class="navbar-brand" id="sideNavTitle"></span>
 	      
 	
     </nav>   
@@ -97,9 +97,10 @@
     
     <!----------------------------메인 들어갈 자리.---------------------------->
     <div id="main">
-      
-      <c:import url="../contents/studentList.jsp"></c:import>
-      
+	     <c:import url='../contents/studentList.jsp'></c:import>
+	  <%--    <c:import url='../contents/studentInsert.jsp'></c:import>
+	     <c:import url='../contents/studentFeeList.jsp'></c:import>
+	     <c:import url='../contents/studentUpdate.jsp'></c:import> --%>
       
     </div>
     
@@ -131,9 +132,11 @@
       }
       
       
-      function showTitle(id){
+      function showTitle(id, num){
 			var value = id.innerHTML;
 			document.getElementById("sideNavTitle").innerHTML = value;
+			var main = document.getElementById("main");
+			
 			
       }
       

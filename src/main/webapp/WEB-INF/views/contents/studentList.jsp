@@ -2,7 +2,16 @@
     pageEncoding="UTF-8"%>
 
 
-
+  <style type="text/css">
+  
+  #stuListScroll{
+  
+ 	overflow-y : scroll;
+ 	height : 400px;
+  	
+  }
+  
+  </style>
 
 
 
@@ -71,35 +80,167 @@
          </select>
          
          <input type="button" value="검색" onclick=""/>
-      </form>
-      
-   </div>
+      </form> <!-- memberSearchForm -->
+   </div> <!-- card-header -->
 
 
    <div class="card-body">
-      <div id="memberList"  class="table-responsive">
-         <table class="table table-striped">
-            <thead>
-               <tr>
-                  <th>번호</th>
-                  <th>학번</th>
-                  <th>이름</th>
-                  <th>성별</th>
-                  <th>생년월일</th>
-                  <th>연락처</th>
-                  <th>이메일</th>
-                  <th>입학전형</th>
-                  <th>구분</th>
-                  <th>옵션</th>
-               <tr>
-            </thead>
-            
-            <tbody>
-            </tbody>
-            
-         </table>
-      </div>
-   </div>
+      
+            <div id="stuListScroll">
+        	 <table class="table table-striped table-sm" >
+	        	  <thead>
+		               <tr>
+		                  <th>번호</th>
+		                  <th>학번</th>
+		                  <th>이름</th>
+		                  <th>성별</th>
+		                  <th>생년월일</th>
+		                  <th>연락처</th>
+		                  <th>이메일</th>
+		                  <th>입학전형</th>
+		                  <th>권한</th>
+		                  <th>옵션</th>
+		               <tr>
+		       	    </thead>
+        	 
+        	
+		     	      <tbody>
+			            	<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td><button type="button" class="btn btn-small btn-info">수정</button><button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+							<tr>
+				            	<td>1</td>
+				            	<td>2013049595</td>
+				            	<td>윤인아</td>
+				            	<td>여</td>
+				            	<td>19940317</td>
+				            	<td>01086166450</td>
+				            	<td>ina-yun@hanmail.net</td>
+				            	<td>수시</td>
+				            	<td>예비역회장</td>
+				                <td> <button type="button" class="btn btn-small btn-info">수정</button> <button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							</tr>
+	            	</tbody>
+        		</table>
+       		</div> <!-- stuListScroll -->
+  	 </div> <!-- card-body -->
 
-</div>
+</div> <!-- card -->
 
