@@ -8,37 +8,34 @@ commit;
 
 CREATE TABLE STUDENT (
 
-stuNumber VARCHAR2(12) PRIMARY KEY,
-stuName VARCHAR2(10) NOT NULL,
-stuBirthday VARCHAR2(10) NOT NULL,
-stuPhone VARCHAR2(15) NOT NULL,
-stuEmail VARCHAR2(50) NOT NULL,
-stuEnterance NUMBER(2) NOT NULL,
-stuAuthority NUMBER(2) NOT NULL,
-stuGender NUMBER(4) NOT NULL,
-stuPassword VARCHAR2(20) NOT NULL
+STU_NUMBER VARCHAR2(12) PRIMARY KEY,
+STU_NAME VARCHAR2(10) NOT NULL,
+STU_BIRTHDAY VARCHAR2(10) NOT NULL,
+STU_PHONE VARCHAR2(15) NOT NULL,
+STU_EMAIL VARCHAR2(50) NOT NULL,
+STU_ENTERANCE NUMBER(2) NOT NULL,
+STU_AUTHORITY NUMBER(2) NOT NULL,
+STU_GENDER NUMBER(4) NOT NULL,
+STU_PASSWORD VARCHAR2(20) NOT NULL
 );
 
 
 CREATE TABLE EXPERIENCE (
-
-stuNumber VARCHAR2(12),
-expYear NUMBER(4) NOT NULL,
-expsemester NUMBER(1) NOT NULL,
-expContent VARCHAR2(100) NOT NULL
+STU_NUMBER VARCHAR2(12),
+EXP_YEAR NUMBER(4) NOT NULL,
+EXP_SEMESTER NUMBER(1) NOT NULL,
+EXP_CONTENT VARCHAR2(100) NOT NULL
 );
-
-
 
 CREATE TABLE STUDENT_FEE (
 
-stuNumber VARCHAR2(12) PRIMARY KEY,
-feePaidDate VARCHAR2(8) NOT NULL,
-feeTotalAmount NUMBER(6) NOT NULL,
-feePaidAmount NUMBER(6) NOT NULL,
-feePaidMethod NUMBER(1) NOT NULL,
-feePaidStatus NUMBER(1) NOT NULL,
-feeContent VARCHAR2(150)
+STU_NUMBER VARCHAR2(12) PRIMARY KEY,
+FEE_PAID_DATE VARCHAR2(8) DEFAULT '00000000' NOT NULL ,
+FEE_TOTAL_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
+FEE_PAID_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
+FEE_PAID_METHOD NUMBER(1) DEFAULT 1 NOT NULL ,
+FEE_PAID_STATUS NUMBER(1) DEFAULT 3 NOT NULL ,
+FEE_CONTENT VARCHAR2(150)
 );
 
 
@@ -46,14 +43,12 @@ feeContent VARCHAR2(150)
 
 CREATE TABLE COMMON (
 
-commonCategory VARCHAR2(20) NOT NULL,
-commonCode NUMBER(2) NOT NULL,
-commonValue VARCHAR2(20) NOT NULL
+COMMON_CATEGORY VARCHAR2(20) NOT NULL,
+COMMON_CODE NUMBER(2) NOT NULL,
+COMMON_VALUE VARCHAR2(20) NOT NULL
 );
 
 commit;
-
-
 
 ----------------복합 PK 설정------------------------
 ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(commonCategory,commonCode);
@@ -61,13 +56,11 @@ ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(stuNumber,expYea
 
 
 ------------------FK 설정----------------------
-ALTER TABLE EXPERIENCE ADD (CONSTRAINT EXPERIENCE_RE FOREIGN KEY (stuNumber) REFERENCES STUDENT (stuNumber));
-ALTER TABLE STUDENT_FEE ADD (CONSTRAINT STUDENT_FEE_RE FOREIGN KEY (stuNumber) REFERENCES STUDENT (stuNumber));
+ALTER TABLE EXPERIENCE ADD (CONSTRAINT EXPERIENCE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
+ALTER TABLE STUDENT_FEE ADD (CONSTRAINT STUDENT_FEE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
 commit;
 
-
-------------------common 테이블 insert----------------
-
+--------------------insert common DATA----------------
 insert into COMMON values('stuEnterance',01,'수시');
 insert into COMMON values('stuEnterance',02,'정시');
 insert into COMMON values('stuEnterance',03,'추합');
@@ -82,8 +75,8 @@ insert into COMMON values('stuAuthority',06,'학회장');
 insert into COMMON values('stuAuthority',07,'일반');
 
 
-insert into COMMON values('stuGender',01,'여자');
-insert into COMMON values('stuGender',02,'남자');
+insert into COMMON values('stuGender',01,'여');
+insert into COMMON values('stuGender',02,'남');
 
 
 insert into COMMON values('expsemester',01,'1학기');
@@ -100,19 +93,32 @@ insert into COMMON values('feePaidStatus',03,'미납');
 commit;
 
 
---------------------------DUMMY DATA---------------------
 
+--------------------insert--------------
+---------맨 처음 student 넣을때-----------
+insert into STUDENT values(
+'2010042465',
+'이정훈',
+'19900921',
+'01035781942',
+'johnathanl305@gmail.com',
+2,
+1,
+1,
+'000000'
+);
+commit;
 --------------------insert DUMMY STUDENT-----------
-insert into STUDENT values('2005042465','이정훈','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,1,'000000');
-insert into STUDENT values('2007042422','신세휘','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,2,'000000');
-insert into STUDENT values('2011042461','김형곤','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,1,'000000');
-insert into STUDENT values('2013042474','이만재','19941201','01012535486','mfjvn442@naver.com'         ,4,4,2,'000000');
-insert into STUDENT values('2013042451','강효미','19960312','01098822256','llhhh3005@naver.com'        ,3,5,1,'000000');
-insert into STUDENT values('2011042495','이슬기','19990110','01078256217','aksentlaa@lycos.com'        ,2,6,2,'000000');
-insert into STUDENT values('2012042453','서원희','19970421','01033649782','gsmdnnl4244@gmail.com'      ,3,7,1,'000000');
-insert into STUDENT values('2014042477','안광모','19940921','01015514568','lknnj_39@gmail.com'         ,2,7,2,'000000');
-insert into STUDENT values('2015042408','전일환','19960827','01088752564','kevin4144@hanmail.net'      ,3,6,1,'000000');
-insert into STUDENT values('2016042418','신정환','19950626','01054682158','dddoovm0024@hanmail.net'    ,4,5,2,'000000');
+insert into STUDENT values('2005042465','이정훈','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,2,'000000');
+insert into STUDENT values('2007042422','신세휘','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,1,'000000');
+insert into STUDENT values('2011042461','김형곤','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,2,'000000');
+insert into STUDENT values('2013042474','이만재','19941201','01012535486','mfjvn442@naver.com'         ,4,4,1,'000000');
+insert into STUDENT values('2013042451','강효미','19960312','01098822256','llhhh3005@naver.com'        ,3,5,2,'000000');
+insert into STUDENT values('2011042495','이슬기','19990110','01078256217','aksentlaa@lycos.com'        ,2,6,1,'000000');
+insert into STUDENT values('2012042453','서원희','19970421','01033649782','gsmdnnl4244@gmail.com'      ,3,7,2,'000000');
+insert into STUDENT values('2014042477','안광모','19940921','01015514568','lknnj_39@gmail.com'         ,2,7,1,'000000');
+insert into STUDENT values('2015042408','전일환','19960827','01088752564','kevin4144@hanmail.net'      ,3,6,2,'000000');
+insert into STUDENT values('2016042418','신정환','19950626','01054682158','dddoovm0024@hanmail.net'    ,4,5,1,'000000');
 
 
 -------------------insert DUMMY EXPERIENCE ----------
@@ -145,3 +151,44 @@ insert into STUDENT_FEE values ('2015042408',20150516,170000,130000,2,2,'1회차입
 insert into STUDENT_FEE values ('2016042418',20160516,150000,150000,1,1,'');
 
 commit;
+--------------------select-----------------
+-------------------- 모든 학생의 정보 다 불러오기.------------------------------------
+SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY_VALUE
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
+FROM STUDENT S;
+------------------- 모든 학생 회비 정보 불러오기----------------------------------------;
+
+SELECT S.STU_NUMBER,S.STU_NAME,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+FROM STUDENT S, STUDENT_FEE F
+WHERE S.STU_NUMBER = F.STU_NUMBER;
+
+------------------- 한 학생 기본정보 불러오기-----------------------------------
+
+SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+FROM STUDENT S, STUDENT_FEE F
+WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461'); 
+
+
+
+
+
+
+
+
+
+SELECT
+    *
+FROM student;
+    
+select * from student WHERE STU_NUMBER = '2010042465';
+select * from experience;
+select * from common;
+
