@@ -38,50 +38,60 @@
 <div class="card">
 
    <div class="card-header">
-      <form id="memberSearchForm">
-         <select>
+   
+  	 <label class="small">> 검색으로 찾기</label>
+      <form id="seachKeywordForm">
+         <select name="searchCategory">
             <option value="선택없음">선택없음</option>
             <option value="stuName">이름</option>
             <option value="stuNumber">학번</option>
             <option value="stuPhone">연락처</option>
             <option value="stuEmail">이메일</option>
          </select>
-         <input type="text" name="input"/>
-         
-         <label>학번별로</label>
-         <select id="searchStuNumber" onclick="javascript:stuNumberOption()">
+         <input type="text" name="searchContent"/>
+         <input type="button" value="검색" onclick=""/>
+      </form> <!-- seachKeywordForm -->
+     <hr>
+     
+      <label class="small">> 범위로 찾기</label>
+      <form id="searchScopeForm">
+        <label>학번별로</label>
+         <select name="stuNumber" id="searchStuNumber" onclick="javascript:stuNumberOption()">
             <option value="선택없음">선택없음</option>
          </select>
+         &nbsp;
          
          <label>입학전형별로</label>
-         <select>
+         <select name="stuEntrance">
             <option value="선택없음">선택없음</option>
             <option value="">수시</option>
             <option value="">정시</option>
             <option value="">추합</option>
             <option value="">특별</option>
          </select>
+         &nbsp;
          
-         
-         <label>구분별로</label>
-         <select>
+         <label>접근권한별로</label>
+         <select name="stuAuthority">
             <option value="선택없음">선택없음</option>
             <option value="6">일반</option>
             <option value="5">학회장/예비역회장</option>
             <option value="4">집행부</option>
             <option value="3">집행부팀장</option>
          </select>
+         &nbsp;
          
          <label>성별로</label>
-         <select>
+         <select name="stuGender">
             <option value="선택없음">선택없음</option>
             <option value="F">여</option>
             <option value="M">남</option>
          </select>
          
          <input type="button" value="검색" onclick=""/>
-      </form> <!-- memberSearchForm -->
+      </form> <!-- searchScopeForm -->
    </div> <!-- card-header -->
+
 
 
    <div class="card-body">
