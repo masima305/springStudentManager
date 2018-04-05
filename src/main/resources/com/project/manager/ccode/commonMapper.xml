@@ -1,0 +1,10 @@
+<!--?xml version="1.0" encoding="UTF-8"? -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- commonCode들을 불러오기 위한 매퍼. -->
+<mapper namespace="common">
+	<!-- 모든 학생을 다 불러오는 query -->
+	<select id="listAllCommon" parameterType="HashMap" resultType="HashMap">
+		select * from common
+	</select>
+</mapper>

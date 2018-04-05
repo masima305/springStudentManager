@@ -23,7 +23,8 @@
 	<mappers>
 		<!-- StudentManager 를 위한 쿼리 -->
 		<mapper resource="com/project/manager/student/studentMapper.xml"/>
-		
+		<!-- common code 를 위한 쿼리 -->
+		<mapper resource="com/project/manager/ccode/commonMapper.xml"/>
 	</mappers>
 	
 		

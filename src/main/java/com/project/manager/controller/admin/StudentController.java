@@ -23,7 +23,10 @@ public class StudentController {
 	 * 전체 학생 리스트 불러오기
 	 * del_yn='n'인 학생만
 	 */
+	@RequestMapping(value="/listAllStudent.do")
 	public List<HashMap<String, Object>> listAllStudent(HttpServletRequest request){
+	
+		
 		return null;
 	}
 	
