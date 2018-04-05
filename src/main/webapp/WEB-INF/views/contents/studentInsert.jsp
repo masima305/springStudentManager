@@ -5,8 +5,8 @@
 
 <div class="card">
 
- <div class="card-header">학생 등록</div>
-
+<div class="card-header">학생 등록</div>
+ㄴ
 <div class="card-body">
 
 <div class="container">
@@ -30,8 +30,10 @@
 <div class="row">
 <div class="col-sm-3 col-md-6 col-lg-4"><lable>성별</lable></div>
 <div class="col-sm-9 col-md-6 col-lg-8">
-<input type="radio" name="stuGender" value="F"/>여
-<input type="radio" name="stuGender" value="M"/>남
+<select>
+<option name="stuGender" value="1">여</option>
+<option name="stuGender" value="2">남</option>
+</select>
 </div>
 </div>
 
@@ -49,10 +51,12 @@
 <div class="row">
 <div class="col-sm-3 col-md-6 col-lg-4"><lable>입학전형</lable></div>
 <div class="col-sm-9 col-md-6 col-lg-8">
-<input type="radio" name="stuEntrance" value="수시"/>수시
-<input type="radio" name="stuEntrance" value="정시"/>정시
-<input type="radio" name="stuEntrance" value="추합"/>추합
-<input type="radio" name="stuEntrance" value="특별"/>특별
+<select>
+<option name="stuEntrance" value="1">수시</option>
+<option name="stuEntrance" value="2">정시</option>
+<option name="stuEntrance" value="3">추합</option>
+<option name="stuEntrance" value="4">특별</option>
+</select>
 </div>
 </div>
 
@@ -64,13 +68,50 @@
 <option name="stuAuthority" value="2">부회장</option>
 <option name="stuAuthority" value="3">학생회 팀장</option>
 <option name="stuAuthority" value="4">학생회</option>
-<option name="stuAuthority" value="5">학회/예비역 회장</option>
-<option name="stuAuthority" value="6">일반</option>
+<option name="stuAuthority" value="5">학회장</option>
+<option name="stuAuthority" value="6">예비역 회장</option>
+<option name="stuAuthority" value="7">일반</option>
 </select>
 </div>
 </div>
 
-<br>
+<br><hr>
+
+<div class="row">
+<div class="col-sm-3 col-md-6 col-lg-4"><lable>회비금액*</lable></div>
+<div class="col-sm-9 col-md-6 col-lg-8"><input type="text" name="feeTotalAmount"/></div>
+</div>
+
+<div class="row">
+<div class="col-sm-3 col-md-6 col-lg-4"><lable>납부금액</lable></div>
+<div class="col-sm-9 col-md-6 col-lg-8"><input type="text" name="feePaidAmount"/></div>
+</div>
+
+<div class="row">
+<div class="col-sm-3 col-md-6 col-lg-4"><lable>입금방식</lable></div>
+<div class="col-sm-9 col-md-6 col-lg-8">
+<select>
+<option name="feePaidMethod" value="1">계좌이체</option>
+<option name="feePaidMethod" value="2">현금</option>
+</select>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-3 col-md-6 col-lg-4"><lable>상태</lable></div>
+<div class="col-sm-9 col-md-6 col-lg-8">
+<select>
+<option name="feePaidStatus" value="1">분할납부</option>
+<option name="feePaidStatus" value="2">입금완료</option>
+<option name="feePaidStatus" value="3">미납</option>
+</select>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-3 col-md-6 col-lg-4"><lable>비고</lable></div>
+<div class="col-sm-9 col-md-6 col-lg-8"><input type="text" name="feeContent"/></div>
+</div>
 
 <div class="row">
 
