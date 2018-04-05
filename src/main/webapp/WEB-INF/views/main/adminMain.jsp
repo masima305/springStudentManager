@@ -18,7 +18,12 @@
         margin: 0;
         background-color: rgb(224, 224, 235);
       }
-      
+       #stuListScroll{
+  
+ 		overflow-y : scroll;
+ 		height : 400px;
+  	
+ 	 }
         /*-----------------------------사이드바 용 css--------------------------*/
       .navbar-brand{
         text-align:right;
@@ -76,13 +81,37 @@
       .seven{height: 70%;}
       .three{height: 30%;}
       
+      
       </style>
     
   </head>
+	<script>
+  	$(document).ready(
+  			
+  		function() {
+  		
+  			<c:set var = "listAll" scope = "session" value = "${'/listAllStudent.do'}"/>
+  			<c:set var = "fee" scope = "session" value = "${'../contents/studentFeeList.jsp'}"/>
+  				
+  		}
+  		);
 
-
+  	/*  
+  	 * 학번별로 검색
+  	 * option 동적 추가 기능
+  	 */
+    function stuNumberOption(){
+        var date = new Date();
+        var year = date.getFullYear();
+        var selectValue = document.getElementById("searchStuNumber");
+        for(var i=year-40; i<=year; i++){
+           selectValue.add(new Option(i,i));
+        }
+     }
+  	</script>	
+	
   <body>
-  
+  	
       
     <!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->
     <nav id="upperbar" class="navbar navbar-expand-lg navbar-light bg-light">
@@ -97,10 +126,11 @@
     
     <!----------------------------메인 들어갈 자리.---------------------------->
     <div id="main">
-	     <c:import url='../contents/studentList.jsp'></c:import>
+   		
+	    <c:import url="${fee}"></c:import>
 	    <%--  <c:import url='../contents/studentInsert.jsp'></c:import> --%>
-	  <%--    <c:import url='../contents/studentFeeList.jsp'></c:import>
-	     <c:import url='../contents/studentUpdate.jsp'></c:import> --%>
+	    <%--    <c:import url='../contents/studentFeeList.jsp'></c:import>
+	    <c:import url='../contents/studentUpdate.jsp'></c:import> --%>
       
     </div>
     
@@ -132,10 +162,11 @@
       }
       
       
-      function showTitle(id, num){
+      function showTitle(id){
 			var value = id.innerHTML;
 			document.getElementById("sideNavTitle").innerHTML = value;
-			var main = document.getElementById("main");
+			
+			
 			
 			
       }

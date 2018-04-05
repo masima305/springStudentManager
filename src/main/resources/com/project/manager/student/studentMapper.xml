@@ -4,7 +4,7 @@
 <!-- Student 테이블을 위한 query mapper -->
 <mapper namespace="student">
 	<!-- 모든 학생을 다 불러오는 query -->
-	<select id="listAllStudent" parameterType="HashMap" resultType="HashMap">
+	<select id="listAllStudent" resultType="HashMap">
 		SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD
         ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
         ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY_VALUE

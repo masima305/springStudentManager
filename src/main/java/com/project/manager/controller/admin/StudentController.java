@@ -8,9 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.project.manager.service.admin.StudentService;
 
-/*@Controller*/
+@Controller
 public class StudentController {
 
 	@Autowired
@@ -24,10 +28,13 @@ public class StudentController {
 	 * del_yn='n'인 학생만
 	 */
 	@RequestMapping(value="/listAllStudent.do")
-	public List<HashMap<String, Object>> listAllStudent(HttpServletRequest request){
-	
-		
-		return null;
+	public @ResponseBody ModelAndView listAllStudent(HttpServletRequest request){
+		System.out.println(">>>>>>>>listAllStudent called");		
+		List<HashMap<String,Object>> list = studentService.listAllStudent();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list",list);
+		mv.setViewName("contents/studentList");
+		return mv;
 	}
 	
 	/*

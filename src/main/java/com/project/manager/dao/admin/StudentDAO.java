@@ -1,5 +1,6 @@
 package com.project.manager.dao.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +21,9 @@ public class StudentDAO {
 	//------------------------------listAllStudent =
 	//------------------------------모든 리스트를 다 가지고 와서 리스트로 만들어서 보냄
 	public List<HashMap<String, Object>> listAllStudent(){
-		List<HashMap<String, Object>> list = this.sqlSession.selectList("student.listAllStudent");
+		System.out.println(">>>>>>>>listAllStudent DAO called");	
+		List<HashMap<String, Object>> list;
+		list = this.sqlSession.selectList("student.listAllStudent");
 		return list;
 	}
 }

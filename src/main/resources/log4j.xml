@@ -32,6 +32,22 @@
 		<level value="info" />
 	</logger>
 
+	<!-- Query Loggers -->
+
+    <logger name="jdbc.sqlonly" additivity="false">  
+        <level value="debug"/>  
+        <appender-ref ref="console"/>  
+    </logger>
+
+    <logger name="jdbc.resultsettable" additivity="false">  
+        <level value="debug"/>  
+        <appender-ref ref="console"/>  
+    </logger>
+    <!-- Query Loggers  End-->
+    
+    
+	<!-- Root Logger -->
+
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
