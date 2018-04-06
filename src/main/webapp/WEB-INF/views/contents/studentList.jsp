@@ -91,7 +91,7 @@
 							<td>${i.STU_BIRTHDAY}</td>
 							<td>${i.STU_PHONE}</td>
 							<td>${i.STU_EMAIL}</td>
-							<td>${i.STU_ENTERENCE_VALUE}</td>
+							<td>${i.STU_ENTERANCE_VALUE}</td>
 							<td>${i.STU_AUTHORITY_VALUE}</td>
 							<td>
 							<button type="button" class="btn btn-small btn-info">수정</button>

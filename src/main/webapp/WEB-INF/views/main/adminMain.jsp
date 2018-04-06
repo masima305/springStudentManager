@@ -149,18 +149,17 @@ html, body {
 	<!----------------------------메인 들어갈 자리.---------------------------->
 	<div id="main">
 
-		<div id="listAll" style="display: block;">
+ 		<div id="listAll" style="display: block;">
 			<c:import url="/listAllStudent.do"></c:import>
 		</div>
 
 		<div id="studentFee" style="display: none;">
 			<c:import url='../contents/studentFeeList.jsp'></c:import>
 		</div>
-
-		<%--   
-	     <c:import url='../contents/studentInsert.jsp'></c:import>
+<%-- 	
+		<c:import url='../contents/studentInsert.jsp'></c:import>
 	    <c:import url='../contents/studentUpdate.jsp'></c:import>
-       --%>
+--%>
 
 
 	</div>
