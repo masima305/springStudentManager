@@ -73,9 +73,22 @@
 						<th>옵션</th>
 					<tr>
 				</thead>
-				<c:forEach var="i" items="${list}">
-
-				</c:forEach>
+				<c:forEach var="i" items="${list}" varStatus="index">
+						<tr>
+							<td>${index.index}</td>
+							<td>${i.STU_NUMBER}</td>
+							<td>${i.STU_NAME}</td>
+							<td>${i.STU_GENDER_VALUE}</td>
+							<td>${i.STU_BIRTHDAY}</td>
+							<td>${i.STU_PHONE}</td>
+							<td>${i.STU_EMAIL}</td>
+							<td>${i.STU_ENTERANCE_VALUE}</td>
+							<td>${i.STU_AUTHORITY_VALUE}</td>
+							<td>
+							<button type="button" class="btn btn-small btn-info">수정</button>
+							<button type="button" class="btn btn-small btn-danger">삭제</button></td>
+						</tr>
+					</c:forEach>
 				<tbody>
 
 

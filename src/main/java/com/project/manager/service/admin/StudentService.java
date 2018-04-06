@@ -50,6 +50,4 @@ public class StudentService {
 	public int deleteStudent(HashMap<String,String> map) {
 		return 0;
 	}
-	
-	
 }
