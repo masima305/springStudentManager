@@ -30,9 +30,12 @@ public class StudentController {
 	@RequestMapping(value="/listAllStudent.do")
 	public @ResponseBody ModelAndView listAllStudent(HttpServletRequest request){
 		System.out.println(">>>>>>>>listAllStudent called");		
-		List<HashMap<String,Object>> list = studentService.listAllStudent();
+		List<HashMap<String,Object>> listAllStudent = studentService.listAllStudent();
+		
+		List<HashMap<String,Object>> listAllCommon = studentService.listAllCommon();
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("list",list);
+		mv.addObject("listAllStudent",listAllStudent);
+		mv.addObject("listAllCommon",listAllCommon);
 		mv.setViewName("contents/studentList");
 		return mv;
 	}
