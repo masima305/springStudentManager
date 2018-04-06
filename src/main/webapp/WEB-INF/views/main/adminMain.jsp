@@ -154,7 +154,7 @@ html, body {
 		</div>
 
 		<div id="studentFee" style="display: none;">
-			<c:import url='../contents/studentFeeList.jsp'></c:import>
+			<c:import url='/listAllFee.do'></c:import>
 		</div>
 <%-- 	
 		<c:import url='../contents/studentInsert.jsp'></c:import>

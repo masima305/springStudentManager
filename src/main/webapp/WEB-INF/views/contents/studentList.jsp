@@ -82,9 +82,9 @@
 				            	<td>예비역회장</td>
 				                <td><button type="button" class="btn btn-small btn-info">수정</button><button type="button" class="btn btn-small btn-danger">삭제</button></td>
 							</tr> -->
-					<c:forEach var="i" items="${list}">
+					<c:forEach var="i" items="${list}" varStatus="index">
 						<tr>
-							<td>1</td>
+							<td>${index.count}</td>
 							<td>${i.STU_NUMBER}</td>
 							<td>${i.STU_NAME}</td>
 							<td>${i.STU_GENDER_VALUE}</td>
