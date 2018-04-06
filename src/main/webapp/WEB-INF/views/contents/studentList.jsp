@@ -22,27 +22,36 @@
 
 		<label class="small">> 범위로 찾기</label>
 		<form id="searchScopeForm">
-			<label>학번별로</label> <select name="stuNumber" id="searchStuNumber"
-				onclick="javascript:stuNumberOption()">
+			<label>학번별로</label> 
+			<select name="stuNumber" id="searchStuNumber" onclick="javascript:stuNumberOption()">
 				<option value="선택없음">선택없음</option>
-			</select> &nbsp; <label>입학전형별로</label> <select name="stuEntrance">
-				<option value="선택없음">선택없음</option>
-				<option value="">수시</option>
-				<option value="">정시</option>
-				<option value="">추합</option>
-				<option value="">특별</option>
-			</select> &nbsp; <label>접근권한별로</label> <select name="stuAuthority">
-				<option value="선택없음">선택없음</option>
-				<option value="6">일반</option>
-				<option value="5">학회장/예비역회장</option>
-				<option value="4">집행부</option>
-				<option value="3">집행부팀장</option>
-			</select> &nbsp; <label>성별로</label> <select name="stuGender">
-				<option value="선택없음">선택없음</option>
-				<option value="F">여</option>
-				<option value="M">남</option>
+			</select>&nbsp;
+			
+			<label>입학전형별로</label> 
+			<select name="stuEntrance">
+			<option value="">선택없음</option>
+			<c:forEach var="i" items="${listAllCommonMap.stuEnteranceList}">
+				<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
+			</c:forEach>
+			</select>&nbsp; 
+			
+			<label>접근권한별로</label> 
+			<select name="stuAuthority">
+			<option value="">선택없음</option>
+			<c:forEach var="i" items="${listAllCommonMap.stuAuthorityList}">
+				<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
+			</c:forEach>	
+			</select>&nbsp; 
+			
+			<label>성별로</label> 
+			<select name="stuGender">
+			<option value="">선택없음</option>
+			<c:forEach var="i" items="${listAllCommonMap.stuGenderList}">
+				<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
+			</c:forEach>	
 			</select> <input type="button" value="검색" onclick="" />
 		</form>
+		
 		<!-- searchScopeForm -->
 	</div>
 	<!-- card-header -->
@@ -82,7 +91,7 @@
 				            	<td>예비역회장</td>
 				                <td><button type="button" class="btn btn-small btn-info">수정</button><button type="button" class="btn btn-small btn-danger">삭제</button></td>
 							</tr> -->
-					<c:forEach var="i" items="${list}" varStatus="index">
+					<c:forEach var="i" items="${listAllStudent}" varStatus="index">
 						<tr>
 							<td>${index.count}</td>
 							<td>${i.STU_NUMBER}</td>
