@@ -19,6 +19,64 @@
          selectValue.add(new Option(i,i));
       }
    }
+   function FeeUpdateBtn(id){
+	   //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
+			
+	   
+	   var paidDate = "<input type='text' size='8' value="+$('#'+id+'paidDate').html() +"></input>";
+	   $('#'+id+'paidDate').empty();
+	   $('#'+id+'paidDate').append(paidDate);
+	   
+	   var totalAmount = "<input type='text' size='7' value="+$('#'+id+'totalAmount').html()+"></input>";
+	   $('#'+id+'totalAmount').empty();
+	   $('#'+id+'totalAmount').append(totalAmount);
+	   
+	   
+	   var paidAmount = "<input type='text' size='7' value="+$('#'+id+'paidAmount').html()+"></input>";
+	   $('#'+id+'paidAmount').empty();
+	   $('#'+id+'paidAmount').append(paidAmount);
+	   
+	   
+	   var paidContent = "<input type='text' size='12' value="+$('#'+id+'paidContent').html()+"></input>";
+	   $('#'+id+'paidContent').empty();
+	   $('#'+id+'paidContent').append(paidContent);
+	   //------------------------------------------------------------------------------------------
+	   
+	   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
+	   
+	   var paidMethod = "<input type='text' size='7' value="+$('#'+id+'paidMethod').html()+"></input>";
+	 /*   alert($('#'+id+'paidMethodValue').val()) */
+	   
+	 
+	 
+	   var paidMethod = "<select>"+
+	   						"<option>"+
+	   						"</option>"+
+	   					"</select>";
+	   $('#'+id+'paidMethod').empty();
+	   $('#'+id+'paidMethod').append(paidMethod);
+	   
+	   
+	   
+	   
+	   $('#'+id+'paidStatus').empty();
+	   var paidStatus = "<select>"+
+			"<option>"+
+			"</option>"+
+		"</select>";
+		$('#'+id+'paidStatus').empty();
+		$('#'+id+'paidStatus').append(paidStatus);
+	   
+		
+		//----------------------버튼 변경--------------------------------
+	
+		var btn = "<button type='button' class='btn btn-small btn-info'>완료</button>";
+	   $('#'+id+'btn').empty();
+	   $('#'+id+'btn').append(btn);
+
+	   
+	   
+   }
    
 </script>
 
@@ -73,24 +131,50 @@
 						<th>옵션</th>
 					<tr>
 				</thead>
-				<c:forEach var="i" items="${list}" varStatus="index">
+				<tbody>
+					<c:forEach var="i" items="${list}" varStatus="index">
 						<tr>
-							<td>${index.index}</td>
+							<td>${index.count}</td>
 							<td>${i.STU_NUMBER}</td>
 							<td>${i.STU_NAME}</td>
-							<td>${i.STU_GENDER_VALUE}</td>
-							<td>${i.STU_BIRTHDAY}</td>
-							<td>${i.STU_PHONE}</td>
-							<td>${i.STU_EMAIL}</td>
-							<td>${i.STU_ENTERANCE_VALUE}</td>
-							<td>${i.STU_AUTHORITY_VALUE}</td>
-							<td>
-							<button type="button" class="btn btn-small btn-info">수정</button>
-							<button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							<!-- '수정'버튼 누르면 바뀜. -->
+							<!--  select값의 경우에는 hidden값으로 그 부분의 value숫자를 가지고 있어야 한다. -->
+							<td id="${i.STU_NUMBER}paidDate">
+								${i.FEE_PAID_DATE}
+							</td>
+							
+							
+							<td id="${i.STU_NUMBER}totalAmount">
+								${i.FEE_TOTAL_AMOUNT}
+							</td>
+							
+							<td id="${i.STU_NUMBER}paidAmount">
+								${i.FEE_PAID_AMOUNT}
+							</td>
+							
+							<td id="${i.STU_NUMBER}paidMethod">
+								${i.FEE_PAID_METHOD_VALUE}	
+							</td>
+							<input type="hidden" id="${i.STU_NUMBER} paidMethodValue"  value="${i.FEE_PAID_METHOD}"/>
+							
+							<td id="${i.STU_NUMBER}paidStatus">
+								${i.FEE_PAID_STATUS_VALUE}
+								
+							</td>
+							<input type="hidden" id="${i.STU_NUMBER}paidStatusValue" value="${i.FEE_PAID_STATUS}">
+							
+	
+							<td id="${i.STU_NUMBER}paidContent">
+								${i.FEE_CONTENT_VALUE}
+							</td>
+							<td id="${i.STU_NUMBER}btn">							
+								<button type="button" class="btn btn-small btn-info"
+									onclick="javascript:FeeUpdateBtn(''+${i.STU_NUMBER})">
+									수정
+								</button>
+							</td>
 						</tr>
 					</c:forEach>
-				<tbody>
-
 
 				</tbody>
 
