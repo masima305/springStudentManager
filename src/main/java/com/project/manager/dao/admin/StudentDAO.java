@@ -27,10 +27,5 @@ public class StudentDAO {
 		return list;
 	}
 	
-	
-	public List<HashMap<String, Object>> listAllCommon(){
-		List<HashMap<String, Object>> list= sqlSession.selectList("common.listAllCommon");
-		return list;
-	}
-	
+
 }

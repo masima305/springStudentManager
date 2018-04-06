@@ -29,7 +29,7 @@ public class FeeController {
 		List<HashMap<String, Object>> list;
 		list = feeService.listAllFee();
 		mv.addObject("list", list);
-		mv.setViewName("/contents/feeList");
+		mv.setViewName("/contents/studentFeeList");
 		return mv;
 	}
 }

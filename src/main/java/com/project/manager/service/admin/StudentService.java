@@ -1,5 +1,6 @@
 package com.project.manager.service.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,13 +27,6 @@ public class StudentService {
 		List<HashMap<String, Object>> list = studentDAO.listAllStudent();
 		return list;
 	}
-	
-	public List<HashMap<String,Object>> listAllCommon(){
-		System.out.println(">>>>>>>>listAllCommon Service called");	
-		List<HashMap<String, Object>> list = studentDAO.listAllCommon();
-		return list;
-	}
-	
 	
 	
 	public List<HashMap<String, Object>> searchStudent(HashMap<String,String> map){

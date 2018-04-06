@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.manager.service.admin.StudentService;
+import com.project.manager.service.ccode.CcodeService;
 
 @Controller
 public class StudentController {
@@ -20,6 +21,8 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 	
+	@Autowired
+	CcodeService ccodeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 	
@@ -31,11 +34,10 @@ public class StudentController {
 	public @ResponseBody ModelAndView listAllStudent(HttpServletRequest request){
 		System.out.println(">>>>>>>>listAllStudent called");		
 		List<HashMap<String,Object>> listAllStudent = studentService.listAllStudent();
-		
-		List<HashMap<String,Object>> listAllCommon = studentService.listAllCommon();
+		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("listAllStudent",listAllStudent);
-		mv.addObject("listAllCommon",listAllCommon);
+		mv.addObject("listAllCommonMap",listAllCommonMap);
 		mv.setViewName("contents/studentList");
 		return mv;
 	}
