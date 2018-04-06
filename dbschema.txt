@@ -1,204 +1,194 @@
-    DROP TABLE STUDENT cascade CONSTRAINTS;
-    DROP TABLE EXPERIENCE cascade CONSTRAINTS;
-    DROP TABLE STUDENT_FEE cascade CONSTRAINTS;
-    DROP TABLE COMMON cascade CONSTRAINTS;
-    commit;
+DROP TABLE STUDENT cascade constraint;
+DROP TABLE EXPERIENCE cascade constraint;
+DROP TABLE STUDENT_FEE cascade constraint;
+DROP TABLE COMMON cascade constraint;
+commit;
+
+
+
+CREATE TABLE STUDENT (
+
+STU_NUMBER VARCHAR2(12) PRIMARY KEY,
+STU_NAME VARCHAR2(10) NOT NULL,
+STU_BIRTHDAY VARCHAR2(10) NOT NULL,
+STU_PHONE VARCHAR2(15) NOT NULL,
+STU_EMAIL VARCHAR2(50) NOT NULL,
+STU_ENTERANCE NUMBER(2) NOT NULL,
+STU_AUTHORITY NUMBER(2) NOT NULL,
+STU_GENDER NUMBER(4) NOT NULL,
+STU_PASSWORD VARCHAR2(20) NOT NULL
+);
+
+
+CREATE TABLE EXPERIENCE (
+STU_NUMBER VARCHAR2(12),
+EXP_YEAR NUMBER(4) NOT NULL,
+EXP_SEMESTER NUMBER(1) NOT NULL,
+EXP_CONTENT VARCHAR2(100) NOT NULL
+);
+
+CREATE TABLE STUDENT_FEE (
+
+STU_NUMBER VARCHAR2(12) PRIMARY KEY,
+FEE_PAID_DATE VARCHAR2(8) DEFAULT '00000000' NOT NULL ,
+FEE_TOTAL_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
+FEE_PAID_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
+FEE_PAID_METHOD NUMBER(1) DEFAULT 1 NOT NULL ,
+FEE_PAID_STATUS NUMBER(1) DEFAULT 3 NOT NULL ,
+FEE_CONTENT VARCHAR2(150)
+);
+
+
+
+
+CREATE TABLE COMMON (
+
+COMMON_CATEGORY VARCHAR2(20) NOT NULL,
+COMMON_CODE NUMBER(2) NOT NULL,
+COMMON_VALUE VARCHAR2(20) NOT NULL
+);
+
+commit;
+
+----------------∫π«’ PK º≥¡§------------------------
+ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(commonCategory,commonCode);
+ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(stuNumber,expYear,expsemester);
+
+
+------------------FK º≥¡§----------------------
+ALTER TABLE EXPERIENCE ADD (CONSTRAINT EXPERIENCE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
+ALTER TABLE STUDENT_FEE ADD (CONSTRAINT STUDENT_FEE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
+commit;
+
+--------------------insert common DATA----------------
+insert into COMMON values('stuEnterance',01,'ºˆΩ√');
+insert into COMMON values('stuEnterance',02,'¡§Ω√');
+insert into COMMON values('stuEnterance',03,'√ﬂ«’');
+insert into COMMON values('stuEnterance',04,'∆Ø∫∞');
+
+insert into COMMON values('stuAuthority',01,'»∏¿Â');
+insert into COMMON values('stuAuthority',02,'∫Œ»∏¿Â');
+insert into COMMON values('stuAuthority',03,'¡˝«‡∫Œ∆¿¿Â');
+insert into COMMON values('stuAuthority',04,'¡˝«‡∫Œø¯');
+insert into COMMON values('stuAuthority',05,'øπ∫Òø™»∏¿Â');
+insert into COMMON values('stuAuthority',06,'«–»∏¿Â');
+insert into COMMON values('stuAuthority',07,'¿œπ›');
+
+
+insert into COMMON values('stuGender',01,'ø©');
+insert into COMMON values('stuGender',02,'≥≤');
+
+
+insert into COMMON values('expsemester',01,'1«–±‚');
+insert into COMMON values('expsemester',02,'2«–±‚');
+
+
+insert into COMMON values('feePaidMethod',01,'∞Ë¡¬¿Ã√º');
+insert into COMMON values('feePaidMethod',02,'«ˆ±›');
+
+
+insert into COMMON values('feePaidStatus',01,'¿‘±›øœ∑·');
+insert into COMMON values('feePaidStatus',02,'∫–«“¿‘±›');
+insert into COMMON values('feePaidStatus',03,'πÃ≥≥');
+commit;
+
+
+
+--------------------insert--------------
+---------∏« √≥¿Ω student ≥÷¿ª∂ß-----------
+insert into STUDENT values(
+'2010042465',
+'¿Ã¡§»∆',
+'19900921',
+'01035781942',
+'johnathanl305@gmail.com',
+2,
+1,
+1,
+'000000'
+);
+commit;
+--------------------insert DUMMY STUDENT-----------
+insert into STUDENT values('2005042465','¿Ã¡§»∆','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,2,'000000');
+insert into STUDENT values('2007042422','Ω≈ºº»÷','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,1,'000000');
+insert into STUDENT values('2011042461','±Ë«¸∞Ô','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,2,'000000');
+insert into STUDENT values('2013042474','¿Ã∏∏¿Á','19941201','01012535486','mfjvn442@naver.com'         ,4,4,1,'000000');
+insert into STUDENT values('2013042451','∞≠»øπÃ','19960312','01098822256','llhhh3005@naver.com'        ,3,5,2,'000000');
+insert into STUDENT values('2011042495','¿ÃΩΩ±‚','19990110','01078256217','aksentlaa@lycos.com'        ,2,6,1,'000000');
+insert into STUDENT values('2012042453','º≠ø¯»Ò','19970421','01033649782','gsmdnnl4244@gmail.com'      ,3,7,2,'000000');
+insert into STUDENT values('2014042477','æ»±§∏','19940921','01015514568','lknnj_39@gmail.com'         ,2,7,1,'000000');
+insert into STUDENT values('2015042408','¿¸¿œ»Ø','19960827','01088752564','kevin4144@hanmail.net'      ,3,6,2,'000000');
+insert into STUDENT values('2016042418','Ω≈¡§»Ø','19950626','01054682158','dddoovm0024@hanmail.net'    ,4,5,1,'000000');
+
+
+-------------------insert DUMMY EXPERIENCE ----------
+insert into EXPERIENCE values ('2013042451',2014,1,'«–ª˝»∏');
+insert into EXPERIENCE values ('2013042451',2015,2,'ø¨±ÿ«–»∏¿Â');
+insert into EXPERIENCE values ('2013042451',2016,1,'16≥‚µµ«–ª˝»∏ ∫Œ»∏¿Â');
+insert into EXPERIENCE values ('2013042451',2016,1,'ø¨±ÿ«–»∏ ∫Œ»∏¿Â');
+
+insert into EXPERIENCE values ('2007042422',2013,1,'«–ª˝»∏');
+insert into EXPERIENCE values ('2007042422',2014,2,'√‡±∏«–»∏¿Â');
+insert into EXPERIENCE values ('2007042422',2015,1,'15≥‚µµ«–ª˝»∏ ∫Œ»∏¿Â');
+insert into EXPERIENCE values ('2007042422',2015,1,'√‡±∏«–»∏ ∫Œ»∏¿Â');
+
+insert into EXPERIENCE values ('2015042408',2017,1,'«–ª˝»∏');
+insert into EXPERIENCE values ('2015042408',2017,2,'√‡±∏«–»∏¿Â');
+insert into EXPERIENCE values ('2015042408',2018,1,'18≥‚µµ«–ª˝»∏ ∫Œ»∏¿Â');
+insert into EXPERIENCE values ('2015042408',2018,1,'√‡±∏«–»∏ ∫Œ»∏¿Â');
+commit;
+
+-------------------insert DUMMY STUDENT_FEE ----------
+insert into STUDENT_FEE values ('2005042465',20050516,150000,150000,1,1,'');
+insert into STUDENT_FEE values ('2007042422',20070316,170000,170000,1,1,'');
+insert into STUDENT_FEE values ('2011042461',20110806,170000,130000,2,2,'2»∏¬˜¿‘±›');
+insert into STUDENT_FEE values ('2013042474',20130516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2013042451',20130516,150000,150000,2,1,'');
+insert into STUDENT_FEE values ('2011042495',20110516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2012042453',20120516,150000,     0,1,3,'');
+insert into STUDENT_FEE values ('2014042477',20140516,150000,150000,2,1,'');
+insert into STUDENT_FEE values ('2015042408',20150516,170000,130000,2,2,'1»∏¬˜¿‘±›');
+insert into STUDENT_FEE values ('2016042418',20160516,150000,150000,1,1,'');
+
+commit;
+--------------------select-----------------
+-------------------- ∏µÁ «–ª˝¿« ¡§∫∏ ¥Ÿ ∫“∑Øø¿±‚.------------------------------------
+SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY_VALUE
+    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
+FROM STUDENT S;
+------------------- ∏µÁ «–ª˝ »∏∫Ò ¡§∫∏ ∫“∑Øø¿±‚----------------------------------------;
+
+SELECT S.STU_NUMBER,S.STU_NAME,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+,DECODE(F.FEE_CONTENT,NULL,'æ¯¿Ω',F.FEE_CONTENT)
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+FROM STUDENT S, STUDENT_FEE F
+WHERE S.STU_NUMBER = F.STU_NUMBER;
+
+------------------- «— «–ª˝ ±‚∫ª¡§∫∏ ∫“∑Øø¿±‚-----------------------------------
+
+SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+,DECODE(F.FEE_CONTENT,NULL,'æ¯¿Ω',F.FEE_CONTENT)
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+FROM STUDENT S, STUDENT_FEE F
+WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461'); 
+
+
+
+
+
+
+
+
+
+SELECT
+    *
+FROM student;
     
-    CREATE TABLE STUDENT (
-    STU_NUMBER VARCHAR2(12) PRIMARY KEY,
-    STU_NAME VARCHAR2(10) NOT NULL,
-    STU_BIRTHDAY VARCHAR2(10) NOT NULL,
-    STU_PHONE VARCHAR2(15) NOT NULL,
-    STU_EMAIL VARCHAR2(50) NOT NULL,
-    STU_ENTERANCE NUMBER(2) NOT NULL,
-    STU_AUTHORITY NUMBER(2) NOT NULL,
-    STU_GENDER NUMBER(4) NOT NULL,
-    STU_PASSWORD VARCHAR2(20) NOT NULL,
-    STU_DELETE_YN VARCHAR2(2) DEFAULT 'N' NOT NULL
-    );
-    
-    
-    CREATE TABLE EXPERIENCE (
-    STU_NUMBER VARCHAR2(12),
-    EXP_YEAR NUMBER(4) NOT NULL,
-    EXP_SEMESTER NUMBER(1) NOT NULL,
-    EXP_CONTENT VARCHAR2(100) NOT NULL,
-    EXP_DELETE_YN VARCHAR2(2) DEFAULT 'N' NOT NULL
-    );
-    
-    CREATE TABLE STUDENT_FEE (
-    
-    STU_NUMBER VARCHAR2(12) PRIMARY KEY,
-    FEE_PAID_DATE VARCHAR2(8) DEFAULT '00000000' NOT NULL ,
-    FEE_TOTAL_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
-    FEE_PAID_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
-    FEE_PAID_METHOD NUMBER(1) DEFAULT 1 NOT NULL ,
-    FEE_PAID_STATUS NUMBER(1) DEFAULT 3 NOT NULL ,
-    FEE_CONTENT VARCHAR2(150),
-    FEE_DELETE_YN VARCHAR2(2) DEFAULT 'N' NOT NULL
-    );
-    
-    
-    
-    
-    CREATE TABLE COMMON (
-    
-    COMMON_CATEGORY VARCHAR2(20) NOT NULL,
-    COMMON_CODE NUMBER(2) NOT NULL,
-    COMMON_VALUE VARCHAR2(20) NOT NULL
-    );
-    
-    commit;
-    
-    ----------------Î≥µÌï© PK ÏÑ§Ï†ï------------------------
-    ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(COMMON_CATEGORY,COMMON_CODE);
-    ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(STU_NUMBER,EXP_YEAR,EXP_SEMESTER,EXP_CONTENT);
-    
-    
-    ------------------FK ÏÑ§Ï†ï----------------------
-    ALTER TABLE EXPERIENCE ADD (CONSTRAINT EXPERIENCE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
-    ALTER TABLE STUDENT_FEE ADD (CONSTRAINT STUDENT_FEE_RE FOREIGN KEY (STU_NUMBER) REFERENCES STUDENT (STU_NUMBER));
-    commit;
-    
-    --------------------insert common DATA----------------
-    insert into COMMON values('stuEnterance',01,'ÏàòÏãú');
-    insert into COMMON values('stuEnterance',02,'Ï†ïÏãú');
-    insert into COMMON values('stuEnterance',03,'Ï∂îÌï©');
-    insert into COMMON values('stuEnterance',04,'ÌäπÎ≥Ñ');
-    
-    insert into COMMON values('stuAuthority',01,'ÌöåÏû•');
-    insert into COMMON values('stuAuthority',02,'Î∂ÄÌöåÏû•');
-    insert into COMMON values('stuAuthority',03,'ÏßëÌñâÎ∂ÄÌåÄÏû•');
-    insert into COMMON values('stuAuthority',04,'ÏßëÌñâÎ∂ÄÏõê');
-    insert into COMMON values('stuAuthority',05,'ÏòàÎπÑÏó≠ÌöåÏû•');
-    insert into COMMON values('stuAuthority',06,'ÌïôÌöåÏû•');
-    insert into COMMON values('stuAuthority',07,'ÏùºÎ∞ò');
-    
-    
-    insert into COMMON values('stuGender',01,'Ïó¨');
-    insert into COMMON values('stuGender',02,'ÎÇ®');
-    
-    
-    insert into COMMON values('expsemester',01,'1ÌïôÍ∏∞');
-    insert into COMMON values('expsemester',02,'2ÌïôÍ∏∞');
-    
-    
-    insert into COMMON values('feePaidMethod',01,'Í≥ÑÏ¢åÏù¥Ï≤¥');
-    insert into COMMON values('feePaidMethod',02,'ÌòÑÍ∏à');
-    
-    
-    insert into COMMON values('feePaidStatus',01,'ÏûÖÍ∏àÏôÑÎ£å');
-    insert into COMMON values('feePaidStatus',02,'Î∂ÑÌï†ÏûÖÍ∏à');
-    insert into COMMON values('feePaidStatus',03,'ÎØ∏ÎÇ©');
-    commit;
-    
-    
-    
-    --------------------insert--------------
-    ---------Îß® Ï≤òÏùå student ÎÑ£ÏùÑÎïå-----------
-    insert into STUDENT values(
-    '2010042465',
-    'Ïù¥Ï†ïÌõà',
-    '19900921',
-    '01035781942',
-    'johnathanl305@gmail.com',
-    2,
-    1,
-    1,
-    '000000',
-    'N'
-    );
-    commit;
-    --------------------insert DUMMY STUDENT-----------
-    insert into STUDENT values('2005042465','Ïù¥Ï†ïÌõà','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,2,'000000','N');
-    insert into STUDENT values('2007042422','Ïã†ÏÑ∏Ìúò','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,1,'000000','N');
-    insert into STUDENT values('2011042461','ÍπÄÌòïÍ≥§','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,2,'000000','N');
-    insert into STUDENT values('2013042474','Ïù¥ÎßåÏû¨','19941201','01012535486','mfjvn442@naver.com'         ,4,4,1,'000000','N');
-    insert into STUDENT values('2013042451','Í∞ïÌö®ÎØ∏','19960312','01098822256','llhhh3005@naver.com'        ,3,5,2,'000000','N');
-    insert into STUDENT values('2011042495','Ïù¥Ïä¨Í∏∞','19990110','01078256217','aksentlaa@lycos.com'        ,2,6,1,'000000','N');
-    insert into STUDENT values('2012042453','ÏÑúÏõêÌù¨','19970421','01033649782','gsmdnnl4244@gmail.com'      ,3,7,2,'000000','N');
-    insert into STUDENT values('2014042477','ÏïàÍ¥ëÎ™®','19940921','01015514568','lknnj_39@gmail.com'         ,2,7,1,'000000','N');
-    insert into STUDENT values('2015042408','Ï†ÑÏùºÌôò','19960827','01088752564','kevin4144@hanmail.net'      ,3,6,2,'000000','N');
-    insert into STUDENT values('2016042418','Ïã†Ï†ïÌôò','19950626','01054682158','dddoovm0024@hanmail.net'    ,4,5,1,'000000','N');
-    
-    
-    -------------------insert DUMMY EXPERIENCE ----------
-    insert into EXPERIENCE values ('2013042451',2014,1,'ÌïôÏÉùÌöå','N');
-    insert into EXPERIENCE values ('2013042451',2015,2,'Ïó∞Í∑πÌïôÌöåÏû•','N');
-    insert into EXPERIENCE values ('2013042451',2016,1,'16ÎÖÑÎèÑÌïôÏÉùÌöå Î∂ÄÌöåÏû•','N');
-    insert into EXPERIENCE values ('2013042451',2016,1,'Ïó∞Í∑πÌïôÌöå Î∂ÄÌöåÏû•','N');
-    
-    insert into EXPERIENCE values ('2007042422',2013,1,'ÌïôÏÉùÌöå','N');
-    insert into EXPERIENCE values ('2007042422',2014,2,'Ï∂ïÍµ¨ÌïôÌöåÏû•','N');
-    insert into EXPERIENCE values ('2007042422',2015,1,'15ÎÖÑÎèÑÌïôÏÉùÌöå Î∂ÄÌöåÏû•','N');
-    insert into EXPERIENCE values ('2007042422',2015,1,'Ï∂ïÍµ¨ÌïôÌöå Î∂ÄÌöåÏû•','N');
-    
-    insert into EXPERIENCE values ('2015042408',2017,1,'ÌïôÏÉùÌöå','N');
-    insert into EXPERIENCE values ('2015042408',2017,2,'Ï∂ïÍµ¨ÌïôÌöåÏû•','N');
-    insert into EXPERIENCE values ('2015042408',2018,1,'18ÎÖÑÎèÑÌïôÏÉùÌöå Î∂ÄÌöåÏû•','N');
-    insert into EXPERIENCE values ('2015042408',2018,1,'Ï∂ïÍµ¨ÌïôÌöå Î∂ÄÌöåÏû•','N');
-    commit;
-    
-    -------------------insert DUMMY STUDENT_FEE ----------
-    insert into STUDENT_FEE values ('2005042465',20050516,150000,150000,1,1,'','N');
-    insert into STUDENT_FEE values ('2007042422',20070316,170000,170000,1,1,'','N');
-    insert into STUDENT_FEE values ('2011042461',20110806,170000,130000,2,2,'2ÌöåÏ∞®ÏûÖÍ∏à','N');
-    insert into STUDENT_FEE values ('2013042474',20130516,150000,     0,1,3,'','N');
-    insert into STUDENT_FEE values ('2013042451',20130516,150000,150000,2,1,'','N');
-    insert into STUDENT_FEE values ('2011042495',20110516,150000,     0,1,3,'','N');
-    insert into STUDENT_FEE values ('2012042453',20120516,150000,     0,1,3,'','N');
-    insert into STUDENT_FEE values ('2014042477',20140516,150000,150000,2,1,'','N');
-    insert into STUDENT_FEE values ('2015042408',20150516,170000,130000,2,2,'1ÌöåÏ∞®ÏûÖÍ∏à','N');
-    insert into STUDENT_FEE values ('2016042418',20160516,150000,150000,1,1,'','N');
-    
-    commit;
-    --------------------select-----------------
-    -------------------- Î™®Îì† ÌïôÏÉùÏùò Ï†ïÎ≥¥ Îã§ Î∂àÎü¨Ïò§Í∏∞.------------------------------------
-    SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD
-        ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
-        ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY_VALUE
-        ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
-    FROM STUDENT S
-    WHERE S.STU_DELETE_YN = 'N';
-    ------------------- Î™®Îì† ÌïôÏÉù ÌöåÎπÑ Ï†ïÎ≥¥ Î∂àÎü¨Ïò§Í∏∞----------------------------------------;
-    
-    SELECT S.STU_NUMBER,S.STU_NAME,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
-    ,DECODE(F.FEE_CONTENT,NULL,'ÏóÜÏùå',F.FEE_CONTENT)
-    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
-    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
-    FROM STUDENT S, STUDENT_FEE F
-    WHERE S.STU_NUMBER = F.STU_NUMBER
-    AND S.STU_DELETE_YN = 'N';
-    
-    ------------------- Ìïú ÌïôÏÉù Í∏∞Î≥∏Ï†ïÎ≥¥ Î∂àÎü¨Ïò§Í∏∞-----------------------------------
-    
-    SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
-    ,DECODE(F.FEE_CONTENT,NULL,'ÏóÜÏùå',F.FEE_CONTENT)
-    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
-    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
-    FROM STUDENT S, STUDENT_FEE F
-    WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461')
-    AND S.STU_DELETE_YN = 'N';
-    
-    -------------------------ÏÇ≠Ï†ú ÏøºÎ¶¨ ----------------------------------------------
-    ------------------------ÌïôÏÉù Ï†ïÎ≥¥ ÏÇ≠Ï†ú--------------------------------------------
-    ---Ìïú ÌïôÏÉùÏùò Ï†ïÎ≥¥Í∞Ä DELETEÏ≤òÎ¶¨ ÎêòÎ©¥ Ïù¥ 3Í∞ÄÏßÄÏùò Î™®Îì† ÏøºÎ¶¨Í∞Ä ÏÑ∏Ìä∏Î°ú ÎèôÏûë.
-    UPDATE STUDENT SET STU_DELETE_YN = 'Y' WHERE STU_NUMBER = '2007042422';
-    UPDATE EXPERIENCE SET EXP_DELETE_YN = 'Y' WHERE STU_NUMBER = '2007042422';
-    UPDATE EXPERIENCE SET EXP_DELETE_YN = 'Y' WHERE STU_NUMBER = '2007042422';    
-    -----------------------------------------------------------------------------
-    
-    UPDATE EXPERIENCE SET STU_NUMBER = '00000000' WHERE STU_NUMBER = '2014042477'  ;    
-    UPDATE STUDENT_FEE SET STU_NUMBER = '00000000' WHERE STU_NUMBER = '2014042477'  ;    
-    UPDATE student SET STU_NUMBER = '00000000' WHERE STU_NUMBER = '2014042477'  ;   
-    
-    
-    
-    
-    
-    
-    SELECT * FROM student;
-    select * from student WHERE STU_NUMBER = '2010042465';
-    select * from experience;
-    select * from common;
-    
+select * from student WHERE STU_NUMBER = '2010042465';
+select * from experience;
+select * from common;
+

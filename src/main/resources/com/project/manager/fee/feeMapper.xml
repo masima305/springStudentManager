@@ -1,0 +1,16 @@
+<!--?xml version="1.0" encoding="UTF-8"? -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- fee 테이블을 위한 query mapper -->
+<mapper namespace="fee">
+	<!-- 모든 학생회비 정보를 다 불러오는 query -->
+	<select id="listAllfee" resultType="HashMap">
+		SELECT S.STU_NUMBER,S.STU_NAME,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+	    ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+	    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+	    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+	    FROM STUDENT S, STUDENT_FEE F
+	    WHERE S.STU_NUMBER = F.STU_NUMBER
+	    AND S.STU_DELETE_YN = 'N';
+	</select>
+</mapper>
