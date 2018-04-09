@@ -22,10 +22,16 @@ public class StudentDAO {
 	//------------------------------모든 리스트를 다 가지고 와서 리스트로 만들어서 보냄
 	public List<HashMap<String, Object>> listAllStudent(){
 		System.out.println(">>>>>>>>listAllStudent DAO called");	
-		List<HashMap<String, Object>> list;
-		list = this.sqlSession.selectList("student.listAllStudent");
-		return list;
+		return this.sqlSession.selectList("student.listAllStudent");
 	}
+	
+	public List<HashMap<String, Object>> searchKeywordStudent(HashMap<String,String> map){
+		System.out.println(">>>>>>>>searchKeywordStudent DAO called");
+		return this.sqlSession.selectList("student.searchKeywordStudent",map);
+	}
+	
+	
+	
 	
 
 }

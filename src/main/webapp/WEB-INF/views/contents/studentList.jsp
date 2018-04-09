@@ -9,7 +9,7 @@
 		<label class="small">> 검색으로 찾기</label>
 		<form id="seachKeywordForm">
 			<select name="searchCategory">
-				<option value="선택없음">선택없음</option>
+				<option value="">선택없음</option>
 				<option value="stuName">이름</option>
 				<option value="stuNumber">학번</option>
 				<option value="stuPhone">연락처</option>

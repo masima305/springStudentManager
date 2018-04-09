@@ -16,6 +16,23 @@ public class CcodeService {
 	@Autowired
 	CcodeDAO ccodeDAO;
 	
+	
+    public static final HashMap<String, String> CCODENAMEMAP = new HashMap<String, String>();
+	
+    static {
+	    	CCODENAMEMAP.put("stuNum","STU_NUM");
+	    	CCODENAMEMAP.put("stuName","STU_NAME");
+	    	CCODENAMEMAP.put("stuPhone","STU_PHONE");
+	    	CCODENAMEMAP.put("stuEmail","STU_EMAIL");
+	    	CCODENAMEMAP.put("stuEnterance","STU_ENTERANCE");
+	    	CCODENAMEMAP.put("stuAuthority","STU_AUTHORITY");
+	    	CCODENAMEMAP.put("stuGender","STU_GENDER");
+	    	CCODENAMEMAP.put("feePaidStatus","FEE_PAID_STATUS");
+	    	CCODENAMEMAP.put("feePaidMethod","FEE_PAID_METHOD");
+	    }
+	
+
+	
 	private static final Logger logger = LoggerFactory.getLogger(CcodeService.class);
 	
 	/*

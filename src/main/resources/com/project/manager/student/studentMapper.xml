@@ -3,7 +3,9 @@
 
 <!-- Student 테이블을 위한 query mapper -->
 <mapper namespace="student">
-	<!-- 모든 학생을 다 불러오는 query -->
+
+
+	<!-- 모든 학생을 다 불러오기 -->
 	<select id="listAllStudent" resultType="HashMap">
 		SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD,STU_ENTERANCE,STU_AUTHORITY,STU_GENDER
         ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
@@ -12,4 +14,20 @@
     	FROM STUDENT S
     	WHERE S.STU_DELETE_YN = 'N'
 	</select>
+	
+	
+	<!-- 특정 키워드 검색에 따른 학생 불러오기 -->
+	<select id="searchKeywordStudent" resultType="HashMap" parameterType="HashMap">
+		 SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+	     FROM STUDENT S, STUDENT_FEE F
+	     WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461')
+	     AND S.STU_DELETE_YN = 'N'
+		 AND #{searchCategory} = #{searchContent}
+	</select>
+	
+	
+	
 </mapper>
