@@ -35,6 +35,7 @@ public class StudentController {
 		System.out.println(">>>>>>>>listAllStudent called");		
 		List<HashMap<String,Object>> listAllStudent = studentService.listAllStudent();
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("listAllStudent",listAllStudent);
 		mv.addObject("listAllCommonMap",listAllCommonMap);
