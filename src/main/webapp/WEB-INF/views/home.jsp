@@ -14,7 +14,7 @@
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
    
     <style type="text/css">
-      /*div {border: 1px solid black;}*/
+     /*  div {border: 1px solid black;} */
       
       .full {height: 100%;}
       .eight{height: 80%;}
@@ -31,6 +31,7 @@
         height: 100%;
         margin: 0;
       }
+      
     </style>
   </head>
   
@@ -45,16 +46,17 @@
         </div>
         <div class="col-8 eight">
           <div class="row five">
-            <!--이미지 들어가는 곳-->
-            
           </div>
+          
           <div class="row five">
             
             <div class="col">
             </div>
+            
             <div class="col-6">
               <div class="row three">
               </div>
+              
               <form>
               <div class="row three">
                 <!--아이디 비밀번호 칸.-->
@@ -65,11 +67,8 @@
                   
                   
                   <div id="inputSection" class="col-8">
-                  
                     <p><input type="text" name=""/></p>
-                  
                     <p><input type="password" name=""/></p>
-                  
                   </div>
               </div>
               

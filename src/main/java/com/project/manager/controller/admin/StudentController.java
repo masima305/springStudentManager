@@ -44,11 +44,47 @@ public class StudentController {
 	}
 	
 	/*
-	 * 검색 영역,내용에 따른 학생 리스트 불러오기
+	 * 검색 
+	 * '특정 키워드'에 따른 학생 리스트 불러오기
+	 * form.id = seachKeywordForm
+	 * 
 	 */
-	public List<HashMap<String, Object>> searchStudent(HttpServletRequest request){
+	public List<HashMap<String, Object>> searchKeywordStudent(HttpServletRequest request){
+		
+		String searchCategory = request.getParameter("searchCategory");
+		String searchContent = request.getParameter("searchContent");
+		
+		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
+		searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
+		
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("searchCategory", searchCategory);
+		map.put("searchContent", searchContent);
+		
+		
+		List<HashMap<String,Object>> searchKeywordStudentList = studentService.searchKeywordStudent(map);
+		
+		
+		/*
+		 * TODO
+		 * 컨트롤러 완성하기 , ajax 처리
+		 */
+		
 		return null;
 	}
+	
+	
+	/*
+	 * 검색 
+	 * '범위'에 따른 학생 리스트 불러오기
+	 * form.id = searchScopeForm
+	 * 
+	 */
+	public List<HashMap<String, Object>> searchScopeStudent(HttpServletRequest request){
+		return null;
+	}
+	
+	
 	
 	/*
 	 * 학생 추가하기

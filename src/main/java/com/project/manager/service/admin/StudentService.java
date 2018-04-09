@@ -23,15 +23,23 @@ public class StudentService {
 	
 	
 	public List<HashMap<String, Object>> listAllStudent(){
+		
 		System.out.println(">>>>>>>>listAllStudent Service called");	
-		List<HashMap<String, Object>> list = studentDAO.listAllStudent();
-		return list;
+		return studentDAO.listAllStudent();
 	}
 	
 	
-	public List<HashMap<String, Object>> searchStudent(HashMap<String,String> map){
+	public List<HashMap<String, Object>> searchKeywordStudent(HashMap<String,String> map){
+		
+		System.out.println(">>>>>>>>searchKeywordStudent Service called");
+		return studentDAO.searchKeywordStudent(map);
+	}
+	
+	
+	public List<HashMap<String, Object>> searchScopeStudent(HashMap<String,String> map){
 		return null;
 	}
+	
 	
 	public int insertStudent(HashMap<String,String> map) {
 		return 0;
