@@ -30,7 +30,10 @@ public class StudentDAO {
 		return this.sqlSession.selectList("student.searchKeywordStudent",map);
 	}
 	
-	
+	public List<HashMap<String, Object>> searchScopeStudent(HashMap<String,String> map){
+		System.out.println(">>>>>>>>searchScopeStudent DAO called");
+		return this.sqlSession.selectList("student.searchScopeStudent",map);
+	}
 	
 	
 

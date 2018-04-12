@@ -1,5 +1,5 @@
-     DROP TABLE STUDENT cascade CONSTRAINTS;
-   	 DROP TABLE EXPERIENCE cascade CONSTRAINTS;
+﻿     DROP TABLE STUDENT cascade CONSTRAINTS;
+     DROP TABLE EXPERIENCE cascade CONSTRAINTS;
      DROP TABLE STUDENT_FEE cascade CONSTRAINTS;
      DROP TABLE COMMON cascade CONSTRAINTS;
      commit;
@@ -140,6 +140,7 @@
      commit;
      
      -------------------insert DUMMY STUDENT_FEE ----------
+     insert into STUDENT_FEE values ('2010042465',20050516,150000,150000,1,1,'','N');
      insert into STUDENT_FEE values ('2005042465',20050516,150000,150000,1,1,'','N');
      insert into STUDENT_FEE values ('2007042422',20070316,170000,170000,1,1,'','N');
      insert into STUDENT_FEE values ('2011042461',20110806,170000,130000,2,2,'2회차입금','N');
@@ -180,6 +181,40 @@
      WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461')
      AND S.STU_DELETE_YN = 'N';
      
+
+
+
+ 	----------------- 한 학생 기본정보 불러오기 버전2 (성별,입학전형,접근권한 정보 추가 & 별칭 그냥 원래 기본에쓰던 칼럼명으로 변경-----------------------------------
+
+ 	SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = FS.FEE_PAID_METHOD) as FEE_PAID_METHOD
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = F.FEE_PAID_STATUS) as FEE_PAID_STATUS
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY
+	     FROM STUDENT S, STUDENT_FEE F
+	     WHERE (S.STU_NUMBER = F.STU_NUMBER)
+	     AND S.STU_DELETE_YN = 'N'
+
+
+		<choose>
+			<when test="searchCategory == 'STU_NAME'">S
+				AND S.STU_NAME = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_NUMBER'">
+				AND S.STU_NUMBER = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_PHONE'">
+				AND S.STU_PHONE = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_EMAIL'">
+				AND S.STU_EMAIL = #{searchContent}	
+			</when>
+	    </choose>
+
+
+
      -------------------------삭제 쿼리 ----------------------------------------------
      ------------------------학생 정보 삭제--------------------------------------------
      ---한 학생의 정보가 DELETE처리 되면 이 3가지의 모든 쿼리가 세트로 동작.

@@ -49,7 +49,8 @@ public class StudentController {
 	 * form.id = seachKeywordForm
 	 * 
 	 */
-	public List<HashMap<String, Object>> searchKeywordStudent(HttpServletRequest request){
+	@RequestMapping(value="/searchKeywordStudent.do")
+	public @ResponseBody List<HashMap<String, Object>> searchKeywordStudent(HttpServletRequest request){
 		
 		String searchCategory = request.getParameter("searchCategory");
 		String searchContent = request.getParameter("searchContent");
@@ -64,13 +65,7 @@ public class StudentController {
 		
 		List<HashMap<String,Object>> searchKeywordStudentList = studentService.searchKeywordStudent(map);
 		
-		
-		/*
-		 * TODO
-		 * 컨트롤러 완성하기 , ajax 처리
-		 */
-		
-		return null;
+		return searchKeywordStudentList;
 	}
 	
 	
@@ -80,8 +75,28 @@ public class StudentController {
 	 * form.id = searchScopeForm
 	 * 
 	 */
-	public List<HashMap<String, Object>> searchScopeStudent(HttpServletRequest request){
-		return null;
+	@RequestMapping(value="/searchScopeStudent.do")
+	public @ResponseBody List<HashMap<String, Object>> searchScopeStudent(HttpServletRequest request){
+		
+		String stuNumber = request.getParameter("stuNumber");
+		String stuGender = request.getParameter("stuGender");
+		String stuEnterance = request.getParameter("stuEnterance");
+		String stuAuthority = request.getParameter("stuAuthority");
+		
+		
+		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
+		//searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
+		
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("stuNumber", stuNumber);
+		map.put("stuGender", stuGender);
+		map.put("stuEnterance", stuEnterance);
+		map.put("stuAuthority", stuAuthority);
+		
+		
+		List<HashMap<String,Object>> searchScopeStudentList = studentService.searchScopeStudent(map);
+		
+		return searchScopeStudentList;
 	}
 	
 	

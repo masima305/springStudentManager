@@ -23,7 +23,7 @@ public class CcodeService {
     public static final HashMap<String, String> CCODENAMEMAP = new HashMap<String, String>();
 	
     static {
-	    	CCODENAMEMAP.put("stuNum","STU_NUM");
+	    	CCODENAMEMAP.put("stuNumber","STU_NUMBER");
 	    	CCODENAMEMAP.put("stuName","STU_NAME");
 	    	CCODENAMEMAP.put("stuPhone","STU_PHONE");
 	    	CCODENAMEMAP.put("stuEmail","STU_EMAIL");

@@ -20,14 +20,57 @@
 	<select id="searchKeywordStudent" resultType="HashMap" parameterType="HashMap">
 		 SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
 	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = f.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = f.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = F.FEE_PAID_METHOD) as FEE_PAID_METHOD
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = F.FEE_PAID_STATUS) as FEE_PAID_STATUS
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY
 	     FROM STUDENT S, STUDENT_FEE F
-	     WHERE (S.STU_NUMBER = F.STU_NUMBER) and (S.STU_NUMBER='2011042461')
+	     WHERE (S.STU_NUMBER = F.STU_NUMBER)
 	     AND S.STU_DELETE_YN = 'N'
-		 AND #{searchCategory} = #{searchContent}
+
+	    <choose>
+			<when test="searchCategory == 'STU_NAME'">S
+				AND S.STU_NAME = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_NUMBER'">
+				AND S.STU_NUMBER = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_PHONE'">
+				AND S.STU_PHONE = #{searchContent}	
+			</when>
+			<when test="searchCategory == 'STU_EMAIL'">
+				AND S.STU_EMAIL = #{searchContent}	
+			</when>
+	    </choose>
+	   
 	</select>
 	
-	
+	<select id="searchScopeStudent" resultType="HashMap" parameterType="HashMap">
+		 SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
+	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = F.FEE_PAID_METHOD) as FEE_PAID_METHOD
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = F.FEE_PAID_STATUS) as FEE_PAID_STATUS
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
+	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY
+	     FROM STUDENT S, STUDENT_FEE F
+	     WHERE (S.STU_NUMBER = F.STU_NUMBER)
+	     AND S.STU_DELETE_YN = 'N'
+	     
+			<if test="stuNumber != 'null'">
+				AND S.STU_NUMBER = #{stuNumber}	
+			</if>
+			<if test="stuGender != 'null'">
+				AND S.STU_GENDER = #{stuGender}	
+			</if>
+			<if test="stuEnterance != 'null'">
+				AND S.STU_ENTERANCE = #{stuEnterance}	
+			</if>
+			<if test="stuAuthority != 'null'">
+				AND S.STU_AUTHORITY = #{stuAuthority}	
+			</if>
+	   
+	</select>
 	
 </mapper>
