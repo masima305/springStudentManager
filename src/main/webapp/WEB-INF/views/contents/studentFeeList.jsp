@@ -4,26 +4,81 @@
 
 
 
-<script type="text/javascript">
+<script>
+
+	function ajaxFeeSearchKeyword(formId) {
+		
+		$('#'+formId).ajaxForm({
+			
+			type: "post",
+			url: "/searchKeywordFee.do",
+			datatype: "json",
+			success: function(result){
+				
+				$("#showFeeList").empty();
+				var str = "";
+				
+				$.each(result,function(index,value){
+						str+="<tr>"
+						str+="<td>" + index + "</td>";
+						str+="<td>" + this.STU_NUMBER + "</td>";
+					 	str+="<td>"+ this.STU_NAME + "</td>";
+						str+="<td>"+ this.FEE_PAID_DATE + "</td>";
+						str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
+						str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
+						str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+						str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+						str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
+						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
+						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
+						str+="</tr>"
+				});
+				$("#showFeeList").append(str);
+			},
+			error: function(result){}
+		}).submit();
+	}
+	
+
+	function ajaxFeeSearchScope(formId) {
+		
+		$('#'+formId).ajaxForm({
+			
+			type: "post",
+			url: "/searchScopeFee.do",
+			datatype: "json",
+			success: function(result){
+				
+				$("#showFeeList").empty();
+				var str = "";
+				
+				$.each(result,function(index,value){
+					str+="<tr>"
+						str+="<td>" + index + "</td>";
+						str+="<td>" + this.STU_NUMBER + "</td>";
+					 	str+="<td>"+ this.STU_NAME + "</td>";
+						str+="<td>"+ this.FEE_PAID_DATE + "</td>";
+						str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
+						str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
+						str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+						str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+						str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
+						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
+						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
+						str+="</tr>"
+				});
+				$("#showFeeList").append(str);
+			},
+			error: function(result){}
+		}).submit();
+	}
 
 
-/*  
- * 학번별로 검색
- * option 동적 추가 기능
- */
-   function stuNumberOption(){
-      var date = new Date();
-      var year = date.getFullYear();
-      var selectValue = document.getElementById("searchStuNumber");
-      for(var i=year-40; i<=year; i++){
-         selectValue.add(new Option(i,i));
-      }
-   }
    function FeeUpdateBtn(id){
 	   //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
-	   var listAllCommonMap  = ${listAllCommonMap}
-	   var feePaidMethodList = listAllCommonMap.feePaidMethodList
-	   var feePaidStatusList = listAllCommonMap.feePaidStatusList
+	   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
+	   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
+	   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
 	   
 	   
 
@@ -102,38 +157,45 @@
 
 	<div class="card-header">
 		<label class="small">> 검색으로 찾기</label>
-		<form id="searchKeyForm">
-			<select>
-				<option value="선택없음">선택없음</option>
+			<form id="feeSeachKeywordForm">
+			<select name="searchCategory">
+				<option value="">선택없음</option>
 				<option value="stuName">이름</option>
 				<option value="stuNumber">학번</option>
-			</select> <input type="text" name="searchContent" /> <input type="button"
-				value="검색" onclick="" />
-		</form>
-		<!-- seachKeywordForm -->
+				<option value="stuPhone">연락처</option>
+				<option value="stuEmail">이메일</option>
+			</select> 
+			<input type="text" name="searchContent" />
+			<input type="button" value="검색" onclick="javascript:ajaxFeeSearchKeyword('feeSeachKeywordForm')" />
+		</form> <!-- seachKeywordForm -->
 		<hr>
 
 
-
-		<lable class="small">> 범위로 찾기</lable>
-		<form id="searchScopeForm">
-			<input type="text" name="input" /> <label>학번별로</label> <select
-				id="searchStuNumber" onclick="javascript:stuNumberOption()">
-				<option value="선택없음">선택없음</option>
-			</select> <label>상태별로</label> <select>
-				<option value="선택없음">선택없음</option>
-				<option value="">미납</option>
-				<option value="">분할</option>
-				<option value="">완료</option>
-			</select> <input type="button" value="검색" onclick="" />
-		</form>
-
+		<label class="small">> 범위로 찾기</label>
+		<form id="feeSearchScopeForm">
+		
+			<label>학번별로</label> 
+			<select name="stuNumber" id="searchStuNumber2" onclick="javascript:stuNumberOption('searchStuNumber2')">
+				<option value="null">선택없음</option>
+			</select>&nbsp;
+				
+			
+			<label>상태별로</label> 
+			<select name="feePaidStatus">
+			<option value="null">선택없음</option>
+			<c:forEach var="i" items="${listAllCommonObjectMap.feePaidStatusList}">
+				<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
+			</c:forEach>
+			</select>&nbsp; 
+			
+			<input type="button" value="검색" onclick="javascript:ajaxFeeSearchScope('feeSearchScopeForm')" />
+		</form> <!-- searchScopeForm -->
 	</div>
 
 
 	<div class="card-body">
-		<div id="memberList" class="table-responsive">
-			<table class="table table-striped">
+		<div id="stuListScroll">
+			<table class="table table-striped table-sm">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -148,7 +210,8 @@
 						<th>옵션</th>
 					<tr>
 				</thead>
-				<tbody>
+				
+				<tbody id="showFeeList">
 					<c:forEach var="i" items="${list}" varStatus="index">
 							<tr>
 								<td>${index.count}</td>
@@ -193,11 +256,9 @@
 
 							</tr>
 					</c:forEach>
-
 				</tbody>
-
 			</table>
-		</div>
+		</div> <!-- stuListScroll -->
 	</div>
 
 </div>

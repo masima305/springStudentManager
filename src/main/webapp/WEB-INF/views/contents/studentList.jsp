@@ -7,9 +7,9 @@
 
 
 <script>
-$("#showList").empty();
+$("#showStuList").empty();
 	
-	function ajaxSearchKeyword(formId) {
+	function ajaxStuSearchKeyword(formId) {
 		
 		$('#'+formId).ajaxForm({
 			
@@ -18,7 +18,7 @@ $("#showList").empty();
 			datatype: "json",
 			success: function(result){
 				
-				$("#showList").empty();
+				$("#showStuList").empty();
 				var str = "";
 				
 				$.each(result,function(index,value){
@@ -26,23 +26,23 @@ $("#showList").empty();
 						str+="<td>" + index + "</td>";
 						str+="<td>" + this.STU_NUMBER + "</td>";
 					 	str+="<td>"+ this.STU_NAME + "</td>";
-						str+="<td>"+ this.STU_GENDER + "</td>";
+						str+="<td>"+ this.STU_GENDER_VALUE + "</td>";
 						str+="<td>"+ this.STU_BIRTHDAY + "</td>";
 						str+="<td>"+ this.STU_PHONE + "</td>";
 						str+="<td>"+ this.STU_EMAIL + "</td>";
-						str+="<td>"+ this.STU_ENTERANCE + "</td>";
-						str+="<td>"+ this.STU_AUTHORITY + "</td>";
+						str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
+						str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
 						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-						str+="<button type='button' class='btn btn-small btn-danger'>삭제</button></td>" 
+						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
 						str+="</tr>"
 				});
-				$("#showList").append(str);
+				$("#showStuList").append(str);
 			},
 			error: function(result){}
 		}).submit();
 	}
 	
-	function ajaxSearchScope(formId) {
+	function ajaxStuSearchScope(formId) {
 			
 			$('#'+formId).ajaxForm({
 				
@@ -51,7 +51,7 @@ $("#showList").empty();
 				datatype: "json",
 				success: function(result){
 					
-					$("#showList").empty();
+					$("#showStuList").empty();
 					var str = "";
 					
 					$.each(result,function(index,value){
@@ -59,17 +59,17 @@ $("#showList").empty();
 							str+="<td>" + index + "</td>";
 							str+="<td>" + this.STU_NUMBER + "</td>";
 						 	str+="<td>"+ this.STU_NAME + "</td>";
-							str+="<td>"+ this.STU_GENDER + "</td>";
+							str+="<td>"+ this.STU_GENDER_VALUE + "</td>";
 							str+="<td>"+ this.STU_BIRTHDAY + "</td>";
 							str+="<td>"+ this.STU_PHONE + "</td>";
 							str+="<td>"+ this.STU_EMAIL + "</td>";
-							str+="<td>"+ this.STU_ENTERANCE + "</td>";
-							str+="<td>"+ this.STU_AUTHORITY + "</td>";
+							str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
+							str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
 							str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-							str+="<button type='button' class='btn btn-small btn-danger'>삭제</button></td>" 
+							str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
 							str+="</tr>"
 					});
-					$("#showList").append(str);
+					$("#showStuList").append(str);
 				},
 				error: function(result){}
 			}).submit();
@@ -84,23 +84,25 @@ $("#showList").empty();
 	<div class="card-header">
 
 		<label class="small">> 검색으로 찾기</label>
-		<form id="seachKeywordForm">
+		<form id="stuSeachKeywordForm">
 			<select name="searchCategory">
 				<option value="">선택없음</option>
 				<option value="stuName">이름</option>
 				<option value="stuNumber">학번</option>
 				<option value="stuPhone">연락처</option>
 				<option value="stuEmail">이메일</option>
-			</select> <input type="text" name="searchContent" /> <input type="button"
-				value="검색" onclick="javascript:ajaxSearchKeyword('seachKeywordForm')" />
+			</select> 
+			<input type="text" name="searchContent"/> 
+			<input type="button" value="검색" onclick="javascript:ajaxStuSearchKeyword('stuSeachKeywordForm')" />
 		</form>
 		<!-- seachKeywordForm -->
 		<hr>
 
 		<label class="small">> 범위로 찾기</label>
-		<form id="searchScopeForm">
+		<form id="stuSearchScopeForm">
+		
 			<label>학번별로</label> 
-			<select name="stuNumber" id="searchStuNumber" onclick="javascript:stuNumberOption()">
+			<select name="stuNumber" id="searchStuNumber1" onclick="javascript:stuNumberOption('searchStuNumber1')">
 				<option value="null">선택없음</option>
 			</select>&nbsp;
 			
@@ -126,7 +128,9 @@ $("#showList").empty();
 			<c:forEach var="i" items="${listAllCommonMap.stuGenderList}">
 				<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
 			</c:forEach>	
-			</select> <input type="button" value="검색" onclick="javascript:ajaxSearchScope('searchScopeForm')" />
+			</select> 
+			
+			<input type="button" value="검색" onclick="javascript:ajaxStuSearchScope('stuSearchScopeForm')" />
 		</form>
 		
 		<!-- searchScopeForm -->
@@ -155,7 +159,7 @@ $("#showList").empty();
 				</thead>
 
 
-				<tbody id="showList">
+				<tbody id="showStuList">
 					<!-- <tr>
 				            	<td>1</td>
 				            	<td>2013049595</td>
@@ -166,7 +170,8 @@ $("#showList").empty();
 				            	<td>ina-yun@hanmail.net</td>
 				            	<td>수시</td>
 				            	<td>예비역회장</td>
-				                <td><button type="button" class="btn btn-small btn-info">수정</button><button type="button" class="btn btn-small btn-danger">삭제</button></td>
+				                <td><button type="button" class="btn btn-small btn-info">수정</button>
+				                <button type="button" class="btn btn-small btn-danger">삭제</button></td>
 							</tr> -->
 					<c:forEach var="i" items="${listAllStudent}" varStatus="index">
 						<tr>
@@ -181,7 +186,7 @@ $("#showList").empty();
 							<td>${i.STU_AUTHORITY_VALUE}</td>
 							<td>
 							<button type="button" class="btn btn-small btn-info">수정</button>
-							<button type="button" class="btn btn-small btn-danger">삭제</button></td>
+							<button type="button" class="btn btn-small btn-danger">보기</button></td>
 						</tr>
 					</c:forEach>
 

@@ -18,5 +18,14 @@ public class FeeDAO {
 		return list;
 	}
 	
+	public List<HashMap<String, Object>> searchKeywordFee(HashMap<String,String> map){
+		System.out.println(">>>>>>>>searchKeywordFee DAO called");
+		return this.sqlSession.selectList("fee.searchKeywordFee",map);
+	}
+	
+	public List<HashMap<String, Object>> searchScopeFee(HashMap<String,String> map){
+		System.out.println(">>>>>>>>searchScopeFee DAO called");
+		return this.sqlSession.selectList("fee.searchScopeFee",map);
+	}
 	
 }

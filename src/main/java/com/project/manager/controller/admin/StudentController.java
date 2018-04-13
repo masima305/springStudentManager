@@ -79,6 +79,12 @@ public class StudentController {
 	public @ResponseBody List<HashMap<String, Object>> searchScopeStudent(HttpServletRequest request){
 		
 		String stuNumber = request.getParameter("stuNumber");
+		
+		if(!stuNumber.equals("null")) {
+			stuNumber+="%";
+		}
+		
+		
 		String stuGender = request.getParameter("stuGender");
 		String stuEnterance = request.getParameter("stuEnterance");
 		String stuAuthority = request.getParameter("stuAuthority");

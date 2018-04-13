@@ -18,4 +18,19 @@ public class FeeService {
 		List<HashMap<String, Object>> list = feeDAO.listAllFee();
 		return list;
 	}
+	
+
+	public List<HashMap<String, Object>> searchKeywordFee(HashMap<String,String> map){
+		
+		System.out.println(">>>>>>>>searchKeywordFee Service called");
+		return feeDAO.searchKeywordFee(map);
+	}
+	
+	
+	public List<HashMap<String, Object>> searchScopeFee(HashMap<String,String> map){
+		
+		System.out.println(">>>>>>>>searchScopeFee Service called");
+		return feeDAO.searchScopeFee(map);
+	}
+	
 }

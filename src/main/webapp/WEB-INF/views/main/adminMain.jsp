@@ -11,9 +11,6 @@
 
 <c:import url="../../../resources/common/commonMeta.jsp"></c:import>
 
-<%--     <c:set var ="listAll" scope = "session" value = "/listAllStudent.do"/>
-  	<c:set var ="fee" scope = "session" value = "../contents/studentFeeList.jsp"/> --%>
-
 
 <style type="text/css">
 /*div {border: 1px solid black;}
@@ -108,36 +105,28 @@ html, body {
 
 </head>
 <script>
-/*   	$(document).ready(
-  			
-  			
-  		function() {
-  				
-  		}
-  		
-  		); */
+
 
   	/*  
   	 * 학번별로 검색
   	 * option 동적 추가 기능
   	 */
-    function stuNumberOption(){
+    function stuNumberOption(id){
+    	var selectValue = document.getElementById(id);
         var date = new Date();
         var year = date.getFullYear();
-        var selectValue = document.getElementById("searchStuNumber");
         for(var i=year-40; i<=year; i++){
            selectValue.add(new Option(i,i));
         }
-     }
+     } 
   	</script>
 
 <body>
 
 
 	<!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->
-	<nav id="upperbar"
-		class="navbar navbar-expand-lg navbar-light bg-light">
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>&nbsp
+	<nav id="upperbar" class="navbar navbar-expand-lg navbar-light bg-light">
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
 
 
 		<span class="navbar-brand" id="sideNavTitle">학생관리</span>
@@ -169,10 +158,10 @@ html, body {
 	<!------------------------------------ 사이드 바 ------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> <a href="#"
-			onclick="showTitle(this,'studentFee')">학생회비관리</a> <a href="#"
-			onclick="showTitle(this)">학과일정관리</a> <a href="#"
-			onclick="showTitle(this)">학생회의</a>
+		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> 
+		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
+		<a href="#" onclick="showTitle(this)">학과일정관리</a> 
+		<a href="#" onclick="showTitle(this)">학생회의</a>
 	</div>
 	<!------------------------------------------------------------------------>
 
