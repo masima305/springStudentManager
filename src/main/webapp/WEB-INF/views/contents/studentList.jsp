@@ -126,18 +126,42 @@
     
       <!-- Modal content-->
       <div class="modal-content">
+      
         <div class="modal-header">
       	  <h4 class="modal-title">학생 상세 보기</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" id="modalBody">
-          <p>Some text in the modal.</p>
-        </div>
+			        
+		<!-- Nav tabs -->
+	  	<ul class="nav nav-tabs nav-justified" role="tablist">
+		    <li class="nav-item">
+		      <a class="nav-link active" data-toggle="tab" href="#stuInfoDetail">기본정보</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#stuFeeDetail">학생회비</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#stuExpDetail">학생경력</a>
+		    </li>
+	  	</ul>
+			  
+	     <!-- Tab panes -->
+	  	<div class="tab-content">
+		    <div id="stuInfoDetail" class="container tab-pane active"><br>
+		    </div>
+		    <div id="stuFeeDetail" class="container tab-pane fade"><br>
+		    </div>
+		    <div id="stuExpDetail" class="container tab-pane fade"><br>
+		    </div>
+	 	</div>
+        
         <div class="modal-footer" id="modalFooter">
-        	<p>footer</p>
+        	<hr>
+        	<button type="button" class="btn btn-small btn-info">수정</button>
+      	    <button type="button" class="btn btn-small btn-danger">삭제</button>
         </div>
+        
       </div>
-      
     </div>
   </div>
 
@@ -152,20 +176,52 @@ function ajaxStuDetail(stuNumber){
 		method: "post",
 		dataType: "json",
 		success: function(result) {
-			$("#modalBody").empty();
 			
-			$("#modalBody").append("<p>학번 :"+ result[0].STU_NUMBER + "이름:"+ result[0].STU_NAME +"</p>");
-			$("#modalBody").append("<p>학생회비금액 :"+ result[0].FEE_TOTAL_AMOUNT + "납부금액:"+ result[0].FEE_PAID_AMOUNT +"</p>");
+			//학생 기본 정보
+			$("#stuInfoDetail").empty();
+			var str = "<br>";
+			str+= "<img class='card-img-top' src='../../../resources/common/img/man.png' alt='Card image' style='width:30%'><br><br>";
+			str+= "<form>"
+			str+="<table class='table table-bordered'><tbody>";
+			str+="<tr><th>학번</th><td>"+result[0].STU_NUMBER+"</td><th>이름</th><td>"+result[0].STU_NAME+"</td></tr>";
+			str+="<tr><th>생년월일</th><td>"+result[0].STU_BIRTHDAY+"</td><th>성별</th><td>"+result[0].STU_GENDER_VALUE+"</td></tr>";
+			str+="<tr><th>연락처</th><td>"+result[0].STU_PHONE+"</td><th>이메일</th><td>"+result[0].STU_EMAIL+"</td></tr>";
+			str+="<tr><th>입학전형</th><td>"+result[0].STU_ENTERANCE_VALUE+"</td><th>접근권한</th><td>"+result[0].STU_AUTHORITY_VALUE+"</td></tr>";
+			str+="</tbody></form>"
+			$("#stuInfoDetail").append(str);
+			
+			
+			//학생 회비 정보
+			$("#stuFeeDetail").empty();
+			var str = "<br>";
+			str+="<table class='table table-bordered'><thead><tr><th>회비금액</th><th>납부금액</th><th>입금날짜</th><th>입금방식</th><th>상태</th><th>비고</th></tr></thead><tbody>";
+			str+="<tr>"
+			str+= "<td>"+result[0].FEE_TOTAL_AMOUNT + "</td>";
+			str+= "<td>"+result[0].FEE_PAID_AMOUNT + "</td>";
+			str+= "<td>"+result[0].FEE_PAID_DATE + "</td>";
+			str+= "<td>"+result[0].FEE_PAID_METHOD_VALUE + "</td>";
+			str+= "<td>"+result[0].FEE_PAID_STATUS_VALUE + "</td>";
+			str+= "<td>"+result[0].FEE_CONTENT_VALUE + "</td>";
+			str+="</tr>"
+			str+="</tbody>"
+			$("#stuFeeDetail").append(str);
 
-			var str = "";
+			//학생 경력 정보
+			$("#stuExpDetail").empty();
+			var str = "<br>";
+			str+="<table class='table table-bordered'><thead><tr><th>년도</th><th>학기</th><th>활동내용</th></tr></thead><tbody>";
 			
 			$.each(result,function(index,value){
-				str+= "<p>년도 :"+this.EXP_YEAR + "</p>";
-				str+= "<p>학기 :"+this.EXP_SEMESTER + "</p>";
-				str+= "<p>활동내용 :"+this.EXP_CONTENT + "</p>";
+				str+="<tr>"
+				str+= "<td>"+this.EXP_YEAR + "</td>";
+				str+= "<td>"+this.EXP_SEMESTER + "</td>";
+				str+= "<td>"+this.EXP_CONTENT + "</td>";
+				str+="</tr>"
 			});
-		
-			$("#modalBody").append(str);
+			str+="</tbody>"
+			$("#stuExpDetail").append(str);
+			
+			//모달 실행
 			$("#stuDetailModal").modal();
 		}
 	});
