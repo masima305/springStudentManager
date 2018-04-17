@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+/*div {border: 1px solid black;}
+      */
+html, body {
+	height: 100%;
+	margin: 0;
+	background-color: rgb(224, 224, 235);
+}
+
+#stuListScroll {
+	overflow-y: scroll;
+	height: 400px;
+}
+/*-----------------------------사이드바 용 css--------------------------*/
+.navbar-brand {
+	text-align: right;
+}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 20px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+#upperbar {
+	transition: margin-left .5s;
+}
+
+#main {
+	transition: margin-left .5s;
+	padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+/*----------------------------------------------------------------------*/
+.full {
+	height: 100%;
+}
+
+.eight {
+	height: 80%;
+}
+
+.five {
+	height: 50%;
+}
+
+.seven {
+	height: 70%;
+}
+
+.three {
+	height: 30%;
+}

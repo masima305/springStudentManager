@@ -6,149 +6,83 @@
 
 <script>
 
-	function ajaxFeeSearchKeyword(formId) {
-		
-		$('#'+formId).ajaxForm({
-			
-			type: "post",
-			url: "/searchKeywordFee.do",
-			datatype: "json",
-			success: function(result){
-				
-				$("#showFeeList").empty();
-				var str = "";
-				
-				$.each(result,function(index,value){
-						str+="<tr>"
-						str+="<td>" + index + "</td>";
-						str+="<td>" + this.STU_NUMBER + "</td>";
-					 	str+="<td>"+ this.STU_NAME + "</td>";
-						str+="<td>"+ this.FEE_PAID_DATE + "</td>";
-						str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
-						str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
-						str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
-						str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
-						str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
-						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
-						str+="</tr>"
-				});
-				$("#showFeeList").append(str);
-			},
-			error: function(result){}
-		}).submit();
-	}
-	
-
-	function ajaxFeeSearchScope(formId) {
-		
-		$('#'+formId).ajaxForm({
-			
-			type: "post",
-			url: "/searchScopeFee.do",
-			datatype: "json",
-			success: function(result){
-				
-				$("#showFeeList").empty();
-				var str = "";
-				
-				$.each(result,function(index,value){
-					str+="<tr>"
-						str+="<td>" + index + "</td>";
-						str+="<td>" + this.STU_NUMBER + "</td>";
-					 	str+="<td>"+ this.STU_NAME + "</td>";
-						str+="<td>"+ this.FEE_PAID_DATE + "</td>";
-						str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
-						str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
-						str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
-						str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
-						str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
-						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
-						str+="</tr>"
-				});
-				$("#showFeeList").append(str);
-			},
-			error: function(result){}
-		}).submit();
-	}
 
 
-   function FeeUpdateBtn(id){
-	   //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
-	   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
-	   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
-	   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
-	   
-	   
+function FeeUpdateBtn(id){
+   //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
+   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
+   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
+   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
+   
+   
 
-	   var paidDate = "<input type='text' size='8' value="+$('#'+id+'paidDate').html() +"></input>";
-	   $('#'+id+'paidDate').empty();
-	   $('#'+id+'paidDate').append(paidDate);
-	   
-	   
-	   var totalAmount = "<input type='text' size='7' value="+$('#'+id+'totalAmount').html()+"></input>";
-	   $('#'+id+'totalAmount').empty();
-	   $('#'+id+'totalAmount').append(totalAmount);
-	   
-	   
-	   var paidAmount = "<input type='text' size='7' value="+$('#'+id+'paidAmount').html()+"></input>";
-	   $('#'+id+'paidAmount').empty();
-	   $('#'+id+'paidAmount').append(paidAmount);
-	   
-	   
-	   var paidContent = "<input type='text' size='12' value="+$('#'+id+'paidContent').html()+"></input>";
-	   $('#'+id+'paidContent').empty();
-	   $('#'+id+'paidContent').append(paidContent);
-	   //------------------------------------------------------------------------------------------
-	   
-	   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
-	      
-	   
-	   var paidMethod = "<select><option value=''> 선택</option>";
-	   for(var i=0; i<feePaidMethodList.length; i++){
-		   paidMethod += "<option value='"+ feePaidMethodList[i].COMMON_CODE+"'";
-		   if( $('#'+id+'paidMethodValue').val() == feePaidMethodList[i].COMMON_CODE){
-			   paidMethod += " selected ";
-		   } 
-		   paidMethod += ">"+ feePaidMethodList[i].COMMON_VALUE+"</option>";
-	   }
-	   paidMethod+="</select>";
-	  
-	   
-	   
-	   
-	   var paidStatus = "<select><option value=''> 선택</option>";
-	   for(var i=0; i<feePaidStatusList.length; i++){
-		   paidStatus += "<option value='"+ feePaidStatusList[i].COMMON_CODE+"'";
-		  
-		   if( $('#'+id+'paidStatusValue').val() == feePaidStatusList[i].COMMON_CODE){
-			   paidStatus += " selected ";
-		   } 
-		   paidStatus += ">"+ feePaidStatusList[i].COMMON_VALUE+"</option>";
-	   }
-	   paidStatus+="</select>";
-	  
-	   
-	 	
-	 	
-	   $('#'+id+'paidMethod').empty();
-	   $('#'+id+'paidMethod').append(paidMethod);
-	   
-		$('#'+id+'paidStatus').empty();
-		$('#'+id+'paidStatus').append(paidStatus);
-		//----------------------버튼 변경--------------------------------
-		//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
-		var btn = "<button type='button' class='btn btn-small btn-warning'>완료</button>";
-	   $('#'+id+'btn').empty();
-	   $('#'+id+'btn').append(btn);
+   var paidDate = "<input type='text' size='8' value="+$('#'+id+'paidDate').html() +"></input>";
+   $('#'+id+'paidDate').empty();
+   $('#'+id+'paidDate').append(paidDate);
+   
+   
+   var totalAmount = "<input type='text' size='7' value="+$('#'+id+'totalAmount').html()+"></input>";
+   $('#'+id+'totalAmount').empty();
+   $('#'+id+'totalAmount').append(totalAmount);
+   
+   
+   var paidAmount = "<input type='text' size='7' value="+$('#'+id+'paidAmount').html()+"></input>";
+   $('#'+id+'paidAmount').empty();
+   $('#'+id+'paidAmount').append(paidAmount);
+   
+   
+   var paidContent = "<input type='text' size='12' value="+$('#'+id+'paidContent').html()+"></input>";
+   $('#'+id+'paidContent').empty();
+   $('#'+id+'paidContent').append(paidContent);
+   //------------------------------------------------------------------------------------------
+   
+   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
+      
+   
+   var paidMethod = "<select><option value=''> 선택</option>";
+   for(var i=0; i<feePaidMethodList.length; i++){
+	   paidMethod += "<option value='"+ feePaidMethodList[i].COMMON_CODE+"'";
+	   if( $('#'+id+'paidMethodValue').val() == feePaidMethodList[i].COMMON_CODE){
+		   paidMethod += " selected ";
+	   } 
+	   paidMethod += ">"+ feePaidMethodList[i].COMMON_VALUE+"</option>";
    }
+   paidMethod+="</select>";
+  
    
-   /*
-   		Ajax콜을 통해 수정된 자료가 넘어가며, 리턴값으로 true를 받게 되면 눌린 버튼의 
-   		input값이 다시 수정된 값으로 만들어져서 보여진다.
    
-   */
+   
+   var paidStatus = "<select><option value=''> 선택</option>";
+   for(var i=0; i<feePaidStatusList.length; i++){
+	   paidStatus += "<option value='"+ feePaidStatusList[i].COMMON_CODE+"'";
+	  
+	   if( $('#'+id+'paidStatusValue').val() == feePaidStatusList[i].COMMON_CODE){
+		   paidStatus += " selected ";
+	   } 
+	   paidStatus += ">"+ feePaidStatusList[i].COMMON_VALUE+"</option>";
+   }
+   paidStatus+="</select>";
+  
+   
+ 	
+ 	
+   $('#'+id+'paidMethod').empty();
+   $('#'+id+'paidMethod').append(paidMethod);
+   
+	$('#'+id+'paidStatus').empty();
+	$('#'+id+'paidStatus').append(paidStatus);
+	//----------------------버튼 변경--------------------------------
+	//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
+	var btn = "<button type='button' class='btn btn-small btn-warning'>완료</button>";
+   $('#'+id+'btn').empty();
+   $('#'+id+'btn').append(btn);
+}
+
+/*
+		Ajax콜을 통해 수정된 자료가 넘어가며, 리턴값으로 true를 받게 되면 눌린 버튼의 
+		input값이 다시 수정된 값으로 만들어져서 보여진다.
+
+*/
    
 </script>
 
@@ -177,6 +111,9 @@
 			<label>학번별로</label> 
 			<select name="stuNumber" id="searchStuNumber2" onclick="javascript:stuNumberOption('searchStuNumber2')">
 				<option value="null">선택없음</option>
+				
+				
+				
 			</select>&nbsp;
 				
 			

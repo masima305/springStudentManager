@@ -1,84 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-
-
-
-<script>
-$("#showStuList").empty();
 	
-	function ajaxStuSearchKeyword(formId) {
-		
-		$('#'+formId).ajaxForm({
-			
-			type: "post",
-			url: "/searchKeywordStudent.do",
-			datatype: "json",
-			success: function(result){
-				
-				$("#showStuList").empty();
-				var str = "";
-				
-				$.each(result,function(index,value){
-						str+="<tr>"
-						str+="<td>" + index + "</td>";
-						str+="<td>" + this.STU_NUMBER + "</td>";
-					 	str+="<td>"+ this.STU_NAME + "</td>";
-						str+="<td>"+ this.STU_GENDER_VALUE + "</td>";
-						str+="<td>"+ this.STU_BIRTHDAY + "</td>";
-						str+="<td>"+ this.STU_PHONE + "</td>";
-						str+="<td>"+ this.STU_EMAIL + "</td>";
-						str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
-						str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
-						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
-						str+="</tr>"
-				});
-				$("#showStuList").append(str);
-			},
-			error: function(result){}
-		}).submit();
-	}
-	
-	function ajaxStuSearchScope(formId) {
-			
-			$('#'+formId).ajaxForm({
-				
-				type: "post",
-				url: "/searchScopeStudent.do",
-				datatype: "json",
-				success: function(result){
-					
-					$("#showStuList").empty();
-					var str = "";
-					
-					$.each(result,function(index,value){
-							str+="<tr>"
-							str+="<td>" + index + "</td>";
-							str+="<td>" + this.STU_NUMBER + "</td>";
-						 	str+="<td>"+ this.STU_NAME + "</td>";
-							str+="<td>"+ this.STU_GENDER_VALUE + "</td>";
-							str+="<td>"+ this.STU_BIRTHDAY + "</td>";
-							str+="<td>"+ this.STU_PHONE + "</td>";
-							str+="<td>"+ this.STU_EMAIL + "</td>";
-							str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
-							str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
-							str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-							str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
-							str+="</tr>"
-					});
-					$("#showStuList").append(str);
-				},
-				error: function(result){}
-			}).submit();
-		}
-
-</script>
-
-
-
 <div class="card">
 
 	<div class="card-header">
@@ -136,8 +59,6 @@ $("#showStuList").empty();
 		<!-- searchScopeForm -->
 	</div>
 	<!-- card-header -->
-
-
 
 	<div class="card-body">
 
