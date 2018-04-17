@@ -42,6 +42,11 @@ public class StudentService {
 		return studentDAO.searchScopeStudent(map);
 	}
 	
+	public List<HashMap<String, Object>> getStudent(HashMap<String,String> map){
+		
+		System.out.println(">>>>>>>>getStudent Service called");
+		return studentDAO.getStudent(map);
+	}
 	
 	public int insertStudent(HashMap<String,String> map) {
 		return 0;

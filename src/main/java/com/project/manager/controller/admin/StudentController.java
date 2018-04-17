@@ -62,10 +62,7 @@ public class StudentController {
 		map.put("searchCategory", searchCategory);
 		map.put("searchContent", searchContent);
 		
-		
-		List<HashMap<String,Object>> searchKeywordStudentList = studentService.searchKeywordStudent(map);
-		
-		return searchKeywordStudentList;
+		return studentService.searchKeywordStudent(map);
 	}
 	
 	
@@ -99,11 +96,20 @@ public class StudentController {
 		map.put("stuEnterance", stuEnterance);
 		map.put("stuAuthority", stuAuthority);
 		
-		
-		List<HashMap<String,Object>> searchScopeStudentList = studentService.searchScopeStudent(map);
-		
-		return searchScopeStudentList;
+		return studentService.searchScopeStudent(map);
 	}
+	
+	@RequestMapping(value="/getStudent.do")
+	public @ResponseBody List<HashMap<String, Object>> getStudent (HttpServletRequest request){
+		
+		String stuNumber = request.getParameter("stuNumber");
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("stuNumber", stuNumber);
+		
+		return studentService.getStudent(map);
+	}
+	
 	
 	
 	

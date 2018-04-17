@@ -35,6 +35,9 @@ public class StudentDAO {
 		return this.sqlSession.selectList("student.searchScopeStudent",map);
 	}
 	
-	
+	public List<HashMap<String, Object>> getStudent(HashMap<String,String> map){
+		System.out.println(">>>>>>>>getStudent DAO called");
+		return this.sqlSession.selectList("student.getStudent",map);
+	}
 
 }
