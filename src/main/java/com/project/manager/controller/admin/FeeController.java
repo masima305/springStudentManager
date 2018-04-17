@@ -110,6 +110,22 @@ public class FeeController {
 	}
 	
 	
+	//학생회비 정보 업데이트를 위한 컨트롤러.
+	@RequestMapping(value="/updateFee.do")
+	public  @ResponseBody int updateFee(HttpServletRequest request){
+		
+		
+		HashMap<String, String> map = new HashMap<String,String>();
+		map.put("stuNumber", request.getParameter("feeStudentId"));
+		map.put("feePaidDate", request.getParameter("feePaidDate"));
+		map.put("feeTotalAmount", request.getParameter("feeTotalAmount"));
+		map.put("feePaidAmount", request.getParameter("feePaidAmount"));
+		map.put("feeContent", request.getParameter("feePaidContent"));
+		map.put("feePaidMethod", request.getParameter("feePaidMethod"));
+		map.put("feePaidStatus", request.getParameter("feePaidStatus"));
+		int r = feeService.updateFee(map);				
+		return r;
+	}
 	
 	
 	

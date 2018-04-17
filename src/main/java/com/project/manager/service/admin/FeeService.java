@@ -33,4 +33,10 @@ public class FeeService {
 		return feeDAO.searchScopeFee(map);
 	}
 	
+	//---------------- 학생 개개인 업데이트 처리-----------------------
+	public int updateFee(HashMap<String,String> map){
+		
+		System.out.println(">>>>>>>>updateFee Service called");
+		return feeDAO.updateFee(map);
+	}
 }

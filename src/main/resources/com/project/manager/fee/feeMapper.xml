@@ -3,6 +3,8 @@
 
 <!-- fee 테이블을 위한 query mapper -->
 <mapper namespace="fee">
+
+	<!-- =======================================select 쿼리들================================================= -->
 	<!-- 모든 학생회비 정보를 다 불러오는 query -->
 	<select id="listAllFee" resultType="HashMap">
 		SELECT S.STU_NUMBER,S.STU_NAME,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
@@ -66,7 +68,19 @@
 	
 	</select>
 	
-	
+	<!-- =============================update 쿼리들================================================-->
+	<update id="updateFee" parameterType="HashMap">
+		 UPDATE student_fee
+	     SET 
+	        FEE_PAID_DATE = #{feePaidDate}, 
+	        FEE_TOTAL_AMOUNT = #{feeTotalAmount}, 
+	        FEE_PAID_AMOUNT = #{feePaidAmount},
+	        FEE_PAID_METHOD = #{feePaidMethod},
+	        FEE_PAID_STATUS = #{feePaidStatus},
+	        FEE_CONTENT = #{feeContent}
+	    WHERE
+	        STU_NUMBER = #{stuNumber}
+	</update>
 	
 	
 	

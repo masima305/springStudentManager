@@ -28,4 +28,9 @@ public class FeeDAO {
 		return this.sqlSession.selectList("fee.searchScopeFee",map);
 	}
 	
+	public int updateFee(HashMap<String,String> map){
+		System.out.println(">>>>>>>>updateFee DAO called");
+		return this.sqlSession.update("fee.updateFee",map);
+	}
+	
 }
