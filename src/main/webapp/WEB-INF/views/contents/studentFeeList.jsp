@@ -2,11 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
-
 <script>
-
-
 
 function FeeUpdateBtn(id){
    //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
@@ -14,32 +10,26 @@ function FeeUpdateBtn(id){
    var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
    var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
    
-   
-
-   var paidDate = "<input type='text' size='8' value="+$('#'+id+'paidDate').html() +"></input>";
+   //---------- 표 내용물의 <td>태그 안에 <input>태그를 만들어서 내용을 그대로 넣어준다.
+   var paidDate = "<input id='"+id+"paidDateUpdate' type='text' size='8' value="+$('#'+id+'paidDate').html() +"></input>";
    $('#'+id+'paidDate').empty();
    $('#'+id+'paidDate').append(paidDate);
    
-   
-   var totalAmount = "<input type='text' size='7' value="+$('#'+id+'totalAmount').html()+"></input>";
+   var totalAmount = "<input id='"+id+"totalAmountUpdate' type='text' size='7' value="+$('#'+id+'totalAmount').html()+"></input>";
    $('#'+id+'totalAmount').empty();
    $('#'+id+'totalAmount').append(totalAmount);
    
-   
-   var paidAmount = "<input type='text' size='7' value="+$('#'+id+'paidAmount').html()+"></input>";
+   var paidAmount = "<input id='"+id+"paidAmountUpdate' type='text' size='7' value="+$('#'+id+'paidAmount').html()+"></input>";
    $('#'+id+'paidAmount').empty();
    $('#'+id+'paidAmount').append(paidAmount);
    
-   
-   var paidContent = "<input type='text' size='12' value="+$('#'+id+'paidContent').html()+"></input>";
+   var paidContent = "<input id='"+id+"paidContentUpdate' type='text' size='12' value="+$('#'+id+'paidContent').html()+"></input>";
    $('#'+id+'paidContent').empty();
    $('#'+id+'paidContent').append(paidContent);
    //------------------------------------------------------------------------------------------
    
    //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
-      
-   
-   var paidMethod = "<select><option value=''> 선택</option>";
+   var paidMethod = "<select id='"+id+"paidMethodUpdate' ><option value=''> 선택</option>";
    for(var i=0; i<feePaidMethodList.length; i++){
 	   paidMethod += "<option value='"+ feePaidMethodList[i].COMMON_CODE+"'";
 	   if( $('#'+id+'paidMethodValue').val() == feePaidMethodList[i].COMMON_CODE){
@@ -49,10 +39,7 @@ function FeeUpdateBtn(id){
    }
    paidMethod+="</select>";
   
-   
-   
-   
-   var paidStatus = "<select><option value=''> 선택</option>";
+   var paidStatus = "<select id='"+id+"paidStatusUpdate' ><option value=''> 선택</option>";
    for(var i=0; i<feePaidStatusList.length; i++){
 	   paidStatus += "<option value='"+ feePaidStatusList[i].COMMON_CODE+"'";
 	  
@@ -61,29 +48,103 @@ function FeeUpdateBtn(id){
 	   } 
 	   paidStatus += ">"+ feePaidStatusList[i].COMMON_VALUE+"</option>";
    }
-   paidStatus+="</select>";
-  
-   
- 	
+   paidStatus+="</select>";	
  	
    $('#'+id+'paidMethod').empty();
    $('#'+id+'paidMethod').append(paidMethod);
+   $('#'+id+'paidMethod').append();
+   
    
 	$('#'+id+'paidStatus').empty();
 	$('#'+id+'paidStatus').append(paidStatus);
 	//----------------------버튼 변경--------------------------------
 	//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
-	var btn = "<button type='button' class='btn btn-small btn-warning'>완료</button>";
+	var btn = "<button type='button' class='btn btn-small btn-warning' onclick='javascript:FeeUpdateCall("+id+")'>완료</button>";
    $('#'+id+'btn').empty();
    $('#'+id+'btn').append(btn);
 }
 
+
+
 /*
 		Ajax콜을 통해 수정된 자료가 넘어가며, 리턴값으로 true를 받게 되면 눌린 버튼의 
 		input값이 다시 수정된 값으로 만들어져서 보여진다.
-
 */
-   
+
+function FeeUpdateCall(id){
+	var paidDateUpdate = $("#"+id+"paidDateUpdate").val();
+	var totalAmountUpdate = $("#"+id+"totalAmountUpdate").val();
+	var paidAmountUpdate = $("#"+id+"paidAmountUpdate").val();
+	var paidContentUpdate = $("#"+id+"paidContentUpdate").val();
+	var paidMethodUpdate = $("#"+id+"paidMethodUpdate").val();
+	var paidStatusUpdate = $("#"+id+"paidStatusUpdate").val();
+	
+	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
+		alert(paidDateUpdate+"/"+totalAmountUpdate+"/"+paidAmountUpdate+"/"
+				+paidContentUpdate+"/"+paidMethodUpdate+"/"+paidStatusUpdate)			
+	}
+	
+	//------------------------------success 후에 일어나는 변화..
+	
+	 //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
+	   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
+	   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
+	   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
+	   
+	   //---------- 표 내용물의 <td>태그 안에 <input>태그를 만들어서 내용을 그대로 넣어준다.
+	   $('#'+id+'paidDate').empty();
+	   $('#'+id+'paidDate').append(paidDateUpdate);
+	   
+	   $('#'+id+'totalAmount').empty();
+	   $('#'+id+'totalAmount').append(totalAmountUpdate);
+	   
+	   $('#'+id+'paidAmount').empty();
+	   $('#'+id+'paidAmount').append(paidAmountUpdate);
+	   
+	   $('#'+id+'paidContent').empty();
+	   $('#'+id+'paidContent').append(paidContentUpdate);
+	   //------------------------------------------------------------------------------------------
+	   
+	   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
+	   var paidMethod = "";
+	   for(var i=0; i<feePaidMethodList.length; i++){
+		   if( paidMethodUpdate == feePaidMethodList[i].COMMON_CODE){
+			   paidMethod += feePaidMethodList[i].COMMON_VALUE;
+		   } 
+	   }
+	   paidMethod += "<input type='hidden' id='"+id+"paidMethodValue'  value='"+paidMethodUpdate+"'/>"
+			
+	   
+	   var paidStatus = "";
+	   for(var i=0; i<feePaidStatusList.length; i++){
+		   if( paidStatusUpdate == feePaidStatusList[i].COMMON_CODE){
+			   paidStatus += feePaidStatusList[i].COMMON_VALUE;
+		   } 
+	   }
+	   paidStatus += "<input type='hidden' id='"+id+"paidStatusValue'  value='"+paidStatusUpdate+"'/>"
+
+	   
+	   $('#'+id+'paidMethod').empty();
+	   $('#'+id+'paidMethod').append(paidMethod);
+	   $('#'+id+'paidMethod').append();
+	   
+	   
+		$('#'+id+'paidStatus').empty();
+		$('#'+id+'paidStatus').append(paidStatus);
+		//----------------------버튼 변경--------------------------------
+		//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
+		var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+id+")'>수정</button>";
+	   $('#'+id+'btn').empty();
+	   $('#'+id+'btn').append(btn);
+}
+
+
+ 
+ 
+ 
+ 
+
+
 </script>
 
 
@@ -192,6 +253,7 @@ function FeeUpdateBtn(id){
 								</td>
 
 							</tr>
+							
 					</c:forEach>
 				</tbody>
 			</table>
