@@ -79,8 +79,8 @@
      insert into COMMON values('stuGender',02,'남');
      
      
-     insert into COMMON values('expsemester',01,'1학기');
-     insert into COMMON values('expsemester',02,'2학기');
+     insert into COMMON values('expSemester',01,'1학기');
+     insert into COMMON values('expSemester',02,'2학기');
      
      
      insert into COMMON values('feePaidMethod',01,'계좌이체');

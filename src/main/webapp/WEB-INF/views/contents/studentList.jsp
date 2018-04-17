@@ -106,8 +106,7 @@
 							<td>${i.STU_ENTERANCE_VALUE}</td>
 							<td>${i.STU_AUTHORITY_VALUE}</td>
 							<td>
-							<button type="button" class="btn btn-small btn-info">수정</button>
-							<button type="button" class="btn btn-small btn-danger">보기</button></td>
+							<button type="button" class="btn btn-small btn-info" onclick="javascript:ajaxStuDetail(${i.STU_NUMBER})">보기</button>
 						</tr>
 					</c:forEach>
 
@@ -121,3 +120,56 @@
 </div>
 <!-- card -->
 
+<!-- Modal -->
+  <div class="modal fade" id="stuDetailModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+      	  <h4 class="modal-title">학생 상세 보기</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer" id="modalFooter">
+        	<p>footer</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+<script>
+
+function ajaxStuDetail(stuNumber){
+	
+	$.ajax({
+		url: "/getStudent.do",
+		data: {stuNumber: stuNumber},
+		method: "post",
+		dataType: "json",
+		success: function(result) {
+			$("#modalBody").empty();
+			
+			$("#modalBody").append("<p>학번 :"+ result[0].STU_NUMBER + "이름:"+ result[0].STU_NAME +"</p>");
+			$("#modalBody").append("<p>학생회비금액 :"+ result[0].FEE_TOTAL_AMOUNT + "납부금액:"+ result[0].FEE_PAID_AMOUNT +"</p>");
+
+			var str = "";
+			
+			$.each(result,function(index,value){
+				str+= "<p>년도 :"+this.EXP_YEAR + "</p>";
+				str+= "<p>학기 :"+this.EXP_SEMESTER + "</p>";
+				str+= "<p>활동내용 :"+this.EXP_CONTENT + "</p>";
+			});
+		
+			$("#modalBody").append(str);
+			$("#stuDetailModal").modal();
+		}
+	});
+	
+}
+
+</script>
