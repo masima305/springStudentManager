@@ -155,11 +155,9 @@
 		    </div>
 	 	</div>
         
-        <div class="modal-footer" id="modalFooter">
-        	<hr>
-        	<button type="button" class="btn btn-small btn-info">수정</button>
-      	    <button type="button" class="btn btn-small btn-danger">삭제</button>
-        </div>
+    <!--     <div class="modal-footer" id="modalFooter">
+        	
+        </div> -->
         
       </div>
     </div>
@@ -189,6 +187,11 @@ function ajaxStuDetail(stuNumber){
 			str+="<tr><th>입학전형</th><td>"+result[0].STU_ENTERANCE_VALUE+"</td><th>접근권한</th><td>"+result[0].STU_AUTHORITY_VALUE+"</td></tr>";
 			str+="</tbody></form>"
 			$("#stuInfoDetail").append(str);
+			$("#stuInfoDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
+			$("#stuInfoDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
+      	    
+			
+			
 			
 			
 			//학생 회비 정보
@@ -205,6 +208,9 @@ function ajaxStuDetail(stuNumber){
 			str+="</tr>"
 			str+="</tbody>"
 			$("#stuFeeDetail").append(str);
+			$("#stuFeeDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
+			$("#stuFeeDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
+      	    
 
 			//학생 경력 정보
 			$("#stuExpDetail").empty();
@@ -220,6 +226,9 @@ function ajaxStuDetail(stuNumber){
 			});
 			str+="</tbody>"
 			$("#stuExpDetail").append(str);
+			$("#stuExpDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
+			$("#stuExpDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
+      	    
 			
 			//모달 실행
 			$("#stuDetailModal").modal();
