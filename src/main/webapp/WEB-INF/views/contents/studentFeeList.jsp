@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-
 function FeeUpdateBtn(id){
    //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
    var listAllCommonJsonMap  = ${listAllCommonJsonMap}
@@ -192,8 +191,8 @@ function FeeUpdateCall(id){
 		<form id="feeSearchScopeForm">
 		
 			<label>학번별로</label> 
-			<select name="stuNumber" id="searchStuNumber2" onclick="javascript:stuNumberOption('searchStuNumber2')">
-				<option value="null">선택없음</option>
+			<select name="stuNumber" id="searchStuNumber2">
+			<!-- javascript:stuNumberOption('searchStuNumber2') -->
 				
 				
 				

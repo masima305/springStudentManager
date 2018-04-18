@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	
+
+<
+
 <div class="card">
 
 	<div class="card-header">
@@ -25,8 +27,8 @@
 		<form id="stuSearchScopeForm">
 		
 			<label>학번별로</label> 
-			<select name="stuNumber" id="searchStuNumber1" onclick="javascript:stuNumberOption('searchStuNumber1')">
-				<option value="null">선택없음</option>
+			<select name="stuNumber" id="searchStuNumber1">
+				
 			</select>&nbsp;
 			
 			<label>입학전형별로</label> 
