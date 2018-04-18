@@ -131,6 +131,9 @@
 		    <li class="nav-item">
 		      <a class="nav-link" data-toggle="tab" href="#stuExpDetail">학생경력</a>
 		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#stuOptDetail">옵션</a>
+		    </li>
 	  	</ul>
 			  
 	     <!-- Tab panes -->
@@ -140,6 +143,8 @@
 		    <div id="stuFeeDetail" class="container tab-pane fade"><br>
 		    </div>
 		    <div id="stuExpDetail" class="container tab-pane fade"><br>
+		    </div>
+		    <div id="stuOptDetail" class="container tab-pane fade"><br>
 		    </div>
 	 	</div>
         
@@ -165,21 +170,27 @@ function ajaxStuDetail(stuNumber){
 			
 			//학생 기본 정보
 			$("#stuInfoDetail").empty();
+			
+			//각 정보칸(수정 버튼을 누르면 input태그가 삽입될)의 id룰 : 학번 + Personal + 컬럼명(낙타표기)
+			//									  ex : 2010042465PersonalStuNumber
+			//									앞으로 있을 중복 사용을 방지하기 위해 이름 길게 할게용....
 			var str = "<br>";
-			str+= "<img class='card-img-top' src='../../../resources/common/img/man.png' alt='Card image' style='width:30%'><br><br>";
-			str+= "<form>"
+			str+="<img class='card-img-top' src='../../../resources/common/img/man.png' alt='Card image' style='width:30%'><br><br>";
+			str+="<form>"
 			str+="<table class='table table-bordered'><tbody>";
-			str+="<tr><th>학번</th><td>"+result[0].STU_NUMBER+"</td><th>이름</th><td>"+result[0].STU_NAME+"</td></tr>";
-			str+="<tr><th>생년월일</th><td>"+result[0].STU_BIRTHDAY+"</td><th>성별</th><td>"+result[0].STU_GENDER_VALUE+"</td></tr>";
-			str+="<tr><th>연락처</th><td>"+result[0].STU_PHONE+"</td><th>이메일</th><td>"+result[0].STU_EMAIL+"</td></tr>";
-			str+="<tr><th>입학전형</th><td>"+result[0].STU_ENTERANCE_VALUE+"</td><th>접근권한</th><td>"+result[0].STU_AUTHORITY_VALUE+"</td></tr>";
+			str+="<tr>"
+			str+=	"<th>학번</th><td>"+result[0].STU_NUMBER+"</td>"
+			str+=	"<th>이름</th><td id='"+result[0].STU_NUMBER+"PersonalStuName'>"+result[0].STU_NAME+"</td>";
+			str+="</tr>"
+			str+="<tr>"
+			"<th>생년월일</th><td id='"+result[0].STU_NUMBER+"PersonalStuBirthday'>"+result[0].STU_BIRTHDAY+"</td>"
+			str+="<th>성별</th><td id='"+result[0].STU_NUMBER+"PersonalStuGender'>"+result[0].STU_GENDER_VALUE+"</td></tr>";
+			str+="<tr><th>연락처</th><td id='"+result[0].STU_NUMBER+"PersonalStuPhone' >"+result[0].STU_PHONE+"</td><th>이메일</th><td id='"+result[0].STU_NUMBER+"PersonalStuEmail' >"+result[0].STU_EMAIL+"</td></tr>";
+			str+="<tr><th>입학전형</th><td id='"+result[0].STU_NUMBER+"PersonalStuEnteranceValue' >"+result[0].STU_ENTERANCE_VALUE+"</td><th>접근권한</th><td id='"+result[0].STU_NUMBER+"PersonalStuAuthorityValue' >"+result[0].STU_AUTHORITY_VALUE+"</td></tr>";
 			str+="</tbody></form>"
 			$("#stuInfoDetail").append(str);
 			$("#stuInfoDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
-			$("#stuInfoDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
-      	    
-			
-			
+			$("#stuInfoDetail").append("<br><br>");
 			
 			
 			//학생 회비 정보
@@ -197,9 +208,10 @@ function ajaxStuDetail(stuNumber){
 			str+="</tbody>"
 			$("#stuFeeDetail").append(str);
 			$("#stuFeeDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
-			$("#stuFeeDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
-      	    
+			$("#stuFeeDetail").append("<br><br>");
+			
 
+			
 			//학생 경력 정보
 			$("#stuExpDetail").empty();
 			var str = "<br>";
@@ -217,14 +229,25 @@ function ajaxStuDetail(stuNumber){
 			str+="</tbody>"
 			$("#stuExpDetail").append(str);
 			$("#stuExpDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
-			$("#stuExpDetail").append("<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>");
-      	    
+			$("#stuExpDetail").append("<br><br>");
+			
+			
+			//학생 관리 옵션
+			$("#stuOptDetail").empty();
+			var str = "<br>";
+			str+="<div>";
+			str+="<p>이 학생의 정보를 삭제합니다.<p>";
+			str+="<p>학번 : <strong>"+result[0].STU_NUMBER+"</strong></p>"
+			str+="<p>이름 : <strong>"+result[0].STU_NAME+"</strong></p>"
+			str+="<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>"	
+			str+="<div>";
+			
+			$("#stuOptDetail").append(str);
 			
 			//모달 실행
 			$("#stuDetailModal").modal();
 		}
 	});
-	
 }
 
 
