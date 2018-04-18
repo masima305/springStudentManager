@@ -6,8 +6,10 @@ function stuNumberOption(id){
 	var date = new Date();
     var year = date.getFullYear();
     
+    $("#"+id).append("<option value='null'>선택없음</option>");
     for(var i=year-40; i<=year; i++){
-    	$("#"+id).append(new Option(i,i));
+    
+    	$("#"+id).append("<option value='"+i+"'>"+i+"</option>");
     }
  } 
 
@@ -100,15 +102,17 @@ function ajaxFeeSearchKeyword(formId) {
 					str+="<td>" + index + "</td>";
 					str+="<td>" + this.STU_NUMBER + "</td>";
 				 	str+="<td>"+ this.STU_NAME + "</td>";
-					str+="<td>"+ this.FEE_PAID_DATE + "</td>";
-					str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
-					str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
-					str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
-					str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
-					str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
-					str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-					str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
-					str+="</tr>"
+					str+="<td id='"+this.STU_NUMBER+"paidDate' >"+ this.FEE_PAID_DATE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"totalAmount' >"+ this.FEE_TOTAL_AMOUNT + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidMethod' >"+ this.FEE_PAID_AMOUNT + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidDate+' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidStatus'>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidContent'>"+ this.FEE_CONTENT_VALUE + "</td>";
+					str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
+					
+					str+="</tr>"			
+			
+			
 			});
 			$("#showFeeList").append(str);
 		},
@@ -133,14 +137,14 @@ function ajaxFeeSearchScope(formId) {
 					str+="<td>" + index + "</td>";
 					str+="<td>" + this.STU_NUMBER + "</td>";
 				 	str+="<td>"+ this.STU_NAME + "</td>";
-					str+="<td>"+ this.FEE_PAID_DATE + "</td>";
-					str+="<td>"+ this.FEE_TOTAL_AMOUNT + "</td>";
-					str+="<td>"+ this.FEE_PAID_AMOUNT + "</td>";
-					str+="<td>"+ this.FEE_PAID_METHOD_VALUE + "</td>";
-					str+="<td>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
-					str+="<td>"+ this.FEE_CONTENT_VALUE + "</td>";
-					str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-					str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
+					str+="<td id='"+this.STU_NUMBER+paidDate+"' >"+ this.FEE_PAID_DATE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+totalAmount+"' >"+ this.FEE_TOTAL_AMOUNT + "</td>";
+					str+="<td id='"+this.STU_NUMBER+paidMethod+"' >"+ this.FEE_PAID_AMOUNT + "</td>";
+					str+="<td id='"+this.STU_NUMBER+paidDate+"' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+paidStatus+"'>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+paidContent+"'>"+ this.FEE_CONTENT_VALUE + "</td>";
+					str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
+			
 					str+="</tr>"
 			});
 			$("#showFeeList").append(str);

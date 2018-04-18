@@ -12,7 +12,13 @@
 <c:import url="../../../resources/common/commonMeta.jsp"></c:import>
 
 </head>
-<bo	dy>
+<script>
+	$().ready(function(){
+		stuNumberOption("searchStuNumber1")
+		stuNumberOption("searchStuNumber2")
+		});
+</script>
+<body>
 
 
 	<!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->

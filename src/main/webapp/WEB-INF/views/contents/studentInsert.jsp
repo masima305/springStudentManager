@@ -5,8 +5,7 @@
 
 <div class="card">
 
-<div class="card-header">학생 등록</div>
-ㄴ
+<div class="card-header">학생 등록</div>l
 <div class="card-body">
 
 <div class="container">
@@ -22,7 +21,7 @@
 <div class="col-sm-9 col-md-6 col-lg-8"><input type="text" name="stuNumber"/></div>
 </div>
 
-<div class="row">
+<div class="row"> 
 <div class="col-sm-3 col-md-6 col-lg-4"><lable>생년월일</lable></div>
 <div class="col-sm-9 col-md-6 col-lg-8"><input type="date" name="stuBirthday"/></div>
 </div>
