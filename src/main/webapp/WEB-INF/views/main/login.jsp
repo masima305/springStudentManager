@@ -84,10 +84,11 @@
                       </p>
                       
                       <a href = "/adminMain" >관리자페이지로 이동</a>
+                      
                    
                   </div>
                   <div class="col">
-              
+              <a href = "./main/studentMain.jsp" >유저메인페이지로 이동</a>
                   </div>
               </div>
               

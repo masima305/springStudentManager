@@ -83,7 +83,7 @@
                       </p>
                       
                       <a href = "/adminMain" >관리자페이지로 이동</a>
-                   
+                 	  <a href = "/studentMain" >유저메인페이지로 이동</a>
                   </div>
                   <div class="col">
               
