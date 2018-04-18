@@ -206,11 +206,13 @@ function ajaxStuDetail(stuNumber){
 			str+="<table class='table table-bordered'><thead><tr><th>년도</th><th>학기</th><th>활동내용</th></tr></thead><tbody>";
 			
 			$.each(result,function(index,value){
-				str+="<tr>"
-				str+= "<td>"+translator(this.EXP_YEAR) + "</td>";
-				str+= "<td>"+translator(this.EXP_SEMESTER) + "</td>";
-				str+= "<td>"+translator(this.EXP_CONTENT) + "</td>";
-				str+="</tr>"
+				if(this.EXP_YEAR != undefined ){
+					str+="<tr>"
+					str+= "<td>"+this.EXP_YEAR + "</td>";
+					str+= "<td>"+this.EXP_SEMESTER + "</td>";
+					str+= "<td>"+this.EXP_CONTENT + "</td>";
+					str+="</tr>"
+				}
 			});
 			str+="</tbody>"
 			$("#stuExpDetail").append(str);

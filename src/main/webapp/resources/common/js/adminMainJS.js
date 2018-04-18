@@ -1,14 +1,4 @@
 
-//----------------------------"없음"값 감지기------------------------------------
-//들어오는 값이 null이거나 undefined면, "없음"이라는 text를 리턴한다.
-function translator(input){
-	if(input == undefined || input == null){
-		return "없음";
-	}else{
-		return input;
-	}
-}
-
 //----------------------------학생 년도 출력-------------------------------------
 function stuNumberOption(id){
 	var selectValue = document.getElementById(id);
