@@ -82,19 +82,6 @@
 
 
 				<tbody id="showStuList">
-					<!-- <tr>
-				            	<td>1</td>
-				            	<td>2013049595</td>
-				            	<td>윤인아</td>
-				            	<td>여</td>
-				            	<td>19940317</td>
-				            	<td>01086166450</td>
-				            	<td>ina-yun@hanmail.net</td>
-				            	<td>수시</td>
-				            	<td>예비역회장</td>
-				                <td><button type="button" class="btn btn-small btn-info">수정</button>
-				                <button type="button" class="btn btn-small btn-danger">삭제</button></td>
-							</tr> -->
 					<c:forEach var="i" items="${listAllStudent}" varStatus="index">
 						<tr>
 							<td>${index.count}</td>
@@ -220,9 +207,9 @@ function ajaxStuDetail(stuNumber){
 			
 			$.each(result,function(index,value){
 				str+="<tr>"
-				str+= "<td>"+this.EXP_YEAR + "</td>";
-				str+= "<td>"+this.EXP_SEMESTER + "</td>";
-				str+= "<td>"+this.EXP_CONTENT + "</td>";
+				str+= "<td>"+translator(this.EXP_YEAR) + "</td>";
+				str+= "<td>"+translator(this.EXP_SEMESTER) + "</td>";
+				str+= "<td>"+translator(this.EXP_CONTENT) + "</td>";
 				str+="</tr>"
 			});
 			str+="</tbody>"
@@ -237,5 +224,6 @@ function ajaxStuDetail(stuNumber){
 	});
 	
 }
+
 
 </script>

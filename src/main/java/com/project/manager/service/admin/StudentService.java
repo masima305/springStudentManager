@@ -43,9 +43,23 @@ public class StudentService {
 	}
 	
 	public List<HashMap<String, Object>> getStudent(HashMap<String,String> map){
+		//학생 개인정보와 학생 이력정보를 따로 가지고온다.
 		
 		System.out.println(">>>>>>>>getStudent Service called");
-		return studentDAO.getStudent(map);
+		List<HashMap<String, Object>> studentInfo= studentDAO.getStudentBasic(map);
+		HashMap<String,String> studentExpCount = studentDAO.getStudentExpCount(map);
+		
+		String cnt = String.valueOf(studentExpCount.get("EXP_CNT"));
+		int cnt_num = Integer.parseInt(cnt);
+		
+		if (cnt_num > 0) {
+			System.out.println(">>>>>>>>Exp List detected");
+			List<HashMap<String, Object>> studentExp= studentDAO.getStudentExp(map);
+			studentInfo.addAll(studentExp);
+		}
+		
+		
+		return studentInfo;
 	}
 	
 	public int insertStudent(HashMap<String,String> map) {

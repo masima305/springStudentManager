@@ -99,6 +99,7 @@ public class StudentController {
 		return studentService.searchScopeStudent(map);
 	}
 	
+	//학생 개인 정보 불러오기.
 	@RequestMapping(value="/getStudent.do")
 	public @ResponseBody List<HashMap<String, Object>> getStudent (HttpServletRequest request){
 		

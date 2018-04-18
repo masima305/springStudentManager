@@ -76,22 +76,46 @@
 	
 	
 	
-	<!-- 한 학생 개인 정보 불러오기 -->
-	<select id="getStudent" resultType="HashMap" parameterType="HashMap">
-		 SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,S.STU_ENTERANCE,S.STU_GENDER,S.STU_AUTHORITY,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS, E.EXP_YEAR, E.EXP_SEMESTER, E.EXP_CONTENT
+	<!-- 한 학생 개인 정보 불러오기 : 
+			특정 학생의 기본정보와 학생회비 정보는 반드시 존재하지만, 이력의 경우에는 존재하지 않을수도 있음. 따라서, 이력 테이블은 따로 호출할 수 있게 한다.
+	-->
+	<!-- 학생 기본정보 가져오기 : getStudentBasic -->
+	<select id="getStudentBasic" resultType="HashMap" parameterType="HashMap">
+		 SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,S.STU_ENTERANCE,S.STU_GENDER,S.STU_AUTHORITY,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
 	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT) as FEE_CONTENT_VALUE
 	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = F.FEE_PAID_METHOD) as FEE_PAID_METHOD_VALUE
 	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = F.FEE_PAID_STATUS) as FEE_PAID_STATUS_VALUE
 	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE_VALUE
 	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER_VALUE
 	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY_VALUE
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'expSemester' AND COMMON_CODE = E.EXP_SEMESTER) as EXP_SEMESTER_VALUE
-	     FROM STUDENT S, STUDENT_FEE F, EXPERIENCE E
+	     FROM STUDENT S, STUDENT_FEE F
 	     WHERE (S.STU_NUMBER = F.STU_NUMBER)
-	     AND (S.STU_NUMBER = E.STU_NUMBER)
 	     AND S.STU_DELETE_YN = 'N'
-	     AND S.STU_NUMBER = #{stuNumber}	
-	     ORDER BY E.EXP_YEAR,E.EXP_SEMESTER ASC
-	   
+	     AND S.STU_NUMBER = #{stuNumber}
 	</select>
+	
+	<!-- 학생 이력 갯수 가지고 오기 : getStudentExpCount
+		학생 이력의 갯수가 0이 아니면 학생 이력 정보를 가지고 온다.
+	-->
+	<select id="getStudentExpCount" resultType="HashMap" parameterType="HashMap">
+		SELECT  COUNT(E.EXP_CONTENT) as exp_cnt
+   		FROM EXPERIENCE E
+        WHERE 
+            E.STU_NUMBER = #{stuNumber}
+	</select>
+	
+	
+	<!-- 학생 이력정보 가져오기 : getStudentExp -->
+	<select id="getStudentExp" resultType="HashMap" parameterType="HashMap">
+		 SELECT  E.EXP_YEAR,E.EXP_SEMESTER, E.EXP_CONTENT,
+   		(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'expSemester' AND COMMON_CODE = E.EXP_SEMESTER) as EXP_SEMESTER_VALUE
+	     FROM STUDENT S, EXPERIENCE E
+	     WHERE 
+	     	 S.STU_NUMBER = E.STU_NUMBER
+	     AND S.STU_DELETE_YN = 'N'
+	     AND S.STU_NUMBER = #{stuNumber}
+	     ORDER BY E.EXP_YEAR,E.EXP_SEMESTER ASC
+	</select>
+	
+	
 </mapper>

@@ -1,3 +1,14 @@
+
+//----------------------------"없음"값 감지기------------------------------------
+//들어오는 값이 null이거나 undefined면, "없음"이라는 text를 리턴한다.
+function translator(input){
+	if(input == undefined || input == null){
+		return "없음";
+	}else{
+		return input;
+	}
+}
+
 //----------------------------학생 년도 출력-------------------------------------
 function stuNumberOption(id){
 	var selectValue = document.getElementById(id);
@@ -39,8 +50,7 @@ function ajaxStuSearchKeyword(formId) {
 					str+="<td>"+ this.STU_EMAIL + "</td>";
 					str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
 					str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
-					str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-					str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
+					str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:ajaxStuDetail("+this.STU_NUMBER+")'>보기</button></td>" 
 					str+="</tr>"
 			});
 			$("#showStuList").append(str);
@@ -73,8 +83,8 @@ function ajaxStuSearchScope(formId) {
 						str+="<td>"+ this.STU_EMAIL + "</td>";
 						str+="<td>"+ this.STU_ENTERANCE_VALUE + "</td>";
 						str+="<td>"+ this.STU_AUTHORITY_VALUE + "</td>";
-						str+="<td><button type='button' class='btn btn-small btn-info'>수정</button>"
-						str+="<button type='button' class='btn btn-small btn-danger'>보기</button></td>" 
+						str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:ajaxStuDetail("+this.STU_NUMBER+")'>보기</button></td>" 
+						
 						str+="</tr>"
 				});
 				$("#showStuList").append(str);
@@ -100,19 +110,20 @@ function ajaxFeeSearchKeyword(formId) {
 			$.each(result,function(index,value){
 					str+="<tr>"
 					str+="<td>" + index + "</td>";
-					str+="<td>" + this.STU_NUMBER + "</td>";
-				 	str+="<td>"+ this.STU_NAME + "</td>";
+					str+="<td>" + this.STU_NUMBER + "</td>"; 
+				 	str+="<td>"+ this.STU_NAME + "</td>";	
 					str+="<td id='"+this.STU_NUMBER+"paidDate' >"+ this.FEE_PAID_DATE + "</td>";
 					str+="<td id='"+this.STU_NUMBER+"totalAmount' >"+ this.FEE_TOTAL_AMOUNT + "</td>";
-					str+="<td id='"+this.STU_NUMBER+"paidMethod' >"+ this.FEE_PAID_AMOUNT + "</td>";
-					str+="<td id='"+this.STU_NUMBER+"paidDate+' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidAmount' >"+ this.FEE_PAID_AMOUNT + "</td>";
+					str+="<td id='"+this.STU_NUMBER+"paidMethod' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+					str+="<input type='hidden' id='"+this.STU_NUMBER+"paidMethodValue' value='"+this.FEE_PAID_METHOD+"'/>";
+						
 					str+="<td id='"+this.STU_NUMBER+"paidStatus'>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+					str+="<input type='hidden' id='"+this.STU_NUMBER+"paidStatusValue' value='"+this.FEE_PAID_STATUS+"'/>";
+				
 					str+="<td id='"+this.STU_NUMBER+"paidContent'>"+ this.FEE_CONTENT_VALUE + "</td>";
-					str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
-					
-					str+="</tr>"			
-			
-			
+					str+="<td id='"+this.STU_NUMBER+"btn'><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
+					str+="</tr>"						
 			});
 			$("#showFeeList").append(str);
 		},
@@ -134,18 +145,22 @@ function ajaxFeeSearchScope(formId) {
 			
 			$.each(result,function(index,value){
 				str+="<tr>"
-					str+="<td>" + index + "</td>";
-					str+="<td>" + this.STU_NUMBER + "</td>";
-				 	str+="<td>"+ this.STU_NAME + "</td>";
-					str+="<td id='"+this.STU_NUMBER+paidDate+"' >"+ this.FEE_PAID_DATE + "</td>";
-					str+="<td id='"+this.STU_NUMBER+totalAmount+"' >"+ this.FEE_TOTAL_AMOUNT + "</td>";
-					str+="<td id='"+this.STU_NUMBER+paidMethod+"' >"+ this.FEE_PAID_AMOUNT + "</td>";
-					str+="<td id='"+this.STU_NUMBER+paidDate+"' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
-					str+="<td id='"+this.STU_NUMBER+paidStatus+"'>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
-					str+="<td id='"+this.STU_NUMBER+paidContent+"'>"+ this.FEE_CONTENT_VALUE + "</td>";
-					str+="<td><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
-			
-					str+="</tr>"
+					str+="<tr>"
+						str+="<td>" + index + "</td>";
+						str+="<td>" + this.STU_NUMBER + "</td>"; 
+					 	str+="<td>"+ this.STU_NAME + "</td>";	
+						str+="<td id='"+this.STU_NUMBER+"paidDate' >"+ this.FEE_PAID_DATE + "</td>";
+						str+="<td id='"+this.STU_NUMBER+"totalAmount' >"+ this.FEE_TOTAL_AMOUNT + "</td>";
+						str+="<td id='"+this.STU_NUMBER+"paidAmount' >"+ this.FEE_PAID_AMOUNT + "</td>";
+						str+="<td id='"+this.STU_NUMBER+"paidMethod' >"+ this.FEE_PAID_METHOD_VALUE + "</td>";
+						str+="<input type='hidden' id='"+this.STU_NUMBER+"paidMethodValue' value='"+this.FEE_PAID_METHOD+"'/>";
+							
+						str+="<td id='"+this.STU_NUMBER+"paidStatus'>"+ this.FEE_PAID_STATUS_VALUE + "</td>";
+						str+="<input type='hidden' id='"+this.STU_NUMBER+"paidStatusValue' value='"+this.FEE_PAID_STATUS+"'/>";
+					
+						str+="<td id='"+this.STU_NUMBER+"paidContent'>"+ this.FEE_CONTENT_VALUE + "</td>";
+						str+="<td id='"+this.STU_NUMBER+"btn'><button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+this.STU_NUMBER+")' >수정</button>"
+						str+="</tr>"	
 			});
 			$("#showFeeList").append(str);
 		},
