@@ -2,6 +2,7 @@ package com.project.manager.service.admin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,12 @@ public class StudentService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 	
+	
+	
+	//=====================================================================================================
+	//=========================  READ METHODS  ============================================================
+	//=====================================================================================================
+		
 	
 	public List<HashMap<String, Object>> listAllStudent(){
 		
@@ -63,6 +70,24 @@ public class StudentService {
 		}
 		return studentInfo;
 	}
+	
+	//=====================================================================================================
+	//=========================  INSERT METHODS  ============================================================
+	//=====================================================================================================
+		
+	
+	public int insertExperience(HashMap<String,String> map){
+		//학생 개인정보와 학생 이력정보를 따로 가지고온다.
+		System.out.println(">>>>>>>>insertExperience Service called");
+		int result = studentDAO.insertExperience(map);
+		
+		
+		
+		
+		return result;
+	}
+	
+	
 	
 	public int insertStudent(HashMap<String,String> map) {
 		return 0;

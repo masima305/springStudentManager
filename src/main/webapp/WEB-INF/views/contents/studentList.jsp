@@ -159,8 +159,7 @@
 
 <script>
 
-function ajaxStuDetail(stuNumber){
-	
+function ajaxStuDetail(stuNumber){	
 	$.ajax({
 		url: "/getStudent.do",
 		data: {stuNumber: stuNumber},
@@ -234,7 +233,7 @@ function ajaxStuDetail(stuNumber){
 			str+=	"<thead>"
 			str+=		"<tr><th>년도</th><th>학기</th><th>활동내용</th><th></th></tr>"
 			str+=	"</thead>"
-			str+=	"<tbody>";
+			str+=	"<tbody id='ExpContent'>";
 			
 			$.each(result,function(index,value){
 				if(this.EXP_YEAR != undefined ){
@@ -247,13 +246,21 @@ function ajaxStuDetail(stuNumber){
 			str+=		"</tr>"
 				}});
 			str+=	"</tbody>"
-			str+="</table>"		
+			str+="</table>"	
+			
 			str+="<div id='addInputDiv'></div>";
+			// 경력 추가란이 생성 될 자리.
 			
 			$("#stuExpDetail").append(str);
 			// 추가하기 버튼을 누르면 인풋란이 새로 생성된다.
 			
-			$("#stuExpDetail").append("<hr><button type='button' class='btn btn-small btn-info'>추가하기</button>");
+			str  = "<hr>";
+			str += "<div id = 'expBtnArea'>";
+			str += 		"<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput("+result[0].STU_NUMBER+")'>경력추가</button>";
+			str += "</div>";
+			
+			
+			$("#stuExpDetail").append(str);
 			$("#stuExpDetail").append("<br><br>");
 			
 			
@@ -278,6 +285,100 @@ function ajaxStuDetail(stuNumber){
 		}
 	});
 }
-
-
+function makeExpInput(stuNumber){
+	//경력 추가란을 생성해주는 칸
+	
+	
+	var inputstr = "";
+	inputstr += "<table class='table table-bordered'>"						
+	inputstr += 	"<tbody>"												
+	inputstr += 		"<tr>"		
+	inputstr += 			"<td>"
+	inputstr += 				"<select id='insertExpYear'>"	
+	inputstr += 				"</select>&nbsp";
+	inputstr += 			"</td>"
+	inputstr += 			"<td>"		
+	inputstr += 				"<select id='insertExpSemester'>"
+	inputstr +=						"<option value='1'>1학기</option>"
+	inputstr +=						"<option value='2'>2학기</option>"
+	inputstr += 				"</select>&nbsp";
+	inputstr += 			"</td>"
+	inputstr += 			"<td>"
+	inputstr += 				"<input type='text' id='insertExpContent' placeholder='활동내용'/>"
+	inputstr += 			"</td>"
+	inputstr += 		"</tr>"		
+	inputstr += 	"</tbody>"
+	inputstr += "</table>"
+	$("#addInputDiv").append(inputstr);
+	
+	
+	var str = "<button type='button' class='btn btn-small btn-warning' onclick='javascript:insertExpInput(\""+stuNumber+"\")'>기입완료</button>	&nbsp"
+		str += "<button type='button' class='btn btn-small btn-danger' onclick='javascript:resetExpInput()'>취소</button>";
+	
+	$("#expBtnArea").empty();
+	$("#expBtnArea").append(str);
+	
+	stuNumberOption("insertExpYear");
+}
+function resetExpInput(){
+	$("#addInputDiv").empty();
+	$("#expBtnArea").empty();
+	str = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput()'>경력추가</button>";
+	$("#expBtnArea").append(str);
+}
+function insertExpInput(inputNumber){
+	var str = "";
+	var stuNumber 	= inputNumber;
+	var expYear 	= $("#insertExpYear").val();
+	var expSemester = $("#insertExpSemester").val();
+	var expContent	= $("#insertExpContent").val();
+	
+	//예외처리 사항 : 위의 경력사항과 하나라도 겹치는 것이 있는지?
+	// 처리방법 : 각  input 4개를 모두 String으로 합친뒤 일치하는지 확인.
+	// 일치한다면 예외처리 되어서 alert날려주삼..
+	
+	
+	//---------------AJAX콜을 위한 JSON 데이터 화 -------------------
+	
+	var sendData ={};			   
+	sendData.stuNumber		 = stuNumber;
+	sendData.expYear		 = expYear;
+	sendData.expSemester	 = expSemester;
+	sendData.expContent		 = expContent;
+		
+	//----------------ajax콜로 insert문을 쏴 보낸다.
+	
+		$.ajax({
+		url: "/insertExperience.do",
+		data: sendData,
+		method: "post",
+		dataType: "json",
+		success: function(result) {
+			//----------------success 이후
+			
+			str+=		"<tr>"
+			str+=			"<td>"+expYear+"</td>";
+			str+=			"<td>"+expSemester+ "</td>";
+			str+=			"<td>"+expContent + "</td>";
+			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>"
+			str+=		"</tr>"
+			
+			var n = $("#ExpContent").html();
+			
+			if(n.includes("없음")){
+				$("#ExpContent").empty();	
+			}
+			$("#ExpContent").append(str);
+				
+			$("#addInputDiv").empty();
+			$("#expBtnArea").empty();
+			str = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput(\""+stuNumber+"\")'>경력추가</button>";
+			$("#expBtnArea").append(str);
+			
+		},
+		error: function(abc){
+			alert(""+abc)
+		}
+	});
+}
 </script>

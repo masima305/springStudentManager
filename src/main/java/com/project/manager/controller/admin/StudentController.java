@@ -1,6 +1,7 @@
 package com.project.manager.controller.admin;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,11 @@ public class StudentController {
 	CcodeService ccodeService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+	
+	
+	//=====================================================================================================
+	//=========================  READ METHODS  ============================================================
+	//=====================================================================================================
 	
 	/*
 	 * 전체 학생 리스트 불러오기
@@ -111,6 +117,32 @@ public class StudentController {
 		return studentService.getStudent(map);
 	}
 	
+	
+	
+	//======================================================================================================
+	//========================= INSERT METHODS  ============================================================
+	//======================================================================================================
+		
+	
+	//학생 개인 경험 인서트 하기.
+	@RequestMapping(value="/insertExperience.do")
+	public @ResponseBody int insertExperience (HttpServletRequest request){
+
+		System.out.println(">>>>>>>>insertExperience Controller called");
+		
+		String stuNumber 	= request.getParameter("stuNumber");
+		String expYear 		= request.getParameter("expYear");
+		String expSemester	= request.getParameter("expSemester");
+		String expContent	= request.getParameter("expContent");
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("stuNumber"	  , stuNumber);
+		map.put("expYear"	  , expYear);
+		map.put("expSemester" , expSemester);
+		map.put("expContent"  , expContent);
+		
+		return studentService.insertExperience(map);
+	}
 	
 	
 	

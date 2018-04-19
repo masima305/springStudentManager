@@ -2,16 +2,17 @@
 //----------------------------학생 년도 출력-------------------------------------
 function stuNumberOption(id){
 	var selectValue = document.getElementById(id);
-	$("#"+id).empty();
-	
+
 	var date = new Date();
     var year = date.getFullYear();
+    var yearstr = "";
     
-    $("#"+id).append("<option value='null'>선택없음</option>");
+    yearstr += ("<option value='null'>선택없음</option>");
     for(var i=year-40; i<=year; i++){
     
-    	$("#"+id).append("<option value='"+i+"'>"+i+"</option>");
+    	yearstr += ("<option value='"+i+"'>"+i+"</option>");
     }
+    $("#"+id).html(yearstr);
  } 
 
 //-------------------------------Student List---------------------------------

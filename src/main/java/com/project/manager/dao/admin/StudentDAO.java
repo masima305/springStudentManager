@@ -2,6 +2,7 @@ package com.project.manager.dao.admin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -17,6 +18,11 @@ public class StudentDAO {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	//=====================================================================================================
+	//=========================  READ METHODS  ============================================================
+	//=====================================================================================================
+	
 	
 	//------------------------------listAllStudent =
 	//------------------------------모든 리스트를 다 가지고 와서 리스트로 만들어서 보냄
@@ -47,4 +53,17 @@ public class StudentDAO {
 		System.out.println(">>>>>>>>getStudentExpCount DAO called");
 		return this.sqlSession.selectOne("student.getStudentExpCount",map);
 	}
+	
+	//=====================================================================================================
+	//=========================  INSERT METHODS  ============================================================
+	//=====================================================================================================
+	
+	//경력 사항 추가
+	public int insertExperience(HashMap<String,String> map){
+		System.out.println(">>>>>>>>insertExperience DAO called");
+		Iterator<String> keys = map.keySet().iterator();
+		return this.sqlSession.insert("student.insertExperience",map);
+		}
+	
+	
 }
