@@ -177,17 +177,27 @@ function ajaxStuDetail(stuNumber){
 			var str = "<br>";
 			str+="<img class='card-img-top' src='../../../resources/common/img/man.png' alt='Card image' style='width:30%'><br><br>";
 			str+="<form>"
-			str+="<table class='table table-bordered'><tbody>";
-			str+="<tr>"
-			str+=	"<th>학번</th><td>"+result[0].STU_NUMBER+"</td>"
-			str+=	"<th>이름</th><td id='"+result[0].STU_NUMBER+"PersonalStuName'>"+result[0].STU_NAME+"</td>";
-			str+="</tr>"
-			str+="<tr>"
-			"<th>생년월일</th><td id='"+result[0].STU_NUMBER+"PersonalStuBirthday'>"+result[0].STU_BIRTHDAY+"</td>"
-			str+="<th>성별</th><td id='"+result[0].STU_NUMBER+"PersonalStuGender'>"+result[0].STU_GENDER_VALUE+"</td></tr>";
-			str+="<tr><th>연락처</th><td id='"+result[0].STU_NUMBER+"PersonalStuPhone' >"+result[0].STU_PHONE+"</td><th>이메일</th><td id='"+result[0].STU_NUMBER+"PersonalStuEmail' >"+result[0].STU_EMAIL+"</td></tr>";
-			str+="<tr><th>입학전형</th><td id='"+result[0].STU_NUMBER+"PersonalStuEnteranceValue' >"+result[0].STU_ENTERANCE_VALUE+"</td><th>접근권한</th><td id='"+result[0].STU_NUMBER+"PersonalStuAuthorityValue' >"+result[0].STU_AUTHORITY_VALUE+"</td></tr>";
-			str+="</tbody></form>"
+			str+=	"<table class='table table-bordered'>"
+			str+=	"<tbody>"
+			str+=		"<tr>"
+			str+=			"<th>학번</th><td>"+result[0].STU_NUMBER+"</td>"
+			str+=			"<th>이름</th><td id='"+result[0].STU_NUMBER+"PersonalStuName'>"+result[0].STU_NAME+"</td>";
+			str+=		"</tr>"
+			str+=		"<tr>"
+			str+=			"<th>생년월일</th><td id='"+result[0].STU_NUMBER+"PersonalStuBirthday'>"+result[0].STU_BIRTHDAY+"</td>"
+			str+=			"<th>성별</th><td id='"+result[0].STU_NUMBER+"PersonalStuGender'>"+result[0].STU_GENDER_VALUE+"</td>";
+			str+=		"</tr>"
+			str+=		"<tr>"
+			str+=			"<th>연락처</th><td id='"+result[0].STU_NUMBER+"PersonalStuPhone' >"+result[0].STU_PHONE+"</td>"
+			str+=			"<th>이메일</th><td id='"+result[0].STU_NUMBER+"PersonalStuEmail' >"+result[0].STU_EMAIL+"</td>"
+			str+=		"</tr>";
+			str+=		"<tr>"
+			str+=			"<th>입학전형</th><td id='"+result[0].STU_NUMBER+"PersonalStuEnteranceValue' >"+result[0].STU_ENTERANCE_VALUE+"</td>"
+			str+=			"<th>접근권한</th><td id='"+result[0].STU_NUMBER+"PersonalStuAuthorityValue' >"+result[0].STU_AUTHORITY_VALUE+"</td>"
+			str+=		"</tr>";
+			str+=	"</tbody>"
+			str+=	"</table>"
+			str+="</form>"
 			$("#stuInfoDetail").append(str);
 			$("#stuInfoDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
 			$("#stuInfoDetail").append("<br><br>");
@@ -196,16 +206,21 @@ function ajaxStuDetail(stuNumber){
 			//학생 회비 정보
 			$("#stuFeeDetail").empty();
 			var str = "<br>";
-			str+="<table class='table table-bordered'><thead><tr><th>회비금액</th><th>납부금액</th><th>입금날짜</th><th>입금방식</th><th>상태</th><th>비고</th></tr></thead><tbody>";
-			str+="<tr>"
-			str+= "<td>"+result[0].FEE_TOTAL_AMOUNT + "</td>";
-			str+= "<td>"+result[0].FEE_PAID_AMOUNT + "</td>";
-			str+= "<td>"+result[0].FEE_PAID_DATE + "</td>";
-			str+= "<td>"+result[0].FEE_PAID_METHOD_VALUE + "</td>";
-			str+= "<td>"+result[0].FEE_PAID_STATUS_VALUE + "</td>";
-			str+= "<td>"+result[0].FEE_CONTENT_VALUE + "</td>";
-			str+="</tr>"
-			str+="</tbody>"
+			str+="<table class='table table-bordered'>"
+			str+="	<thead>"
+			str+=		"<tr><th>회비금액</th><th>납부금액</th><th>입금날짜</th><th>입금방식</th><th>상태</th><th>비고</th></tr>"
+			str+=	"</thead>"	
+			str+=	"<tbody>";
+			str+=		"<tr>"
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeeTotalAmount' >"		+ result[0].FEE_TOTAL_AMOUNT	  +  "</td>";
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeePaidAmount' >"		+ result[0].FEE_PAID_AMOUNT 	  +  "</td>";
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeePaidDate' >"		+ result[0].FEE_PAID_DATE 		  +  "</td>";
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeePaidMethodValue'>"	+ result[0].FEE_PAID_METHOD_VALUE +  "</td>";
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeeStatusValue' >"		+ result[0].FEE_PAID_STATUS_VALUE +  "</td>";
+			str+=			"<td id='"+result[0].STU_NUMBER+"PersonalFeeContentValue' >"	+ result[0].FEE_CONTENT_VALUE 	  +	 "</td>";
+			str+=		"</tr>"
+			str+=	"</tbody>"
+			str+="</table>"		
 			$("#stuFeeDetail").append(str);
 			$("#stuFeeDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
 			$("#stuFeeDetail").append("<br><br>");
@@ -215,32 +230,46 @@ function ajaxStuDetail(stuNumber){
 			//학생 경력 정보
 			$("#stuExpDetail").empty();
 			var str = "<br>";
-			str+="<table class='table table-bordered'><thead><tr><th>년도</th><th>학기</th><th>활동내용</th></tr></thead><tbody>";
+			str+="<table class='table table-bordered'>"
+			str+=	"<thead>"
+			str+=		"<tr><th>년도</th><th>학기</th><th>활동내용</th><th></th></tr>"
+			str+=	"</thead>"
+			str+=	"<tbody>";
 			
 			$.each(result,function(index,value){
 				if(this.EXP_YEAR != undefined ){
-					str+="<tr>"
-					str+= "<td>"+this.EXP_YEAR + "</td>";
-					str+= "<td>"+this.EXP_SEMESTER + "</td>";
-					str+= "<td>"+this.EXP_CONTENT + "</td>";
-					str+="</tr>"
-				}
-			});
-			str+="</tbody>"
+			str+=		"<tr>"
+			str+=			"<td>"+this.EXP_YEAR + "</td>";
+			str+=			"<td>"+this.EXP_SEMESTER + "</td>";
+			str+=			"<td>"+this.EXP_CONTENT + "</td>";
+			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>"
+								//개별 삭제를 위한 버튼
+			str+=		"</tr>"
+				}});
+			str+=	"</tbody>"
+			str+="</table>"		
+			str+="<div id='addInputDiv'></div>";
+			
 			$("#stuExpDetail").append(str);
-			$("#stuExpDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
+			// 추가하기 버튼을 누르면 인풋란이 새로 생성된다.
+			
+			$("#stuExpDetail").append("<hr><button type='button' class='btn btn-small btn-info'>추가하기</button>");
 			$("#stuExpDetail").append("<br><br>");
+			
+			
 			
 			
 			//학생 관리 옵션
 			$("#stuOptDetail").empty();
 			var str = "<br>";
 			str+="<div>";
-			str+="<p>이 학생의 정보를 삭제합니다.<p>";
-			str+="<p>학번 : <strong>"+result[0].STU_NUMBER+"</strong></p>"
-			str+="<p>이름 : <strong>"+result[0].STU_NAME+"</strong></p>"
-			str+="<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>"	
-			str+="<div>";
+			str+=	"<p>이 학생의 정보를 삭제합니다.<p>";
+			str+=	"<p>학번 : <strong>"+result[0].STU_NUMBER+"</strong></p>"
+			str+=	"<p>이름 : <strong>"+result[0].STU_NAME+"</strong></p>"
+			str+="<div id='deleteCheckArea'></div>"
+					//삭제를 눌렸을 때 이 공간에 삭제 확인칸이 떠야한다.
+			str+="<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>"	;
+			str+="</div>";
 			
 			$("#stuOptDetail").append(str);
 			
