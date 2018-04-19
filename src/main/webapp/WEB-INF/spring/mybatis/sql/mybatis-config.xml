@@ -21,14 +21,14 @@
 	</plugins>
  -->	
 	<mappers>
-		<!-- StudentManager 를 위한 쿼리 -->
-		<mapper resource="com/project/manager/student/studentMapper.xml"/>
 		<!-- common code 를 위한 쿼리 -->
 		<mapper resource="com/project/manager/ccode/commonMapper.xml"/>
-		<!-- common code 를 위한 쿼리 -->
-		<mapper resource="com/project/manager/fee/feeMapper.xml"/>
-	
-	
+		<!-- 관리자용 '학생기본' 정보를 위한 쿼리 -->
+		<mapper resource="com/project/manager/admin/student/studentMapper.xml"/>
+		<!-- 관리자용 '학생회비' 정보를 위한 쿼리 -->
+		<mapper resource="com/project/manager/admin/fee/feeMapper.xml"/>
+		<!-- 유저용 '유저기본' 정보를 위한 쿼리 -->
+		<mapper resource="com/project/manager/user/userInfo/userInfoMapper.xml"/>
 	</mappers>
 	
 		
