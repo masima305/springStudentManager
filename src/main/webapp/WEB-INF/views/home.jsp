@@ -56,7 +56,7 @@
              	 	<div class="row">
              	 		<div class="col-lg-12">
              	 		
-	             	 		<form id="loginForm" action="/loginCheck.do" method="post">
+	             	 		<form id="loginForm" action="/loginCheck.go" method="post">
 							    <div class="input-group">
 							      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 							      <input id="stuNumber" type="text" class="form-control" name="stuNumber" placeholder="student ID">

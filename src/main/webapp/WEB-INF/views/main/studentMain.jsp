@@ -190,6 +190,8 @@
 		<a href="#" onclick="showTitle(this,'studentFee')">기본정보2</a> 
 		<a href="#" onclick="showTitle(this)">기본정보3</a> 
 		<a href="#" onclick="showTitle(this)">기본정보4</a>
+		
+		<a href="/logout.go">로그아웃</a>
 	</div>
 	<!------------------------------------------------------------------------>
 

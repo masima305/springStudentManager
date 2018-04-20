@@ -35,13 +35,15 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />	
 	
 	<!-- 인터셉터 -->
-	<!-- <mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/main/**"/>
-			<beans:bean id="" class="">
+			<!-- <mvc:mapping path="/*.do"/>
+			<mvc:exclude-mapping path="/*.go"/> -->
+			<mvc:mapping path="/*.ddd"/>
+			<mvc:exclude-mapping path="/*.*"/>
+			<beans:bean id="commonInterceptor" class="com.project.manager.common.CommonInterceptor"></beans:bean>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
 	
 		 	
 </beans:beans>
