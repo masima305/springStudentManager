@@ -13,6 +13,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
+  
+  <script type="text/javascript">
+  
+  
+  	function loginFunction(){
+  		
+  		$("#loginForm").submit();
+  		
+  	}
+  </script>
 </head>
   
 <body>
@@ -46,7 +56,7 @@
              	 	<div class="row">
              	 		<div class="col-lg-12">
              	 		
-	             	 		 <form>
+	             	 		<form id="loginForm" action="/loginCheck.do" method="post">
 							    <div class="input-group">
 							      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 							      <input id="stuNumber" type="text" class="form-control" name="stuNumber" placeholder="student ID">
@@ -56,8 +66,6 @@
 							      <input id="stuPassword" type="password" class="form-control" name="stuPassword" placeholder="Password">
 							    </div>
              	 			</form>
-             	 		
-             	 		
              	 		
              	 		</div>
              	 	</div>
@@ -73,12 +81,19 @@
              	 </div>
              	 
              	 <div class="col-lg-4 col-md-4 col-sm-8">
+             		<div class="row">
+             	 		<div class="col-lg-12">
+             	 			<button type="button" onclick="javascript:loginFunction()">로그인</button>	
+             	 		</div>
+             	 	</div>
+             	 
              	 	<div class="row">
 	             	 	<div class="col-lg-12">
-	             	 		 <a href = "/adminMain" >관리자페이지로 이동</a>
-             	 			 <a href = "/studentMain" >유저메인페이지로 이동</a>
+	             	 		 <a href = "/adminMain">관리자페이지로 이동</a>
+             	 			 <a href = "/getUser.do">유저메인페이지로 이동</a>
 	             	 	</div>
              	 	</div>
+             	 	
              	 </div>
              	 
            	 	 <div class="col-lg-4 col-md-4 col-sm-2">

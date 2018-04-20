@@ -19,11 +19,7 @@
 	<!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->
 	<nav id="upperbar" class="navbar navbar-expand-lg navbar-light bg-light">
 		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
-
-
 		<span class="navbar-brand" id="sideNavTitle">기본정보1</span>
-
-
 	</nav>
 
 
@@ -71,35 +67,35 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">학번</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">2013049595</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_NUMBER}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">이름</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">윤인아</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_NAME}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">성별</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">여</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_GENDER_VALUE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">생년월일</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">19940317</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_BIRTHDAY}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">연락처</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">01086166450</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_PHONE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">이메일</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">ina-yun@hanmail.net</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_EMAIL}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">입학전형</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">수시</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_ENTERANCE_VALUE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">권한</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">일반</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].STU_AUTHORITY_VALUE}</div>
 						</div>
 					</div>
 				
@@ -128,27 +124,27 @@
 						
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">회비금액</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">170000</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_TOTAL_AMOUNT}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">납부금액</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">170000</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_PAID_AMOUNT}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">입금날짜</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">20130516</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_PAID_DATE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">입금방식</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">계좌이체</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_PAID_METHOD_VALUE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">상태</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">납부완료</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_PAID_STATUS_VALUE}</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-4"><span class="font-weight-bold">비고</span></div>
-							<div class="col-lg-8 col-md-8 col-sm-8 col-8">없음</div>
+							<div class="col-lg-8 col-md-8 col-sm-8 col-8">${studentInfo[0].FEE_CONTENT}</div>
 						</div>
 					</div>
 				
@@ -162,18 +158,16 @@
 						</div>
 						<div class="row"><div class="col-lg-12"><hr></div></div>
 						
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-3 col-3">2013</div>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-3">1학기</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-6">영문과 부회장</div>
-						</div>
+						<c:forEach var="i" items="${studentInfo}" varStatus="index">
+							<div class="row">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-3">${i.EXP_YEAR}</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-3">${i.EXP_SEMESTER}</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-6">${i.EXP_CONTENT}</div>
+							</div>
+						</c:forEach>
 						
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-sm-3 col-3">2015</div>
-							<div class="col-lg-3 col-md-3 col-sm-3 col-3">2학기</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-6">공간과 창조 부학회장 헤헤후후히히하하</div>
-						</div>
-			
+						
+				
 					</div>
 					<!-- 여백 -->
 					<div class="col-lg-2">
