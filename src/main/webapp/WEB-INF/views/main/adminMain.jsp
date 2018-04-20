@@ -55,7 +55,7 @@
 
 
 
-	<!------------------------------------ 사이드 바 ------------------------->
+	<!------------------------------------ 사이드 바 --------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> 

@@ -63,7 +63,5 @@ public class StudentDAO {
 		System.out.println(">>>>>>>>insertExperience DAO called");
 		Iterator<String> keys = map.keySet().iterator();
 		return this.sqlSession.insert("student.insertExperience",map);
-		}
-	
-	
+	}
 }

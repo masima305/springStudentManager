@@ -1,6 +1,6 @@
 
 //----------------------------학생 년도 출력-------------------------------------
-function stuNumberOption(id){
+function stuNumberOption(id, startYear){
 	var selectValue = document.getElementById(id);
 
 	var date = new Date();
@@ -12,6 +12,7 @@ function stuNumberOption(id){
     
     	yearstr += ("<option value='"+i+"'>"+i+"</option>");
     }
+    
     $("#"+id).html(yearstr);
  } 
 

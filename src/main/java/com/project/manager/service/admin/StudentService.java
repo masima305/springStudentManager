@@ -35,7 +35,6 @@ public class StudentService {
 		return studentDAO.listAllStudent();
 	}
 	
-	
 	public List<HashMap<String, Object>> searchKeywordStudent(HashMap<String,String> map){
 		
 		System.out.println(">>>>>>>>searchKeywordStudent Service called");
@@ -80,9 +79,6 @@ public class StudentService {
 		//학생 개인정보와 학생 이력정보를 따로 가지고온다.
 		System.out.println(">>>>>>>>insertExperience Service called");
 		int result = studentDAO.insertExperience(map);
-		
-		
-		
 		
 		return result;
 	}
