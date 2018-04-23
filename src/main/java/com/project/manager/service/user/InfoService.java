@@ -47,9 +47,9 @@ public class InfoService {
 			List<HashMap<String, Object>> studentExp= infoDAO.getUserExp(map);
 			studentInfo.addAll(studentExp);
 		}else {
-			studentInfo.get(0).put("EXP_YEAR","없음");
+			studentInfo.get(0).put("EXP_YEAR"	 ,"없음");
 			studentInfo.get(0).put("EXP_SEMESTER","없음");
-			studentInfo.get(0).put("EXP_CONTENT","없음");
+			studentInfo.get(0).put("EXP_CONTENT" ,"없음");
 		}
 		return studentInfo;
 	}

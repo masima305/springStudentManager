@@ -13,6 +13,12 @@ public class FeeDAO {
 	@Autowired
 	SqlSession sqlSession;
 	
+	
+	//=====================================================================================================
+	//=========================  READ METHODS  ============================================================
+	//=====================================================================================================
+		
+	
 	public List<HashMap<String, Object>> listAllFee(){
 		List<HashMap<String, Object>> list= sqlSession.selectList("fee.listAllFee");
 		return list;
@@ -27,6 +33,13 @@ public class FeeDAO {
 		System.out.println(">>>>>>>>searchScopeFee DAO called");
 		return this.sqlSession.selectList("fee.searchScopeFee",map);
 	}
+	
+	
+	//=======================================================================================================
+	//=========================  UPDATE METHODS  ============================================================
+	//=======================================================================================================
+		
+	
 	
 	public int updateFee(HashMap<String,String> map){
 		System.out.println(">>>>>>>>updateFee DAO called");

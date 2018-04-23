@@ -14,8 +14,8 @@
 </head>
 <script>
 	$().ready(function(){
-		stuNumberOption("searchStuNumber1")
-		stuNumberOption("searchStuNumber2")
+		stuNumberOption("searchStuNumber1",undefined)
+		stuNumberOption("searchStuNumber2",undefined)
 		});
 </script>
 <body>
@@ -58,26 +58,26 @@
 	<!------------------------------------ 사이드 바 --------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> 
+		<a href="#" onclick="showTitle(this,'listAll'	)">학생관리</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
-		<a href="#" onclick="showTitle(this)">학과일정관리</a> 
-		<a href="#" onclick="showTitle(this)">학생회의</a>
+		<a href="#" onclick="showTitle(this				)">학과일정관리</a> 
+		<a href="#" onclick="showTitle(this				)">학생회의</a>
 	</div>
 	<!------------------------------------------------------------------------>
 
 
 	<script>
       function openNav() {
-          document.getElementById("mySidenav").style.width = "250px";
-          document.getElementById("main").style.marginLeft = "250px";
-          document.getElementById("upperbar").style.marginLeft="250px";
+          document.getElementById("mySidenav").style.width 		= "250px";
+          document.getElementById("main"	 ).style.marginLeft = "250px";
+          document.getElementById("upperbar" ).style.marginLeft = "250px";
           
       }
 
       function closeNav() {
-          document.getElementById("mySidenav").style.width = "0";
-          document.getElementById("main").style.marginLeft= "0";
-          document.getElementById("upperbar").style.marginLeft="0";
+          document.getElementById("mySidenav").style.width 		= "0";
+          document.getElementById("main"	 ).style.marginLeft = "0";
+          document.getElementById("upperbar" ).style.marginLeft = "0";
       }
       
       var preContentId = "listAll";
@@ -92,9 +92,6 @@
       
       
     </script>
-
-
-
-
+    
 </body>
 </html>

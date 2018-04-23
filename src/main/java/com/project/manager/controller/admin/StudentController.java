@@ -38,14 +38,21 @@ public class StudentController {
 	 */
 	@RequestMapping(value="/listAllStudent.do")
 	public @ResponseBody ModelAndView listAllStudent(HttpServletRequest request){
+		
 		System.out.println(">>>>>>>>listAllStudent called");		
+		
 		List<HashMap<String,Object>> listAllStudent = studentService.listAllStudent();
+		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
+		// 공통코드 호출을 위한 자료구조.
+		
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("listAllStudent",listAllStudent);
-		mv.addObject("listAllCommonMap",listAllCommonMap);
+		mv.addObject("listAllStudent"	, listAllStudent	 );
+		mv.addObject("listAllCommonMap"	, listAllCommonMap	 );
+		
 		mv.setViewName("contents/studentList");
+		
 		return mv;
 	}
 	
@@ -58,15 +65,15 @@ public class StudentController {
 	@RequestMapping(value="/searchKeywordStudent.do")
 	public @ResponseBody List<HashMap<String, Object>> searchKeywordStudent(HttpServletRequest request){
 		
-		String searchCategory = request.getParameter("searchCategory");
-		String searchContent = request.getParameter("searchContent");
+		String searchCategory 	= request.getParameter("searchCategory"	);
+		String searchContent 	= request.getParameter("searchContent"	);
 		
 		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
 		searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
 		map.put("searchCategory", searchCategory);
-		map.put("searchContent", searchContent);
+		map.put("searchContent"	, searchContent	);
 		
 		return studentService.searchKeywordStudent(map);
 	}
@@ -88,19 +95,19 @@ public class StudentController {
 		}
 		
 		
-		String stuGender = request.getParameter("stuGender");
-		String stuEnterance = request.getParameter("stuEnterance");
-		String stuAuthority = request.getParameter("stuAuthority");
+		String stuGender 	= request.getParameter("stuGender"		);
+		String stuEnterance = request.getParameter("stuEnterance"	);
+		String stuAuthority = request.getParameter("stuAuthority"	);
 		
 		
 		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
 		//searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("stuNumber", stuNumber);
-		map.put("stuGender", stuGender);
-		map.put("stuEnterance", stuEnterance);
-		map.put("stuAuthority", stuAuthority);
+		map.put("stuNumber"		, stuNumber		);
+		map.put("stuGender"		, stuGender		);
+		map.put("stuEnterance"	, stuEnterance	);
+		map.put("stuAuthority"	, stuAuthority	);
 		
 		return studentService.searchScopeStudent(map);
 	}
@@ -130,16 +137,16 @@ public class StudentController {
 
 		System.out.println(">>>>>>>>insertExperience Controller called");
 		
-		String stuNumber 	= request.getParameter("stuNumber");
-		String expYear 		= request.getParameter("expYear");
+		String stuNumber 	= request.getParameter("stuNumber"	);
+		String expYear 		= request.getParameter("expYear"	);
 		String expSemester	= request.getParameter("expSemester");
-		String expContent	= request.getParameter("expContent");
+		String expContent	= request.getParameter("expContent"	);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("stuNumber"	  , stuNumber);
-		map.put("expYear"	  , expYear);
-		map.put("expSemester" , expSemester);
-		map.put("expContent"  , expContent);
+		map.put("stuNumber"	  , stuNumber	);
+		map.put("expYear"	  , expYear		);
+		map.put("expSemester" , expSemester	);
+		map.put("expContent"  , expContent	);
 		
 		return studentService.insertExperience(map);
 	}

@@ -17,17 +17,26 @@ import com.google.gson.Gson;
 import com.project.manager.service.admin.FeeService;
 import com.project.manager.service.ccode.CcodeService;
 
+
+// 학생회비 관련된 admin항목들을 모아둔 컨트롤러.
 @Controller
 public class FeeController {
 
 	@Autowired
-	FeeService feeService;
+	FeeService feeService;			// 학비 서비스 호출
 	
 	@Autowired
-	CcodeService ccodeService;
+	CcodeService ccodeService; 		// 공통코드를 위한 묶음.
+	
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(FeeController.class);
+	
+	
+	//=====================================================================================================
+	//=========================  READ METHODS  ============================================================
+	//=====================================================================================================
+		
 	
 	//------------전체 학생회비 리스트 불러오기.-------------------
 	@RequestMapping(value="/listAllFee.do")
@@ -39,12 +48,11 @@ public class FeeController {
 		
 		Gson gson = new Gson();
 		String listAllCommonMap = gson.toJson(listmap);
+			
+		mv.addObject("list"						,list			 );
+		mv.addObject("listAllCommonJsonMap"		,listAllCommonMap);
+		mv.addObject("listAllCommonObjectMap"	,listmap		 );
 		
-		
-		mv.addObject("list", list);
-		mv.addObject("listAllCommonJsonMap",listAllCommonMap);
-		mv.addObject("listAllCommonObjectMap",listmap);
-
 		mv.setViewName("/contents/studentFeeList");
 		
 		return mv;
@@ -52,28 +60,24 @@ public class FeeController {
 	
 	
 	
-	/*
-	 * 검색 
+	/* 검색 
 	 * '특정 키워드'에 따른 학생 리스트 불러오기
-	 * form.id = seachKeywordForm
-	 * 
+	 * form.id = seachKeywordForm 
 	 */
 	@RequestMapping(value="/searchKeywordFee.do")
 	public @ResponseBody List<HashMap<String, Object>> searchKeywordFee(HttpServletRequest request){
 		
 		String searchCategory = request.getParameter("searchCategory");
-		String searchContent = request.getParameter("searchContent");
+		String searchContent  = request.getParameter("searchContent" );
 		
 		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
 		searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
 		map.put("searchCategory", searchCategory);
-		map.put("searchContent", searchContent);
-		
+		map.put("searchContent" , searchContent );
 		
 		List<HashMap<String,Object>> searchKeywordFeeList = feeService.searchKeywordFee(map);
-		
 		return searchKeywordFeeList;
 	}
 	
@@ -82,7 +86,6 @@ public class FeeController {
 	 * 검색 
 	 * '범위'에 따른 학생 리스트 불러오기
 	 * form.id = searchScopeForm
-	 * 
 	 */
 	@RequestMapping(value="/searchScopeFee.do")
 	public @ResponseBody List<HashMap<String, Object>> searchScopeFee(HttpServletRequest request){
@@ -100,35 +103,37 @@ public class FeeController {
 		//searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("stuNumber", stuNumber);
-		map.put("feePaidStatus", feePaidStatus);
+		map.put("stuNumber"		, stuNumber		);
+		map.put("feePaidStatus" , feePaidStatus );
 		
 		
-		List<HashMap<String,Object>> searchScopeFeeList = feeService.searchScopeFee(map);
+		List< HashMap<String,Object> > searchScopeFeeList = feeService.searchScopeFee(map);
 		
 		return searchScopeFeeList;
 	}
+	
+	
+	//=======================================================================================================
+	//=========================  UPDATE METHODS  ============================================================
+	//=======================================================================================================
+		
 	
 	
 	//학생회비 정보 업데이트를 위한 컨트롤러.
 	@RequestMapping(value="/updateFee.do")
 	public  @ResponseBody int updateFee(HttpServletRequest request){
 		
-		
 		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("stuNumber", request.getParameter("feeStudentId"));
-		map.put("feePaidDate", request.getParameter("feePaidDate"));
-		map.put("feeTotalAmount", request.getParameter("feeTotalAmount"));
-		map.put("feePaidAmount", request.getParameter("feePaidAmount"));
-		map.put("feeContent", request.getParameter("feePaidContent"));
-		map.put("feePaidMethod", request.getParameter("feePaidMethod"));
-		map.put("feePaidStatus", request.getParameter("feePaidStatus"));
-		int r = feeService.updateFee(map);				
+		map.put("stuNumber"		, request.getParameter("feeStudentId"	));
+		map.put("feePaidDate"	, request.getParameter("feePaidDate"	));
+		map.put("feeTotalAmount", request.getParameter("feeTotalAmount"	));
+		map.put("feePaidAmount"	, request.getParameter("feePaidAmount"	));
+		map.put("feeContent"	, request.getParameter("feePaidContent"	));
+		map.put("feePaidMethod"	, request.getParameter("feePaidMethod"	));
+		map.put("feePaidStatus"	, request.getParameter("feePaidStatus"	));
+		
+		int r = feeService.updateFee(map);	//업데이트가 잘 되었는지 확인하기 위한 리턴값.(쿼리로 인해 업데이트 된 행의 개수가 출력.)			
 		return r;
 	}
-	
-	
-	
-	
-	
+
 }

@@ -186,10 +186,10 @@
 <!------------------------------------ 사이드 바 ------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll')">기본정보1</a> 
+		<a href="#" onclick="showTitle(this,'listAll'	)">기본정보1</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">기본정보2</a> 
-		<a href="#" onclick="showTitle(this)">기본정보3</a> 
-		<a href="#" onclick="showTitle(this)">기본정보4</a>
+		<a href="#" onclick="showTitle(this				)">기본정보3</a> 
+		<a href="#" onclick="showTitle(this				)">기본정보4</a>
 		
 		<a href="/logout.go">로그아웃</a>
 	</div>
@@ -198,16 +198,16 @@
 
 	<script>
       function openNav() {
-          document.getElementById("mySidenav").style.width = "250px";
-          document.getElementById("main").style.marginLeft = "250px";
-          document.getElementById("upperbar").style.marginLeft="250px";
+          document.getElementById("mySidenav").style.width 		= "250px";
+          document.getElementById("main"	 ).style.marginLeft = "250px";
+          document.getElementById("upperbar" ).style.marginLeft = "250px";
           
       }
 
       function closeNav() {
-          document.getElementById("mySidenav").style.width = "0";
-          document.getElementById("main").style.marginLeft= "0";
-          document.getElementById("upperbar").style.marginLeft="0";
+          document.getElementById("mySidenav").style.width 		= "0";
+          document.getElementById("main"	 ).style.marginLeft = "0";
+          document.getElementById("upperbar" ).style.marginLeft = "0";
       }
       
     /*   

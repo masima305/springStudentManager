@@ -23,15 +23,15 @@ public class CcodeService {
     public static final HashMap<String, String> CCODENAMEMAP = new HashMap<String, String>();
 	
     static {
-	    	CCODENAMEMAP.put("stuNumber","STU_NUMBER");
-	    	CCODENAMEMAP.put("stuName","STU_NAME");
-	    	CCODENAMEMAP.put("stuPhone","STU_PHONE");
-	    	CCODENAMEMAP.put("stuEmail","STU_EMAIL");
-	    	CCODENAMEMAP.put("stuEnterance","STU_ENTERANCE");
-	    	CCODENAMEMAP.put("stuAuthority","STU_AUTHORITY");
-	    	CCODENAMEMAP.put("stuGender","STU_GENDER");
-	    	CCODENAMEMAP.put("feePaidStatus","FEE_PAID_STATUS");
-	    	CCODENAMEMAP.put("feePaidMethod","FEE_PAID_METHOD");
+	    	CCODENAMEMAP.put("stuNumber"	,"STU_NUMBER"		);
+	    	CCODENAMEMAP.put("stuName"		,"STU_NAME"			);
+	    	CCODENAMEMAP.put("stuPhone"		,"STU_PHONE"		);
+	    	CCODENAMEMAP.put("stuEmail"		,"STU_EMAIL"		);
+	    	CCODENAMEMAP.put("stuEnterance"	,"STU_ENTERANCE"	);
+	    	CCODENAMEMAP.put("stuAuthority"	,"STU_AUTHORITY"	);
+	    	CCODENAMEMAP.put("stuGender"	,"STU_GENDER"		);
+	    	CCODENAMEMAP.put("feePaidStatus","FEE_PAID_STATUS"	);
+	    	CCODENAMEMAP.put("feePaidMethod","FEE_PAID_METHOD"	);
 	    }
 	
 
@@ -73,10 +73,10 @@ public class CcodeService {
 
 		List<HashMap<String, Object>> list = ccodeDAO.listAllCommon();
 
-		List<HashMap<String, Object>> stuEnteranceList = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> stuAuthorityList = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> stuGenderList = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> expsemesterList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> stuEnteranceList 	= new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> stuAuthorityList 	= new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> stuGenderList	 	= new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> expsemesterList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> feePaidMethodList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> feePaidStatusList = new ArrayList<HashMap<String, Object>>();
 
@@ -108,12 +108,12 @@ public class CcodeService {
 
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = new HashMap<String,List<HashMap<String, Object>>>(); 
 
-		listAllCommonMap.put("stuEnteranceList", stuEnteranceList);
-		listAllCommonMap.put("stuAuthorityList", stuAuthorityList);
-		listAllCommonMap.put("stuGenderList", stuGenderList);
-		listAllCommonMap.put("expsemesterList", expsemesterList);
-		listAllCommonMap.put("feePaidMethodList", feePaidMethodList);
-		listAllCommonMap.put("feePaidStatusList", feePaidStatusList);
+		listAllCommonMap.put("stuEnteranceList"	, stuEnteranceList	);
+		listAllCommonMap.put("stuAuthorityList"	, stuAuthorityList	);
+		listAllCommonMap.put("stuGenderList"	, stuGenderList		);
+		listAllCommonMap.put("expsemesterList"	, expsemesterList	);
+		listAllCommonMap.put("feePaidMethodList", feePaidMethodList	);
+		listAllCommonMap.put("feePaidStatusList", feePaidStatusList	);
 
 
 		return listAllCommonMap;
