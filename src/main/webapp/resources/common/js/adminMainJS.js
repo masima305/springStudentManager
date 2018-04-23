@@ -39,7 +39,7 @@ function ajaxStuSearchKeyword(formId) {
 			var str = "";
 			
 			$.each(result,function(index,value){
-					str +="<tr>"
+					str +="<tr>";
 					str +=	"<td>" + index 						+ "</td>";
 					str +=	"<td>" + this.STU_NUMBER 			+ "</td>";
 				 	str +=	"<td>" + this.STU_NAME 				+ "</td>";
@@ -51,10 +51,10 @@ function ajaxStuSearchKeyword(formId) {
 					str +=	"<td>" + this.STU_AUTHORITY_VALUE 	+ "</td>";
 					str +=	"<td>";
 					str +=		"<button type='button' class='btn btn-small btn-info' onclick='javascript:ajaxStuDetail("+this.STU_NUMBER+")'>";
-					str +=			"보기"
-					str +=		"</button>"
-					str +=	"</td>" 
-					str +="</tr>"
+					str +=			"보기";
+					str +=		"</button>";
+					str +=	"</td>";
+					str +="</tr>";
 			});
 			$("#showStuList").append(str);
 		},

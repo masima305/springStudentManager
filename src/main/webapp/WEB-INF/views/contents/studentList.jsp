@@ -206,7 +206,7 @@ function ajaxStuDetail(stuNumber){
 			$("#stuInfoDetail").append("<br><br>");
 			
 			
-			//학생 회비 정보
+			//------------------------------------------학생 회비 정보----------------------------------------------------------------------
 			$("#stuFeeDetail").empty();
 			var str = "<br>";
 			str +="<table class='table table-bordered'>";
@@ -215,12 +215,12 @@ function ajaxStuDetail(stuNumber){
 			str +=	"</thead>";
 			str +=	"<tbody>";
 			str +=		"<tr>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeeTotalAmount' >"		+ result[0].FEE_TOTAL_AMOUNT	  +  "</td>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeePaidAmount' >"		+ result[0].FEE_PAID_AMOUNT 	  +  "</td>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeePaidDate' >"			+ result[0].FEE_PAID_DATE 		  +  "</td>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeePaidMethodValue'>"	+ result[0].FEE_PAID_METHOD_VALUE +  "</td>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeeStatusValue' >"		+ result[0].FEE_PAID_STATUS_VALUE +  "</td>";
-			str +=			"<td id='" + result[0].STU_NUMBER+"PersonalFeeContentValue' >"		+ result[0].FEE_CONTENT_VALUE 	  +	 "</td>";
+			str +=			"<td id='personalFeeTotalAmount' >"		+ result[0].FEE_TOTAL_AMOUNT	  +  "</td>";
+			str +=			"<td id='personalFeePaidAmount' >"		+ result[0].FEE_PAID_AMOUNT 	  +  "</td>";
+			str +=			"<td id='personalFeePaidDate' >"		+ result[0].FEE_PAID_DATE 		  +  "</td>";
+			str +=			"<td id='personalFeePaidMethodValue'>"	+ result[0].FEE_PAID_METHOD_VALUE +  "</td>";
+			str +=			"<td id='personalFeePaidStatusValue' >"	+ result[0].FEE_PAID_STATUS_VALUE +  "</td>";
+			str +=			"<td id='personalFeeContentValue' >"	+ result[0].FEE_CONTENT_VALUE 	  +	 "</td>";
 			str +=		"</tr>"
 			str +=	"</tbody>"
 			str +="</table>"		
@@ -302,95 +302,162 @@ function ajaxStuDetail(stuNumber){
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
 	//학생회비 정보수정 생성해주는 칸
-	var personalFeeTotalAmount	 	= $("#"+stuNumber+"PersonalFeeTotalAmount"		).html()
-	var personalFeePaidAmount 		= $("#"+stuNumber+"PersonalFeePaidAmount"		).html()
-	var personalFeePaidDate 		= $("#"+stuNumber+"PersonalFeePaidDate"			).html()
-	var personalFeePaidMethodValue 	= $("#"+stuNumber+"PersonalFeePaidMethodValue"	).html()
-	var personalFeeStatusValue 		= $("#"+stuNumber+"PersonalFeeStatusValue"		).html()
-	var personalFeeContentValue 	= $("#"+stuNumber+"PersonalFeeContentValue"		).html()
 	
-	$("#"+stuNumber+"PersonalFeeTotalAmount"	).empty()
-	$("#"+stuNumber+"PersonalFeePaidAmount"		).empty()
-	$("#"+stuNumber+"PersonalFeePaidDate"		).empty()
-	$("#"+stuNumber+"PersonalFeePaidMethodValue").empty()
-	$("#"+stuNumber+"PersonalFeeStatusValue"	).empty()
-	$("#"+stuNumber+"PersonalFeeContentValue"	).empty()
-	$("#feeBtnArea"								).empty()
+	var listAllCommonJsonMap = ${listAllCommonGson}
+	alert(JSON.stringify(listAllCommonJsonMap));
+	
+	var personalFeeTotalAmount	 	= $("#personalFeeTotalAmount"	 ).html();
+	var personalFeePaidAmount 		= $("#personalFeePaidAmount"	 ).html();
+	var personalFeePaidDate 		= $("#personalFeePaidDate"		 ).html();
+	var personalFeePaidMethodValue 	= $("#personalFeePaidMethodValue").html();
+	var personalFeePaidStatusValue 	= $("#personalFeePaidStatusValue").html();
+	var personalFeeContentValue 	= $("#personalFeeContentValue"	 ).html();
+	
+	$("#personalFeeTotalAmount"		).empty();
+	$("#personalFeePaidAmount"		).empty();
+	$("#personalFeePaidDate"		).empty();
+	$("#personalFeePaidMethodValue"	).empty();
+	$("#personalFeePaidStatusValue"	).empty();
+	$("#personalFeeContentValue"	).empty();
+	$("#feeBtnArea"					).empty();
 	
 	
 	var str = "";
-	str = "<input id='"+stuNumber+"UpdateFeeTotalAmount' value='"+personalFeeTotalAmount+"' size='6'/>"
-	$("#"+stuNumber+"PersonalFeeTotalAmount").append(str)
+	str = "<input id='updateFeeTotalAmount' value='"+personalFeeTotalAmount+"' size='6'/>"
+	$("#personalFeeTotalAmount").append(str)
 	
-	str = "<input id='"+stuNumber+"UpdateFeePaidAmount' value='"+personalFeePaidAmount+"' size='6'/>"
-	$("#"+stuNumber+"PersonalFeePaidAmount").append(str)
+	str = "<input id='updateFeePaidAmount' value='"+personalFeePaidAmount+"' size='6'/>"
+	$("#personalFeePaidAmount").append(str)
 	
 	//입금날짜 형식 예외처리 필요...
-	str = "<input id='"+stuNumber+"UpdateFeePaidDate' value='"+personalFeePaidDate+"' size='8'/>"
-	$("#"+stuNumber+"PersonalFeePaidDate").append(str)
+	str = "<input id='updateFeePaidDate' value='"+personalFeePaidDate+"' size='8'/>"
+	$("#personalFeePaidDate").append(str)
 	
-	//commonCode 처리좀 해줘.....(귀찮....)
-	str  = "<select id='"+stuNumber+"UpdateFeePaidMethodValue size='8'>"
-	str += 	"<option value='1' "
-		if( personalFeePaidMethodValue == '계좌이체')	str+="selected ";		
-	str += ">계좌이체</option>"
-	
-	str += 	"<option value='2' "
-		if( personalFeePaidMethodValue == '현금')	str+="selected ";		
-	str += ">현금</option>"
+	str  = "<select id='updateFeePaidMethodValue'>"
+		for(var k in listAllCommonJsonMap.feePaidMethodList) {
+	str += 		"<option value='"+listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE+"'";   
+			if(listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE == personalFeePaidMethodValue) str += " selected ";
+	str +=	">" + listAllCommonJsonMap.feePaidMethodList[k].COMMON_VALUE + "</option>";			
+		}
 	str += "</select>"
+			
+	$("#personalFeePaidMethodValue").append(str)
 	
-	$("#"+stuNumber+"PersonalFeePaidMethodValue").append(str)
 	
-	//이거도 commonCode처리좀.......
-	str = "<select id='"+stuNumber+"UpdateFeeStatusValue size='8'>"
-	str += 	"<option value='1' "
-		if( personalFeeStatusValue == '입금완료')	str+="selected ";		
-	str += ">입금완료</option>"
+	str = "<select id='updateFeeStatusValue'>"
+		for(var k in listAllCommonJsonMap.feePaidStatusList) {
+	str += 		"<option value='"+listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE+"'";   
+			if(listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE == personalFeePaidStatusValue) str += " selected ";
+	str +=	">" + listAllCommonJsonMap.feePaidStatusList[k].COMMON_VALUE + "</option>";			
+		}
+	str += "</select>"	
 	
-	str += 	"<option value='2' "
-		if( personalFeeStatusValue  == '분할입금')	str+="selected ";		
-	str += ">분할입금</option>"
+	$("#personalFeePaidStatusValue").append(str)
 	
-	str += 	"<option value='3' "
-		if( personalFeeStatusValue == '미납')	str+="selected ";		
-	str += ">미납</option>"
-	str += "</select>"
-		
+	str = "<input id='updateFeeContentValue' value='"+personalFeeContentValue+"'>";
+	$("#personalFeeContentValue"	 ).append(str);
 	
-	$("#"+stuNumber+"PersonalFeeStatusValue").append(str)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//fee content 수정의 경우 placeholder와 value 모두에 원래 기입정보를 넣어둔 뒤,
 	//원래 내용문이 있었는데 ""상태로 업데이트 할때 진짜 이렇게 할지 묻는 예외처리가 있어줬으면 좋겠다.
 	str = "<input id='"+stuNumber+"UpdateFeeContentValue' value='"+personalFeeContentValue+"' size='12'/>"
 	$("#"+stuNumber+"PersonalFeeContentValue").append(str)
 	
-	str = "<button type='button' onclick='updateFeeInput("+stuNumber+")' class='btn btn-small btn-warning'>수정완료</button>"
+	str = "<button type='button' onclick='javascript:updateFeeInput("+stuNumber+")' class='btn btn-small btn-warning'>수정완료</button>"
+	$('#feeBtnArea').empty();
 	$("#feeBtnArea").append(str)
 }
-function updateFeeInput(stuNumber){
-	//여기 수정 하세요
-	/* function updateFeeInput(id){
+function updateFeeInput(id){
 	//-----------------기본적인 값 알아내기 --------------------------
-	var paidDateUpdate = $("#"+id+"paidDateUpdate").val();			//변경된 입금날짜
-	var totalAmountUpdate = $("#"+id+"totalAmountUpdate").val();	//변경된 총액
-	var paidAmountUpdate = $("#"+id+"paidAmountUpdate").val();		//변경된 입금액
-	var paidContentUpdate = $("#"+id+"paidContentUpdate").val();	//변경된 비고
-	var paidMethodUpdate = $("#"+id+"paidMethodUpdate").val();		//변경된 입금방법
-	var paidStatusUpdate = $("#"+id+"paidStatusUpdate").val();		//변경된 입금상태
+	
+	
+	var paidDateUpdate 		= $("#"+id+"UpdateFeePaidDate"		  ).val();		//변경된 입금날짜
+	var totalAmountUpdate 	= $("#"+id+"UpdateFeeTotalAmount"	  ).val();		//변경된 총액
+	var paidAmountUpdate 	= $("#"+id+"UpdateFeePaidAmount"	  ).val();		//변경된 입금액
+	var paidContentUpdate 	= $("#"+id+"UpdateFeeContentValue"	  ).val();		//변경된 비고
+	var paidMethodUpdate 	= $("#"+id+"UpdateFeePaidMethodValue" ).val();		//변경된 입금방법
+	var paidStatusUpdate 	= $("#"+id+"UpdateFeePaidStatusValue" ).val();		//변경된 입금상태
+	
+	alert("입금날짜"+paidDateUpdate 	);
+	alert("총금"+totalAmountUpdate 	);
+	alert("기출금"+paidAmountUpdate	);
+	alert("내용"+paidContentUpdate 	);
+	alert("방법"+paidMethodUpdate		);
+	alert("상태"+paidStatusUpdate		);
 	
 	//-----------------Update를 위한 데이터 json화	-------------------
 	var updateData = {};
 	
-	updateData.feeStudentId = id;
-	updateData.feePaidDate = paidDateUpdate;
-	updateData.feeTotalAmount = totalAmountUpdate;
-	updateData.feePaidAmount = paidAmountUpdate;
-	updateData.feePaidContent = paidContentUpdate;
-	updateData.feePaidMethod = paidMethodUpdate;
-	updateData.feePaidStatus = paidStatusUpdate;
+	updateData.feeStudentId 	= id;
+	updateData.feePaidDate 		= paidDateUpdate;
+	updateData.feeTotalAmount 	= totalAmountUpdate;
+	updateData.feePaidAmount 	= paidAmountUpdate;
+	updateData.feePaidContent 	= paidContentUpdate;
+	updateData.feePaidMethod 	= paidMethodUpdate;
+	updateData.feePaidStatus 	= paidStatusUpdate;
 	//------------------유효성 검사 후 ajax call-----------------------
 	
+	$('#'+id+'PersonalFeePaidDate'		  ).empty();
+	$('#'+id+'PersonalFeeTotalAmount'	  ).empty();
+	$('#'+id+'PersonalFeePaidAmount'	  ).empty();
+	$('#'+id+'PersonalFeeContentValue'	  ).empty();
+	$('#'+id+'PersonalFeePaidMethodValue' ).empty();
+	$('#'+id+'PersonalFeeStatusValue'	  ).empty();
+	   	
+	
+	$('#'+id+'PersonalFeePaidDate'		).append(paidDateUpdate		);
+	$('#'+id+'PersonalFeeTotalAmount'	).append(totalAmountUpdate	);
+	$('#'+id+'PersonalFeePaidAmount'	).append(paidAmountUpdate	);
+	$('#'+id+'PersonalFeeContentValue'	).append(paidContentUpdate	);
+	
+	var paidMethod = "";
+	paidMethod += $("#"+id+"UpdateFeePaidMethodValue option:selected").val();
+	
+	
+	
+	
+	alert(paidMethodUpdate)
+	
+	
+	
+	paidMethod += "<input type='hidden' id='"+id+"paidMethodValue'  value='"+paidMethodUpdate+"'/>";
+			
+	   
+	var paidStatus = "";
+	paidStatus += $("#"+id+"UpdateFeePaidStatusValue option:selected").text();
+	
+	
+	
+	
+	alert(paidStatus)
+	
+	
+	
+	
+	paidStatus += "<input type='hidden' id='"+id+"paidStatusValue'  value='"+paidStatusUpdate+"'/>"
+
+	   
+	$('#'+id+'PersonalFeePaidMethodValue').append(paidMethod);
+	$('#'+id+'PersonalFeePaidMethodValue').append();
+	$('#'+id+'PersonalFeeStatusValue').append(paidStatus);
+	
+	var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeFeeInput("+id+")'>수정</button>";
+	$('#feeBtnArea').empty();
+	$('#feeBtnArea').append(btn);	
+	
+	
+	/* 
 	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
 		
 		$.ajax({
@@ -404,53 +471,15 @@ function updateFeeInput(stuNumber){
 				   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
 				   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
 				   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
-				   
+				    
 				   //---------- 표 내용물의 <td>태그 안에 <input>태그를 만들어서 내용을 그대로 넣어준다.
-				   $('#'+id+'paidDate').empty();
-				   $('#'+id+'paidDate').append(paidDateUpdate);
 				   
-				   $('#'+id+'totalAmount').empty();
-				   $('#'+id+'totalAmount').append(totalAmountUpdate);
-				   
-				   $('#'+id+'paidAmount').empty();
-				   $('#'+id+'paidAmount').append(paidAmountUpdate);
-				   
-				   $('#'+id+'paidContent').empty();
-				   $('#'+id+'paidContent').append(paidContentUpdate);
-				   //------------------------------------------------------------------------------------------
 				   
 				   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
-				   var paidMethod = "";
-				   for(var i=0; i<feePaidMethodList.length; i++){
-					   if( paidMethodUpdate == feePaidMethodList[i].COMMON_CODE){
-						   paidMethod += feePaidMethodList[i].COMMON_VALUE;
-					   } 
-				   }
-				   paidMethod += "<input type='hidden' id='"+id+"paidMethodValue'  value='"+paidMethodUpdate+"'/>"
-						
-				   
-				   var paidStatus = "";
-				   for(var i=0; i<feePaidStatusList.length; i++){
-					   if( paidStatusUpdate == feePaidStatusList[i].COMMON_CODE){
-						   paidStatus += feePaidStatusList[i].COMMON_VALUE;
-					   } 
-				   }
-				   paidStatus += "<input type='hidden' id='"+id+"paidStatusValue'  value='"+paidStatusUpdate+"'/>"
-
-				   
-				   $('#'+id+'paidMethod').empty();
-				   $('#'+id+'paidMethod').append(paidMethod);
-				   $('#'+id+'paidMethod').append();
-				   
-				   
-					$('#'+id+'paidStatus').empty();
-					$('#'+id+'paidStatus').append(paidStatus);
+				  
 					//----------------------버튼 변경--------------------------------
 					//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
-					var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:FeeUpdateBtn("+id+")'>수정</button>";
-				   $('#'+id+'btn').empty();
-				   $('#'+id+'btn').append(btn);	
-				
+					
 				},//success
 			error: function(a,b,c){
 				alert("오류 발생");
@@ -465,7 +494,8 @@ function updateFeeInput(stuNumber){
 		alert('');
 		return;
 	}
-} */
+}
+*/
 }
 
 //======================================경력 수정용 script ==========================
@@ -501,8 +531,8 @@ function makeExpInput(stuNumber){
 	
 	$("#expBtnArea").empty();
 	$("#expBtnArea").append(str);
-	
-	stuNumberOption("insertExpYear");
+	var startYear = (stuNumber.toString()).substr(0,4);
+	stuNumberOption("insertExpYear",parseInt(startYear));
 }
 function resetExpInput(){
 	$("#addInputDiv").empty();
@@ -540,12 +570,12 @@ function insertExpInput(inputNumber){
 		success: function(result) {
 	//--------------------------------------------------success 이후
 			
-			str+=		"<tr>"
+			str+=		"<tr>";
 			str+=			"<td>"+expYear+"</td>";
 			str+=			"<td>"+expSemester+ "</td>";
 			str+=			"<td>"+expContent + "</td>";
-			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>"
-			str+=		"</tr>"
+			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>";
+			str+=		"</tr>";
 			
 			var n = $("#ExpContent").html();
 			
@@ -560,7 +590,7 @@ function insertExpInput(inputNumber){
 			$("#expBtnArea"	).append(str);
 		},
 		error: function(abc){
-			alert(""+abc)
+			alert(""+abc);
 		}
 	});
 }

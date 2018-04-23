@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.project.manager.service.admin.StudentService;
 import com.project.manager.service.ccode.CcodeService;
 
@@ -46,10 +47,13 @@ public class StudentController {
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		// 공통코드 호출을 위한 자료구조.
 		
+		Gson gson = new Gson();
+		String listAllCommonGson = gson.toJson(listAllCommonMap);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("listAllStudent"	, listAllStudent	 );
-		mv.addObject("listAllCommonMap"	, listAllCommonMap	 );
+		mv.addObject("listAllStudent"		, listAllStudent	 );
+		mv.addObject("listAllCommonMap"		, listAllCommonMap	 );
+		mv.addObject("listAllCommonGson"	, listAllCommonGson	 );
 		
 		mv.setViewName("contents/studentList");
 		
