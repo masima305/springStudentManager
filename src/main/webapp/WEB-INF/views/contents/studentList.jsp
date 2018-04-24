@@ -336,7 +336,7 @@ function makeFeeInput(stuNumber){
 	str  = "<select id='updateFeePaidMethodValue'>"
 		for(var k in listAllCommonJsonMap.feePaidMethodList) {
 	str += 		"<option value='"+listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE+"'";   
-			if(listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE == personalFeePaidMethodValue) str += " selected ";
+			if(listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE == personalFeePaidMethodValue) str += " id='updateFeePaidMethodText' selected ";
 	str +=	">" + listAllCommonJsonMap.feePaidMethodList[k].COMMON_VALUE + "</option>";			
 		}
 	str += "</select>"
@@ -344,10 +344,10 @@ function makeFeeInput(stuNumber){
 	$("#personalFeePaidMethodValue").append(str)
 	
 	
-	str = "<select id='updateFeeStatusValue'>"
+	str = "<select id='updateFeePaidStatusValue'>"
 		for(var k in listAllCommonJsonMap.feePaidStatusList) {
 	str += 		"<option value='"+listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE+"'";   
-			if(listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE == personalFeePaidStatusValue) str += " selected ";
+			if(listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE == personalFeePaidStatusValue) str += "id='updateFeePaidStatusText' selected ";
 	str +=	">" + listAllCommonJsonMap.feePaidStatusList[k].COMMON_VALUE + "</option>";			
 		}
 	str += "</select>"	
@@ -355,16 +355,7 @@ function makeFeeInput(stuNumber){
 	$("#personalFeePaidStatusValue").append(str)
 	
 	str = "<input id='updateFeeContentValue' value='"+personalFeeContentValue+"'>";
-	$("#personalFeeContentValue"	 ).append(str);
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	$("#personalFeeContentValue").append(str);
 	
 	
 	
@@ -378,20 +369,21 @@ function makeFeeInput(stuNumber){
 	$('#feeBtnArea').empty();
 	$("#feeBtnArea").append(str)
 }
+
+
 function updateFeeInput(id){
 	//-----------------기본적인 값 알아내기 --------------------------
 	
+	var listAllCommonJsonMap = ${listAllCommonGson}
+	alert(JSON.stringify(listAllCommonJsonMap));
 	
-	var paidDateUpdate 		= $("#"+id+"UpdateFeePaidDate"		  ).val();		//변경된 입금날짜
-	var totalAmountUpdate 	= $("#"+id+"UpdateFeeTotalAmount"	  ).val();		//변경된 총액
-	var paidAmountUpdate 	= $("#"+id+"UpdateFeePaidAmount"	  ).val();		//변경된 입금액
-	var paidContentUpdate 	= $("#"+id+"UpdateFeeContentValue"	  ).val();		//변경된 비고
-	var paidMethodUpdate 	= $("#"+id+"UpdateFeePaidMethodValue" ).val();		//변경된 입금방법
-	var paidStatusUpdate 	= $("#"+id+"UpdateFeePaidStatusValue" ).val();		//변경된 입금상태
+	var paidDateUpdate 		= $("#updateFeePaidDate"		 ).val();		//변경된 입금날짜
+	var totalAmountUpdate 	= $("#updateFeeTotalAmount"	  	 ).val();		//변경된 총액
+	var paidAmountUpdate 	= $("#updateFeePaidAmount"	  	 ).val();		//변경된 입금액
+	var paidContentUpdate 	= $("#updateFeeContentValue"	 ).val();		//변경된 비고
+	var paidMethodUpdate 	= $("#updateFeePaidMethodValue"  ).val();		//변경된 입금방법
+	var paidStatusUpdate 	= $("#updateFeePaidStatusValue" ).val();		//변경된 입금상태
 	
-	alert("입금날짜"+paidDateUpdate 	);
-	alert("총금"+totalAmountUpdate 	);
-	alert("기출금"+paidAmountUpdate	);
 	alert("내용"+paidContentUpdate 	);
 	alert("방법"+paidMethodUpdate		);
 	alert("상태"+paidStatusUpdate		);
@@ -408,84 +400,57 @@ function updateFeeInput(id){
 	updateData.feePaidStatus 	= paidStatusUpdate;
 	//------------------유효성 검사 후 ajax call-----------------------
 	
-	$('#'+id+'PersonalFeePaidDate'		  ).empty();
-	$('#'+id+'PersonalFeeTotalAmount'	  ).empty();
-	$('#'+id+'PersonalFeePaidAmount'	  ).empty();
-	$('#'+id+'PersonalFeeContentValue'	  ).empty();
-	$('#'+id+'PersonalFeePaidMethodValue' ).empty();
-	$('#'+id+'PersonalFeeStatusValue'	  ).empty();
-	   	
-	
-	$('#'+id+'PersonalFeePaidDate'		).append(paidDateUpdate		);
-	$('#'+id+'PersonalFeeTotalAmount'	).append(totalAmountUpdate	);
-	$('#'+id+'PersonalFeePaidAmount'	).append(paidAmountUpdate	);
-	$('#'+id+'PersonalFeeContentValue'	).append(paidContentUpdate	);
-	
-	var paidMethod = "";
-	paidMethod += $("#"+id+"UpdateFeePaidMethodValue option:selected").val();
-	
-	
-	
-	
-	alert(paidMethodUpdate)
-	
-	
-	
-	paidMethod += "<input type='hidden' id='"+id+"paidMethodValue'  value='"+paidMethodUpdate+"'/>";
-			
-	   
-	var paidStatus = "";
-	paidStatus += $("#"+id+"UpdateFeePaidStatusValue option:selected").text();
-	
-	
-	
-	
-	alert(paidStatus)
-	
-	
-	
-	
-	paidStatus += "<input type='hidden' id='"+id+"paidStatusValue'  value='"+paidStatusUpdate+"'/>"
-
-	   
-	$('#'+id+'PersonalFeePaidMethodValue').append(paidMethod);
-	$('#'+id+'PersonalFeePaidMethodValue').append();
-	$('#'+id+'PersonalFeeStatusValue').append(paidStatus);
-	
-	var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeFeeInput("+id+")'>수정</button>";
-	$('#feeBtnArea').empty();
-	$('#feeBtnArea').append(btn);	
-	
-	
-	/* 
 	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
 		
 		$.ajax({
 			url: "updateFee.do",
 			data: updateData,
 			success: function( result ) {
-	
+			
 				//------------------------------success 후에 일어나는 변화..
+				//-- 각 항목에 있는 input칸을 지워주고 변경될 값을 html에 넣어준다. 
+				$('#personalFeePaidDate'		).empty();
+				$('#personalFeeTotalAmount'	  	).empty();
+				$('#personalFeePaidAmount'	  	).empty();
+				$('#personalFeeContentValue'	).empty();
+				$('#personalFeePaidMethodValue' ).empty();
+				$('#personalFeePaidStatusValue'	).empty();
 				
-				 //------- 수정 버튼을 누르면, 해당 칸의 정보가 input태그로 바뀐다.(그 칸의 정보는 그대로 value값으로 가지고 있다,.
-				   var listAllCommonJsonMap  = ${listAllCommonJsonMap}
-				   var feePaidMethodList = listAllCommonJsonMap.feePaidMethodList
-				   var feePaidStatusList = listAllCommonJsonMap.feePaidStatusList
-				    
-				   //---------- 표 내용물의 <td>태그 안에 <input>태그를 만들어서 내용을 그대로 넣어준다.
+				   	
+				
+				$('#personalFeePaidDate'	).append(paidDateUpdate		);
+				$('#personalFeeTotalAmount'	).append(totalAmountUpdate	);
+				$('#personalFeePaidAmount'	).append(paidAmountUpdate	);
+				$('#personalFeeContentValue').append(paidContentUpdate	);
+				
+				//-- select 태그의 값같은 경우, 태그 안에 있는 value값과 공통코드의 code값을 비교해서 text불러온다.
+				var paidMethod = "";
+
+				for(var k in listAllCommonJsonMap.feePaidMethodList) {
+					if(listAllCommonJsonMap.feePaidMethodList[k].COMMON_CODE == paidMethodUpdate){
+						paidMethod += listAllCommonJsonMap.feePaidMethodList[k].COMMON_VALUE;			
+					}
+				}
 				   
+				var paidStatus = "";
+				
+				for(var k in listAllCommonJsonMap.feePaidStatusList) {
+					if(listAllCommonJsonMap.feePaidStatusList[k].COMMON_CODE == paidStatusUpdate){
+						paidStatus += listAllCommonJsonMap.feePaidStatusList[k].COMMON_VALUE;			
+					}
+				}
 				   
-				   //---------------------수정 버튼을 누르면 select항목이 뜬다. (commonList를 가지고 오는 부분이 완성되면 select자동화 할것.)
-				  
-					//----------------------버튼 변경--------------------------------
-					//-----------------------버튼을 누르면 상위 수정된 항목들이 JSON형식으로 만들어져 Ajax콜 해서 넘겨짐.
+				$('#personalFeePaidMethodValue').append(paidMethod);
+				$('#personalFeePaidMethodValue').append();
+				$('#personalFeePaidStatusValue').append(paidStatus);
+				
+				var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeFeeInput("+id+")'>수정</button>";
+				$('#feeBtnArea').empty();
+				$('#feeBtnArea').append(btn);	
 					
 				},//success
 			error: function(a,b,c){
-				alert("오류 발생");
-				console.log("====== > A : "+ JSON.stringify(a))
-				console.log("====== > B : "+ b)
-				console.log("====== > C : "+ c)
+				
 			}	
 		});
 						
@@ -494,8 +459,6 @@ function updateFeeInput(id){
 		alert('');
 		return;
 	}
-}
-*/
 }
 
 //======================================경력 수정용 script ==========================
