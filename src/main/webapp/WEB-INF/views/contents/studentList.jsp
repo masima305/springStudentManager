@@ -484,21 +484,24 @@ function updateInfoInput(id){
 function makeDeleteInput(stuNumber){
 	var str = "";
 	str += "<hr>"
-	str += "<p><strong>학번+이름</strong>을 한번 더 입력하세요</p>"
+	str += "<p><h4><strong>학번+이름</strong>을 한번 더 입력하세요</h4></p>"
+	str += "<div id='deleteKeywordWarning' class='text-danger'></div>"		
 	str += "<p><input type='text' id='deleteKeyword' placeholder='ex)12341234홍길동'></p>"
 	
-	str += "<p>정보 삭제의 <strong>이유</strong>를 입력하세요</p>"		
+	str += "<p><h4>정보 삭제의 <strong>이유</strong>를 입력하세요</h4></p>"		
+	str += "<div id='deleteReasonWarning' class='text-danger'></div>"				
 	str += "<p><input type='text' id='deleteReason' placeholder='ex)타대학 편입'></p>"
 					
 	$("#deleteCheckArea").html(str)	
 	
 	
 	
-	str = "<button type='button' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
+	str = "<button type='button' onclick='javascript:deleteStudent("+stuNumber+")' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
 	$("#deleteBtnArea").html(str)	
 }
-function deleteStudent(keyword, reason){
-	
+function deleteStudent(stuNumber){
+	$("#deleteKeywordWarning").html("학번이름의 조합이 맞지 않습니다. 다시 입력해주세요.")	
+	$("#deleteReasonWarning").html("이유의 형식이 맞지 않거나, 입력값이 없습니다. 다시 입력해주세요")	
 }	
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
