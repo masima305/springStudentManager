@@ -202,7 +202,7 @@ function ajaxStuDetail(stuNumber){
 			str+=	"</table>";
 			str+="</form>";
 			$("#stuInfoDetail").append(str);
-			$("#stuInfoDetail").append("<div id = 'infoBtnArea'><hr><button type='button' class='btn btn-small btn-info'>수정</button></div>");
+			$("#stuInfoDetail").append("<div id = 'infoBtnArea'><hr><button type='button' onclick='makeInfoInput("+result[0].STU_NUMBER+")' class='btn btn-small btn-info'>수정</button></div>");
 			$("#stuInfoDetail").append("<br><br>");
 			
 			
@@ -301,6 +301,12 @@ function ajaxStuDetail(stuNumber){
 }
 //======================================학생정보 수정용 script ==========================
 function makeInfoInput(stuNumber){
+	
+	var listAllCommonJsonMap = ${listAllCommonGson}
+	var stuGenderList = listAllCommonJsonMap.stuGenderList
+	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList
+	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList
+	
 	var personalStuName	 			= $("#personalStuName"	 		).html();
 	var personalStuBirthday 		= $("#personalStuBirthday"	 	).html();
 	var personalStuGender 			= $("#personalStuGender"		).html();
@@ -317,27 +323,159 @@ function makeInfoInput(stuNumber){
 	$("#personalStuEnteranceValue"	).empty();
 	$("#personalStuAuthorityValue"	).empty();
 	
+	//------------------input tag 입력-----------------------------------------
+	
 	var str = "";
 	str = "<input id='updateStuName' value='"+personalStuName+"'>";
-	$("#personalStuName"	 		).append(str);
+	$("#personalStuName").append(str);
+	
+	str = "<input id='updateStuBirthday' value='"+personalStuBirthday+"'>";
+	$("#personalStuBirthday").append(str);
+	
+	str = "<input id='updateStuPhone' value='"+personalStuPhone+"'>";
+	$("#personalStuPhone").append(str);
+	
+	str = "<input id='updateStuEmail' value='"+personalStuEmail+"'>";
+	$("#personalStuEmail").append(str);
+	
+	//-------------------select tag 입력 -------------------------------------
+	
+	str  = "<select id='updateStuGender'>"
+		for(var k in stuGenderList) {
+	str += 		"<option value='"+stuGenderList[k].COMMON_CODE+"'";   
+			if(stuGenderList[k].COMMON_VALUE == personalStuGender) str += " selected ";
+	str +=	">" + stuGenderList[k].COMMON_VALUE + "</option>";			
+		}
+	str += "</select>"
+	
+	$("#personalStuGender").append(str);
+	
+	str  = "<select id='updateStuAuthority'>"
+		for(var k in stuAuthorityList) {
+	str += 		"<option value='"+stuAuthorityList[k].COMMON_CODE+"'";   
+			if(stuAuthorityList[k].COMMON_VALUE == personalStuAuthorityValue) str += " selected ";
+	str +=	">" + stuAuthorityList[k].COMMON_VALUE + "</option>";			
+		}
+	str += "</select>"
+	
+	$("#personalStuAuthorityValue").append(str);
+	
+	str  = "<select id='updateStuEnterance'>"
+		for(var k in stuEnteranceList) {
+	str += 		"<option value='"+stuEnteranceList[k].COMMON_CODE+"'";   
+			if(stuEnteranceList[k].COMMON_VALUE == personalStuEnteranceValue) str += " selected ";
+	str +=	">" + stuEnteranceList[k].COMMON_VALUE + "</option>";			
+		}
+	str += "</select>"
+	
+	$("#personalStuEnteranceValue").append(str);
+	
+	/*------------------------infoBtnArea-----------------------------*/
 	
 	
-	
-	
-	
-	/* personalStuName
-	personalStuBirthday
-	personalStuGender
-	personalStuPhone
-	personalStuEmail
-	personalStuEnteranceValue
-	personalStuAuthorityValue
-	infoBtnArea */
-
+	str = "<button type='button' onclick='javascript:updateInfoInput("+stuNumber+")' class='btn btn-small btn-warning'>수정완료</button>"
+	$('#infoBtnArea').empty();
+	$("#infoBtnArea").append(str)
 
 }
+
+
 function updateInfoInput(id){
 	
+	
+	var listAllCommonJsonMap = ${listAllCommonGson}
+	var stuGenderList = listAllCommonJsonMap.stuGenderList
+	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList
+	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList
+	
+
+	//------------------input tag 입력-----------------------------------------
+	
+	var updateStuName = $('#updateStuName').val()
+	var updateStuBirthday = $('#updateStuBirthday').val()
+	var updateStuPhone = $('#updateStuPhone').val()
+	var updateStuEmail = $('#updateStuEmail').val()
+	var updateStuGender = $('#updateStuGender').val()
+	var updateStuAuthority = $('#updateStuAuthority').val()
+	var updateStuEnterance = $('#updateStuEnterance').val()
+	
+	//-----------------Update를 위한 데이터 json화	-------------------
+	var updateData = {};
+	
+	updateData.stuNumber	= id;
+	updateData.stuName 		= updateStuName;
+	updateData.stuBirthday 	= updateStuBirthday;
+	updateData.stuPhone 	= updateStuPhone;
+	updateData.stuEmail 	= updateStuEmail;
+	updateData.stuGender 	= updateStuGender;
+	updateData.stuAuthority = updateStuAuthority;
+	updateData.stuEnterance = updateStuEnterance;
+	
+	
+	//--------------------ajax call---------------------------
+	//------------------유효성 검사 후 ajax call-----------------------
+	
+	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
+		
+		$.ajax({
+			url: "?????????.do",
+			data: updateData,
+			success: function( result ) {
+			
+				//------------------------------success 후에 일어나는 변화..
+				//-- 각 항목에 있는 input칸을 지워주고 변경될 값을 html에 넣어준다. 
+				
+				
+	
+				$("#personalStuPhone"			).html(updateStuPhone);
+				$("#personalStuEmail"			).html(updateStuEmail);
+				$("#personalStuName"	 		).html(updateStuName);
+				$("#personalStuBirthday"	 	).html(updateStuBirthday);
+				
+				
+				//-------------------select tag 입력 -------------------------------------
+				
+				var gender = "";
+				var enterance = "";
+				var authority = "";
+				
+				for(var k in stuGenderList) {
+					if(stuGenderList[k].COMMON_CODE == updateStuGender){
+						gender += stuGenderList[k].COMMON_VALUE;			
+					}
+				}
+				
+				for(var k in stuAuthorityList) {
+					if(stuAuthorityList[k].COMMON_CODE == updateStuAuthority){
+						authority += stuAuthorityList[k].COMMON_VALUE;			
+					}
+				}
+				for(var k in stuEnteranceList) {
+					if(stuEnteranceList[k].COMMON_CODE == updateStuEnterance){
+						enterance += stuEnteranceList[k].COMMON_VALUE;			
+					}
+				}
+				
+				   
+				$('#personalStuGender').html(gender);
+				$('#personalStuEnteranceValue').html(enterance);
+				$('#personalStuAuthorityValue').html(authority);
+	
+				var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeInfoInput("+id+")'>수정</button>";
+				$('#feeBtnArea').empty();
+				$('#feeBtnArea').append(btn);	
+					
+				},//success
+			error: function(a,b,c){
+				
+			}	
+		});
+						
+	}else{
+		//유효성 검사에 실패하면 그에 해당하는 alert가 나오고, 전송은 하지 않는체로 종료.
+		alert('');
+		return;
+	}
 }
 	
 //======================================학생회비 수정용 script ==========================
@@ -415,18 +553,13 @@ function updateFeeInput(id){
 	//-----------------기본적인 값 알아내기 --------------------------
 	
 	var listAllCommonJsonMap = ${listAllCommonGson}
-	alert(JSON.stringify(listAllCommonJsonMap));
-	
+
 	var paidDateUpdate 		= $("#updateFeePaidDate"		 ).val();		//변경된 입금날짜
 	var totalAmountUpdate 	= $("#updateFeeTotalAmount"	  	 ).val();		//변경된 총액
 	var paidAmountUpdate 	= $("#updateFeePaidAmount"	  	 ).val();		//변경된 입금액
 	var paidContentUpdate 	= $("#updateFeeContentValue"	 ).val();		//변경된 비고
 	var paidMethodUpdate 	= $("#updateFeePaidMethodValue"  ).val();		//변경된 입금방법
-	var paidStatusUpdate 	= $("#updateFeePaidStatusValue" ).val();		//변경된 입금상태
-	
-	alert("내용"+paidContentUpdate 	);
-	alert("방법"+paidMethodUpdate		);
-	alert("상태"+paidStatusUpdate		);
+	var paidStatusUpdate 	= $("#updateFeePaidStatusValue"	 ).val();		//변경된 입금상태
 	
 	//-----------------Update를 위한 데이터 json화	-------------------
 	var updateData = {};

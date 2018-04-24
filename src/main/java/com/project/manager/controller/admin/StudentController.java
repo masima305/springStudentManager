@@ -182,6 +182,7 @@ public class StudentController {
 	/*
 	 * 학생 추가하기
 	 */
+	
 	@RequestMapping(value="/insertStudent.do")
 	public @ResponseBody HashMap<String,String> insertStudent(HttpServletRequest request) {
 		
@@ -218,6 +219,7 @@ public class StudentController {
 			map.put("result", "학생 추가를 실패하였습니다.");
 		}
 		return map;
+	
 	}
 	
 	/*
