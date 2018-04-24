@@ -49,7 +49,9 @@
 		<c:import url='../contents/studentInsert.jsp'></c:import>
 	    <c:import url='../contents/studentUpdate.jsp'></c:import>
 --%>
-
+		<div id="studentInsert" style="display: none;">
+			<c:import url='/getCommonCode.do'></c:import>
+		</div>
 
 	</div>
 
@@ -59,6 +61,7 @@
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		<a href="#" onclick="showTitle(this,'listAll'	)">학생관리</a> 
+		<a href="#" onclick="showTitle(this,'studentInsert'	)">학생등록</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
 		<a href="#" onclick="showTitle(this				)">학과일정관리</a> 
 		<a href="#" onclick="showTitle(this				)">학생회의</a>
