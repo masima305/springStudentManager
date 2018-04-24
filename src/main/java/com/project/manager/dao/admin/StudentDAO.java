@@ -76,4 +76,26 @@ public class StudentDAO {
 		return this.sqlSession.insert("student.insertExperience",map);
 	}
 	
+	//=====================================================================================================
+	//=========================  UPDATE METHODS  ============================================================
+	//=====================================================================================================
+	
+	//학생 '경력' 사항 추가
+	public int updateStudent(HashMap<String,String> map){
+		System.out.println(">>>>>>>>updateStudnet DAO called");
+		
+		System.out.println(map.get("stuNumber"));
+		System.out.println(map.get("stuName"));
+		System.out.println(map.get("stuBirthday"));
+		System.out.println(map.get("stuPhone"));
+		System.out.println(map.get("stuEmail"));
+		System.out.println(map.get("stuGender"));
+		System.out.println(map.get("stuAuthority"));
+		System.out.println(map.get("stuEnterance"));
+		
+		
+	
+		return 0; //this.sqlSession.insert("student.insertExperience",map);
+	}
+	
 }

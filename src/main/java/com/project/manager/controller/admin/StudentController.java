@@ -187,16 +187,16 @@ public class StudentController {
 	public @ResponseBody HashMap<String,String> insertStudent(HttpServletRequest request) {
 		
 		//학생 기본정보
-		HashMap<String,String> InfoMap = new HashMap<String,String>();
-		InfoMap.put("stuNumber", request.getParameter("stuNumber").trim());
-		InfoMap.put("stuName", request.getParameter("stuName").trim());
-		InfoMap.put("stuPassword", request.getParameter("stuBirthday").trim()); //비밀번호는 생년월일로 넣어줌
-		InfoMap.put("stuBirthday", request.getParameter("stuBirthday").trim());
-		InfoMap.put("stuGender", request.getParameter("stuGender").trim());
-		InfoMap.put("stuPhone", request.getParameter("stuPhone").trim());
-		InfoMap.put("stuEmail", request.getParameter("stuEmail").trim());
-		InfoMap.put("stuEnterance", request.getParameter("stuEnterance").trim());
-		InfoMap.put("stuAuthority", request.getParameter("stuAuthority").trim());
+		HashMap<String,String> infoMap = new HashMap<String,String>();
+		infoMap.put("stuNumber", request.getParameter("stuNumber").trim());
+		infoMap.put("stuName", request.getParameter("stuName").trim());
+		infoMap.put("stuPassword", request.getParameter("stuBirthday").trim()); //비밀번호는 생년월일로 넣어줌
+		infoMap.put("stuBirthday", request.getParameter("stuBirthday").trim());
+		infoMap.put("stuGender", request.getParameter("stuGender").trim());
+		infoMap.put("stuPhone", request.getParameter("stuPhone").trim());
+		infoMap.put("stuEmail", request.getParameter("stuEmail").trim());
+		infoMap.put("stuEnterance", request.getParameter("stuEnterance").trim());
+		infoMap.put("stuAuthority", request.getParameter("stuAuthority").trim());
 		
 		//학생회비 정보
 		HashMap<String,String> feeMap = new HashMap<String,String>();
@@ -208,8 +208,8 @@ public class StudentController {
 		feeMap.put("feeContent", request.getParameter("feeContent").trim());
 		
 		//학생 기본정보, 학생회비 정보 DB연결
-		int InfoResult = studentService.insertStudentInfo(InfoMap);
-		int feeResult = studentService.insertStudentFee(InfoMap);
+		int InfoResult = studentService.insertStudentInfo(infoMap);
+		int feeResult = studentService.insertStudentFee(feeMap);
 		
 		HashMap<String,String> map = new HashMap<String,String>();
 
@@ -219,18 +219,41 @@ public class StudentController {
 			map.put("result", "학생 추가를 실패하였습니다.");
 		}
 		return map;
+	}
+	//======================================================================================================
+	//========================= UPDATE METHODS  ============================================================
+	//======================================================================================================
+		
 	
+	@RequestMapping(value="/updateStudent.do")
+	public @ResponseBody int updateStudent (HttpServletRequest request){
+
+		System.out.println(">>>>>>>>updateStudentController called");
+		
+		String stuNumber 	= request.getParameter("stuNumber"		);
+		String stuName 		= request.getParameter("stuName"		);
+		String stuBirthday 	= request.getParameter("stuBirthday"	);
+		String stuPhone 	= request.getParameter("stuPhone"		);
+		String stuEmail 	= request.getParameter("stuEmail"		);
+		String stuGender 	= request.getParameter("stuGender"		);
+		String stuAuthority = request.getParameter("stuAuthority"	);
+		String stuEnterance = request.getParameter("stuEnterance"	);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		
+		
+		map.put("stuNumber"	  	, stuNumber		);
+		map.put("stuName"	  	, stuName		);
+		map.put("stuBirthday"	, stuBirthday	);
+		map.put("stuPhone"	  	, stuPhone		);
+		map.put("stuEmail"	  	, stuEmail		);
+		map.put("stuGender"	  	, stuGender		);
+		map.put("stuAuthority"	, stuAuthority	);
+		map.put("stuEnterance"	, stuEnterance	);
+		
+		return studentService.updateStudent(map);
 	}
 	
-	/*
-	 * 학생 정보 수정하기
-	 * 
-	 * 1) 학번(PK)이 바뀔 경우
-	 * 2) 학번을 제외한 내용만 바뀔 경우
-	 */
-	public int updateStudent(HttpServletRequest request) {
-		return 0;
-	}
 	
 	/*
 	 * 학생 삭제하기 (del_yn= 'n' -> 'y')

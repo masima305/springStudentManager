@@ -93,9 +93,15 @@ public class StudentService {
 		return studentDAO.insertExperience(map);
 	}
 	
-	
+	//=====================================================================================================
+	//=========================  UPDATE METHODS  ============================================================
+	//=====================================================================================================
+		
+	//학생 정보 수정
 	public int updateStudent(HashMap<String,String> map) {
-		return 0;
+		System.out.println(">>>>>>>>updateStudent Service called");
+		return studentDAO.updateStudent(map);
+		
 	}
 	
 	public int deleteStudent(HashMap<String,String> map) {

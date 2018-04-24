@@ -421,7 +421,7 @@ function updateInfoInput(id){
 	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
 		
 		$.ajax({
-			url: "?????????.do",
+			url: "/updateStudent.do",
 			data: updateData,
 			success: function( result ) {
 			
