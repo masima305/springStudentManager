@@ -1,4 +1,4 @@
-<!--?xml version="1.0" encoding="UTF-8"? -->
+  <!--?xml version="1.0" encoding="UTF-8"? -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- Student 테이블을 위한 query mapper -->
@@ -129,6 +129,7 @@
 	<!-- ========================================  INSERT   QUERY   =========================================================== -->
 	<!-- ====================================================================================================================== -->
 	
+	<!-- 학생 '경력' 추가하기 -->
 	<insert id="insertExperience" parameterType="HashMap">
 		INSERT 
     		INTO EXPERIENCE(
@@ -142,6 +143,57 @@
         		#{expYear},
         		#{expSemester},
         		#{expContent}
+    		)
+	</insert>
+	
+	<!-- 학생 '기본정보'추가하기 -->
+	<insert id="insertStudentInfo" parameterType="HashMap" >
+		INSERT 
+    		INTO STUDENT(
+           		STU_NUMBER,
+            	STU_NAME,
+            	STU_BIRTHDAY,
+            	STU_PHONE,
+            	STU_EMAIL,
+            	STU_ENTERANCE,
+            	STU_AUTHORITY,
+            	STU_GENDER,
+            	STU_PASSWORD,
+    		) 
+    		VALUES (
+        		#{stuNumber},
+        		#{stuName},
+        		#{stuBirthday},
+        		#{stuPhone}
+        		#{stuEmail}
+        		#{stuEnterance}
+        		#{stuAuthority}
+        		#{stuGender}
+        		#{stuPassword}
+    		)
+	</insert>
+	
+	
+	<!-- '학생회비' 추가하기 -->
+	<insert id="insertStudentFee" parameterType="HashMap" >
+		INSERT 
+    		INTO STUDENT_FEE(
+           		STU_NUMBER,
+            	FEE_PAID_DATE,
+            	FEE_TOTAL_AMOUNT,
+            	FEE_PAID_AMOUNT,
+            	FEE_PAID_METHOD,
+            	FEE_PAID_STATUS,
+            	FEE_CONTENT,
+    		) 
+    		VALUES (
+        		#{stuNumber},
+        		#{feePaidDate},
+        		#{feeTotalAmount},
+        		#{feePaidAmount}
+        		#{feePaidMethod}
+        		#{feePaidStatus}
+        		#{feeContent}
     		)
 	</insert>
 </mapper>

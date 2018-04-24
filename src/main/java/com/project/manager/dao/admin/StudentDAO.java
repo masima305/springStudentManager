@@ -58,10 +58,22 @@ public class StudentDAO {
 	//=========================  INSERT METHODS  ============================================================
 	//=====================================================================================================
 	
-	//경력 사항 추가
+	//학생 '기본 정보' 추가
+	public int insertStudentInfo(HashMap<String,String> map){
+		System.out.println(">>>>>>>>insertStudentInfo DAO called");
+		return this.sqlSession.insert("student.insertStudentInfo",map);
+	}
+	
+	//학생 '회비' 정보 추가
+	public int insertStudentFee(HashMap<String,String> map){
+		System.out.println(">>>>>>>>insertStudentFee DAO called");
+		return this.sqlSession.insert("student.insertStudentFee",map);
+	}
+	
+	//학생 '경력' 사항 추가
 	public int insertExperience(HashMap<String,String> map){
 		System.out.println(">>>>>>>>insertExperience DAO called");
-		Iterator<String> keys = map.keySet().iterator();
 		return this.sqlSession.insert("student.insertExperience",map);
 	}
+	
 }

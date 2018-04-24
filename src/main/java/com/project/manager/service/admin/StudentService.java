@@ -75,19 +75,24 @@ public class StudentService {
 	//=====================================================================================================
 		
 	
+	//학생 기본 정보 추가
+	public int insertStudentInfo(HashMap<String,String> map) {
+		System.out.println(">>>>>>>>insertStudentInfo Service called");
+		return studentDAO.insertStudentInfo(map);
+	}
+	
+	//학생회비 정보 추가
+	public int insertStudentFee(HashMap<String,String> map) {
+		System.out.println(">>>>>>>>insertStudentFee Service called");
+		return studentDAO.insertStudentFee(map);
+	}
+	
+	//학생 경력 추가
 	public int insertExperience(HashMap<String,String> map){
-		//학생 개인정보와 학생 이력정보를 따로 가지고온다.
 		System.out.println(">>>>>>>>insertExperience Service called");
-		int result = studentDAO.insertExperience(map);
-		
-		return result;
+		return studentDAO.insertExperience(map);
 	}
 	
-	
-	
-	public int insertStudent(HashMap<String,String> map) {
-		return 0;
-	}
 	
 	public int updateStudent(HashMap<String,String> map) {
 		return 0;

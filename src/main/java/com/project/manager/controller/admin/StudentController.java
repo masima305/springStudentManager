@@ -33,6 +33,28 @@ public class StudentController {
 	//=========================  READ METHODS  ============================================================
 	//=====================================================================================================
 	
+	
+	
+	/*
+	 * commonCode 가져오기
+	 */
+	@RequestMapping(value="/getCommonCode.do")
+	public @ResponseBody ModelAndView getCommonCode(HttpServletRequest request) {
+		
+		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
+		Gson gson = new Gson();
+		String listAllCommonGson = gson.toJson(listAllCommonMap);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("listAllCommonMap"		, listAllCommonMap	 );
+		mv.addObject("listAllCommonGson"	, listAllCommonGson	 );
+		
+		mv.setViewName("contents/studentInsert");
+		
+		return mv;
+	}
+	
+	
 	/*
 	 * 전체 학생 리스트 불러오기
 	 * del_yn='n'인 학생만
@@ -160,9 +182,43 @@ public class StudentController {
 	/*
 	 * 학생 추가하기
 	 */
-	public int insertStudent(HttpServletRequest request) {
-		return 0;
 	
+	@RequestMapping(value="/insertStudent.do")
+	public @ResponseBody HashMap<String,String> insertStudent(HttpServletRequest request) {
+		
+		//학생 기본정보
+		HashMap<String,String> InfoMap = new HashMap<String,String>();
+		InfoMap.put("stuNumber", request.getParameter("stuNumber").trim());
+		InfoMap.put("stuName", request.getParameter("stuName").trim());
+		InfoMap.put("stuPassword", request.getParameter("stuBirthday").trim()); //비밀번호는 생년월일로 넣어줌
+		InfoMap.put("stuBirthday", request.getParameter("stuBirthday").trim());
+		InfoMap.put("stuGender", request.getParameter("stuGender").trim());
+		InfoMap.put("stuPhone", request.getParameter("stuPhone").trim());
+		InfoMap.put("stuEmail", request.getParameter("stuEmail").trim());
+		InfoMap.put("stuEnterance", request.getParameter("stuEnterance").trim());
+		InfoMap.put("stuAuthority", request.getParameter("stuAuthority").trim());
+		
+		//학생회비 정보
+		HashMap<String,String> feeMap = new HashMap<String,String>();
+		feeMap.put("stuNumber", request.getParameter("stuNumber").trim());
+		feeMap.put("feeTotalAmount", request.getParameter("feeTotalAmount").trim());
+		feeMap.put("feePaidAmount", request.getParameter("feePaidAmount").trim());
+		feeMap.put("feePaidMethod", request.getParameter("feePaidMethod").trim());
+		feeMap.put("feePaidStatus", request.getParameter("feePaidStatus").trim());
+		feeMap.put("feeContent", request.getParameter("feeContent").trim());
+		
+		//학생 기본정보, 학생회비 정보 DB연결
+		int InfoResult = studentService.insertStudentInfo(InfoMap);
+		int feeResult = studentService.insertStudentFee(InfoMap);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+
+		if(InfoResult!=0 && feeResult!=0) { //둘다 입력을 성공할 경우
+			map.put("result", "학생 추가를 완료하였습니다.");
+		} else {
+			map.put("result", "학생 추가를 실패하였습니다.");
+		}
+		return map;
 	
 	}
 	
