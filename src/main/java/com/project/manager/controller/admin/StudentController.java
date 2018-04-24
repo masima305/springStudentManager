@@ -201,6 +201,7 @@ public class StudentController {
 		//학생회비 정보
 		HashMap<String,String> feeMap = new HashMap<String,String>();
 		feeMap.put("stuNumber", request.getParameter("stuNumber").trim());
+		feeMap.put("feePaidDate", request.getParameter("feePaidDate").trim());
 		feeMap.put("feeTotalAmount", request.getParameter("feeTotalAmount").trim());
 		feeMap.put("feePaidAmount", request.getParameter("feePaidAmount").trim());
 		feeMap.put("feePaidMethod", request.getParameter("feePaidMethod").trim());
