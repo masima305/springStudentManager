@@ -176,34 +176,37 @@
 	
 	<!-- '학생회비' 추가하기 -->
 	<insert id="insertStudentFee" parameterType="HashMap" >
-	
-	
-	
-	
-	
-		INSERT 
+	INSERT 
     		INTO STUDENT_FEE(
-           		STU_NUMBER,
-            	FEE_PAID_DATE,
-            	FEE_TOTAL_AMOUNT,
-            	FEE_PAID_AMOUNT,
-            	FEE_PAID_METHOD,
-            	FEE_PAID_STATUS,
-            	
-        		<if test="feeContent != null">
-				FEE_CONTENT
+           		STU_NUMBER
+            	,FEE_TOTAL_AMOUNT
+            	,FEE_PAID_METHOD
+            	,FEE_PAID_STATUS
+            
+            	<if test='feePaidDate != null and feePaidDate !="" '>
+				,FEE_PAID_DATE
+				</if>
+				<if test='feePaidAmount != null and feePaidAmount !="" '>
+				,FEE_PAID_AMOUNT
+				</if>
+        		<if test='feeContent != null and feeContent !="" '>
+				,FEE_CONTENT
 				</if>
     		) 
     		VALUES (
-        		#{stuNumber},
-        		#{feePaidDate},
-        		#{feeTotalAmount},
-        		#{feePaidAmount},
-        		#{feePaidMethod},
-        		#{feePaidStatus},
+        		#{stuNumber}
+        		,#{feeTotalAmount}
+        		,#{feePaidMethod}
+        		,#{feePaidStatus}
         		
-        		<if test="feeContent != null">
-				#{feeContent}
+        		<if test='feePaidDate != null and feePaidDate !="" '>
+				,#{feePaidDate}
+				</if>
+				<if test='feePaidAmount != null and feePaidAmount !="" '>
+				,#{feePaidAmount}
+				</if>
+        		<if test='feeContent != null and feeContent !="" '>
+				,#{feeContent}
 				</if>
     		)
 	</insert>
