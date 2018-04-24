@@ -8,27 +8,22 @@
 
 	function ajaxStudentInsertForm(formId){
 		
-
-		
-		
-		
-		
 		if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator() )
 			
-			$().ajax({
+			$('#'+formId).ajaxForm({
+				
+				type: "post",
 				url: "/insertStudent.do",
-				data: updateData,
-				success: function( result ) {
-		
-					},//success
-				error: function(a,b,c){
-					alert("오류 발생");
-			
-			});
+				datatype:"json",
+				success : function(result){
+					alert(result.result);
+				},
+				error : function(result){}
+			}).submit();
 							
 		}else{
 			//유효성 검사에 실패하면 그에 해당하는 alert가 나오고, 전송은 하지 않는체로 종료.
-			alert('');
+			alert('입력이 올바르지 않습니다.');
 			return;
 		}
 		
@@ -43,7 +38,7 @@
 	
 	<div class="card-body">
 		<div class="container">
-			<form id="studentInsertForm" action="/insertStudent.do" method="post">
+			<form id="studentInsertForm">
 			
 				<div class="row">
 					<div class="col-sm-3 col-md-6 col-lg-4">

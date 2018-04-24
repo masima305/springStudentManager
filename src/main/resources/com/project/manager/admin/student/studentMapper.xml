@@ -158,17 +158,17 @@
             	STU_ENTERANCE,
             	STU_AUTHORITY,
             	STU_GENDER,
-            	STU_PASSWORD,
+            	STU_PASSWORD
     		) 
     		VALUES (
         		#{stuNumber},
         		#{stuName},
         		#{stuBirthday},
-        		#{stuPhone}
-        		#{stuEmail}
-        		#{stuEnterance}
-        		#{stuAuthority}
-        		#{stuGender}
+        		#{stuPhone},
+        		#{stuEmail},
+        		#{stuEnterance},
+        		#{stuAuthority},
+        		#{stuGender},
         		#{stuPassword}
     		)
 	</insert>
@@ -176,6 +176,11 @@
 	
 	<!-- '학생회비' 추가하기 -->
 	<insert id="insertStudentFee" parameterType="HashMap" >
+	
+	
+	
+	
+	
 		INSERT 
     		INTO STUDENT_FEE(
            		STU_NUMBER,
@@ -184,16 +189,22 @@
             	FEE_PAID_AMOUNT,
             	FEE_PAID_METHOD,
             	FEE_PAID_STATUS,
-            	FEE_CONTENT,
+            	
+        		<if test="feeContent != null">
+				FEE_CONTENT
+				</if>
     		) 
     		VALUES (
         		#{stuNumber},
         		#{feePaidDate},
         		#{feeTotalAmount},
-        		#{feePaidAmount}
-        		#{feePaidMethod}
-        		#{feePaidStatus}
-        		#{feeContent}
+        		#{feePaidAmount},
+        		#{feePaidMethod},
+        		#{feePaidStatus},
+        		
+        		<if test="feeContent != null">
+				#{feeContent}
+				</if>
     		)
 	</insert>
 </mapper>
