@@ -287,9 +287,12 @@ function ajaxStuDetail(stuNumber){
 			str+=	"<p>이 학생의 정보를 삭제합니다.<p>";
 			str+=	"<p>학번 : <strong>" + result[0].STU_NUMBER + "</strong></p>"
 			str+=	"<p>이름 : <strong>" + result[0].STU_NAME	  + "</strong></p>"
-			str+="<div id='deleteCheckArea'></div>"
-					//삭제를 눌렸을 때 이 공간에 삭제 확인칸이 떠야한다.
-			str+=	"<button type='button' class='btn btn-small btn-danger'>삭제</button><br><br>"	;
+			str+=	"<div id='deleteCheckArea'>"
+				//삭제를 눌렸을 때 이 공간에 삭제 확인칸이 떠야한다.
+			str+=	"</div>"
+			str+=	"<div id='deleteBtnArea'>"
+			str+=		"<button type='button' onclick='javascript:makeDeleteInput("+stuNumber+")' class='btn btn-small btn-danger'>삭제</button><br><br>";
+			str+=	"</div>"
 			str+="</div>";
 			
 			$("#stuOptDetail").append(str);
@@ -477,7 +480,26 @@ function updateInfoInput(id){
 		return;
 	}
 }
+//======================================학생정보 삭제용 script ==========================
+function makeDeleteInput(stuNumber){
+	var str = "";
+	str += "<hr>"
+	str += "<p><strong>학번+이름</strong>을 한번 더 입력하세요</p>"
+	str += "<p><input type='text' id='deleteKeyword' placeholder='ex)12341234홍길동'></p>"
 	
+	str += "<p>정보 삭제의 <strong>이유</strong>를 입력하세요</p>"		
+	str += "<p><input type='text' id='deleteReason' placeholder='ex)타대학 편입'></p>"
+					
+	$("#deleteCheckArea").html(str)	
+	
+	
+	
+	str = "<button type='button' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
+	$("#deleteBtnArea").html(str)	
+}
+function deleteStudent(keyword, reason){
+	
+}	
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
 	//학생회비 정보수정 생성해주는 칸
