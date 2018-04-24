@@ -174,8 +174,8 @@ function ajaxStuDetail(stuNumber){
 			//학생 기본 정보
 			$("#stuInfoDetail").empty();
 			
-			//각 정보칸(수정 버튼을 누르면 input태그가 삽입될)의 id룰 : 학번 + Personal + 컬럼명(낙타표기)
-			//									  ex : 2010042465PersonalStuNumber
+			//각 정보칸(수정 버튼을 누르면 input태그가 삽입될)의 id룰 : Personal + 컬럼명(낙타표기)
+			//									  ex : PersonalStuNumber
 			//									앞으로 있을 중복 사용을 방지하기 위해 이름 길게 할게용....
 			var str = "<br>";
 			str+="<img class='card-img-top' src='../../../resources/common/img/man.png' alt='Card image' style='width:30%'><br><br>";
@@ -184,25 +184,25 @@ function ajaxStuDetail(stuNumber){
 			str+=	"<tbody>";
 			str+=		"<tr>";
 			str+=			"<th>학번</th><td>"+result[0].STU_NUMBER+"</td>";
-			str+=			"<th>이름</th><td id='"+result[0].STU_NUMBER+"PersonalStuName'>"+result[0].STU_NAME+"</td>";
+			str+=			"<th>이름</th><td id='personalStuName'>"+result[0].STU_NAME+"</td>";
 			str+=		"</tr>";
 			str+=		"<tr>";
-			str+=			"<th>생년월일</th><td id='"+result[0].STU_NUMBER+"PersonalStuBirthday'>"+result[0].STU_BIRTHDAY+"</td>";
-			str+=			"<th>성별</th><td id='"+result[0].STU_NUMBER+"PersonalStuGender'>"+result[0].STU_GENDER_VALUE+"</td>";
+			str+=			"<th>생년월일</th><td id='personalStuBirthday'>"+result[0].STU_BIRTHDAY+"</td>";
+			str+=			"<th>성별</th><td id='personalStuGender'>"+result[0].STU_GENDER_VALUE+"</td>";
 			str+=		"</tr>";
 			str+=		"<tr>";
-			str+=			"<th>연락처</th><td id='"+result[0].STU_NUMBER+"PersonalStuPhone' >"+result[0].STU_PHONE+"</td>";
-			str+=			"<th>이메일</th><td id='"+result[0].STU_NUMBER+"PersonalStuEmail' >"+result[0].STU_EMAIL+"</td>";
+			str+=			"<th>연락처</th><td id='personalStuPhone' >"+result[0].STU_PHONE+"</td>";
+			str+=			"<th>이메일</th><td id='personalStuEmail' >"+result[0].STU_EMAIL+"</td>";
 			str+=		"</tr>";
 			str+=		"<tr>";
-			str+=			"<th>입학전형</th><td id='"+result[0].STU_NUMBER+"PersonalStuEnteranceValue' >"+result[0].STU_ENTERANCE_VALUE+"</td>";
-			str+=			"<th>접근권한</th><td id='"+result[0].STU_NUMBER+"PersonalStuAuthorityValue' >"+result[0].STU_AUTHORITY_VALUE+"</td>";
+			str+=			"<th>입학전형</th><td id='personalStuEnteranceValue' >"+result[0].STU_ENTERANCE_VALUE+"</td>";
+			str+=			"<th>접근권한</th><td id='personalStuAuthorityValue' >"+result[0].STU_AUTHORITY_VALUE+"</td>";
 			str+=		"</tr>";
 			str+=	"</tbody>";
 			str+=	"</table>";
 			str+="</form>";
 			$("#stuInfoDetail").append(str);
-			$("#stuInfoDetail").append("<hr><button type='button' class='btn btn-small btn-info'>수정</button>");
+			$("#stuInfoDetail").append("<div id = 'infoBtnArea'><hr><button type='button' class='btn btn-small btn-info'>수정</button></div>");
 			$("#stuInfoDetail").append("<br><br>");
 			
 			
@@ -299,6 +299,47 @@ function ajaxStuDetail(stuNumber){
 		}
 	});
 }
+//======================================학생정보 수정용 script ==========================
+function makeInfoInput(stuNumber){
+	var personalStuName	 			= $("#personalStuName"	 		).html();
+	var personalStuBirthday 		= $("#personalStuBirthday"	 	).html();
+	var personalStuGender 			= $("#personalStuGender"		).html();
+	var personalStuPhone 			= $("#personalStuPhone"			).html();
+	var personalStuEmail 			= $("#personalStuEmail"			).html();
+	var personalStuEnteranceValue	= $("#personalStuEnteranceValue").html();
+	var personalStuAuthorityValue	= $("#personalStuAuthorityValue").html();
+
+	$("#personalStuName"	 		).empty();
+	$("#personalStuBirthday"	 	).empty();
+	$("#personalStuGender"			).empty();
+	$("#personalStuPhone"			).empty();
+	$("#personalStuEmail"			).empty();
+	$("#personalStuEnteranceValue"	).empty();
+	$("#personalStuAuthorityValue"	).empty();
+	
+	var str = "";
+	str = "<input id='updateStuName' value='"+personalStuName+"'>";
+	$("#personalStuName"	 		).append(str);
+	
+	
+	
+	
+	
+	/* personalStuName
+	personalStuBirthday
+	personalStuGender
+	personalStuPhone
+	personalStuEmail
+	personalStuEnteranceValue
+	personalStuAuthorityValue
+	infoBtnArea */
+
+
+}
+function updateInfoInput(id){
+	
+}
+	
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
 	//학생회비 정보수정 생성해주는 칸
@@ -369,7 +410,6 @@ function makeFeeInput(stuNumber){
 	$('#feeBtnArea').empty();
 	$("#feeBtnArea").append(str)
 }
-
 
 function updateFeeInput(id){
 	//-----------------기본적인 값 알아내기 --------------------------
@@ -557,12 +597,5 @@ function insertExpInput(inputNumber){
 		}
 	});
 }
-
-
-
-
-
-
-
 
 </script>
