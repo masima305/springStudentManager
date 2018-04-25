@@ -22,7 +22,6 @@
 	function ajaxStudentInsertForm(formId){
 		
 		
-		
 		var insertStuName  		= $('#insertStuName').val();
 		var insertStuNumber 	= $('#insertStuNumber').val();
 		var insertStuBirthday 	= $('#insertStuBirthday').val();
@@ -32,7 +31,6 @@
 		var insertStuEnterance 	= $('#insertStuEnterance').val();
 		var insertStuAuthority 	= $('#insertStuAuthority').val();
 		
-		
 		var insertFeeTotalAmount 	= $('#insertFeeTotalAmount').val();
 		var insertFeePaidDate		= $('#insertFeePaidDate').val();
 		var insertFeePaidAmount 	= $('#insertFeePaidAmount').val();
@@ -41,12 +39,112 @@
 		var insertFeeContent 		= $('#insertFeeContent').val();
 		
 		
+		//'이름' 입력여부 검사
+		if(insertStuName == ""){
+			alert("이름을 입력하지 않았습니다.");
+			 $('#insertStuName').focus();
+			 return false;
+		}
+		
+		//'학번' 입력여부 검사
+		if(insertStuNumber == ""){
+			alert("학번을 입력하지 않았습니다.");
+			 $('#insertStuNumber').focus();
+			 return false;
+		}
+
+		//'학번'유효성 검사 (숫자 10개로만 구성)
+		var regStuNumber =  /^\d{10}$/;
+		if(regStuNumber.test(insertStuNumber) === false){
+			alert("학번 형식이 올바르지 않습니다.");
+			$('#insertStuNumber').empty();
+			$('#insertStuNumber').focus();
+			 return false;
+		}
+		
+		//'생년월일' 입력여부 검사
+		if(insertStuBirthday == ""){
+			alert("생년월일을 입력하지 않았습니다.");
+			 $('#insertStuBirthday').focus();
+			 return false;
+		}
+		
+		//'연락처' 입력여부 검사
+		if(insertStuPhone == ""){
+			alert("연락처를 입력하지 않았습니다.");
+			 $('#insertStuPhone').focus();
+			 return false;
+		}
+		
+
+		//'연락처 형식' 유효성 검사 (숫자 11개로만 구성)
+		var regPhone =  /^\d{11}$/;
+		if(regPhone.test(insertStuPhone) === false){
+			alert("연락처 형식이 올바르지 않습니다.");
+			$('#insertStuPhone').empty();
+			$('#insertStuPhone').focus();
+			 return false;
+		}
+		
+		
+		//'이메일' 입력여부 검사
+		if(insertStuEmail == ""){
+			alert("이메일을 입력하지 않았습니다.");
+			 $('#insertStuEmail').focus();
+			 return false;
+		}
+		
+		//'이메일 형식' 유효성 검사
+		var regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+		if(regEmail.test(insertStuEmail) === false){
+			 alert("잘못된 이메일 형식입니다.");
+			 $('#insertStuEmail').empty();
+			 $('#insertStuEmail').focus();
+			 return false;
+		}
+		
+		//'회비금액' 입력여부 검사
+		if(insertFeeTotalAmount == ""){
+			alert("회비금액을 입력하지 않았습니다.");
+			 $('#insertFeeTotalAmount').focus();
+			 return false;
+		}
+		
+		
+		//회비금액과 납부금액 비교 검사 (회비금액 >= 납부금액)
+		if(insertFeeTotalAmount < insertFeePaidAmount ){ //납부금액이 회비금액보다 큰 경우
+			alert("납부한 금액은 회비금액과 같거나 회비금액보다 작아야 합니다.");
+			 $('#insertFeePaidAmount').empty();
+			 $('#insertFeePaidAmount').focus();
+			 return false;
+		}
+		
+		
+		var insertData = {};
+		
+		insertData.stuName 			= insertStuName;
+		insertData.stuNumber  		= insertStuNumber;
+		insertData.stuBirthday 		= insertStuBirthday;
+		insertData.stuGender 		= insertStuGender;
+		insertData.stuPhone 		= insertStuPhone;
+		insertData.stuEmail 		= insertStuEmail;
+		insertData.stuEnterance 	= insertStuEnterance;
+		insertData.stuAuthority 	= insertStuAuthority;
+		
+		insertData.feeTotalAmount 	= insertFeeTotalAmount;
+		insertData.feePaidDate 		= insertFeePaidDate;
+		insertData.feePaidAmount 	= insertFeePaidAmount;
+		insertData.feePaidMethod 	= insertFeePaidMethod;
+		insertData.feePaidStatus	= insertFeePaidStatus;
+		insertData.feeContent		= insertFeeContent;
+		
+		
 		
 		if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator() )
 			$('#'+formId).ajaxForm({
 				type: "post",
 				url: "/insertStudent.do",
-				data: 
+				data: insertData,
 				success: function(result){
 					alert(result.result);
 				},
@@ -60,18 +158,25 @@
 	}
 	
 	
-	function ajaxStuNumberCheck(formId){
+	//학번 유효성(중복) 검사
+	function ajaxStuNumberCheck(){
 		
-		$("#"+formId).ajaxForm({
+		var insertStuNumber = $('#insertStuNumber').val();
+		
+		$.ajax({
 			type: "post",
-			url: "/stuNumberCheck.do",
-			datatype: "json",
+			url: "/checkStuNumber.do",
+			data: {'stuNumber':insertStuNumber},
 			success: function(result){
 				
+				if(result.result == '1') { //학번이 중복되는 경우
+					$("#stuNumberCheck").html("<i class='fas fa-exclamation-circle'></i>&nbsp;중복되는 학번입니다.");
+				} else {
+					$("#stuNumberCheck").empty();
+				}
 			},
 			error: function(result){}
-		}).submit();
-		
+		});
 	}
 
 </script>
@@ -94,7 +199,6 @@
 								<input type="text" name="stuName" id="insertStuName"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuNameCheck">
-							이름유효성 결과
 							</div>
 						</div>
 					
@@ -103,10 +207,9 @@
 								<label>학번 <span class="prime">*</span></label>
 							</div>
 							<div class="col-sm-5 col-md-5 col-lg-5">
-								<input type="text" name="stuNumber" id="insertStuNumber" onkeydown="javascript:ajaxStuNumberCheck('stuNumber')" />
+								<input type="text" name="stuNumber" id="insertStuNumber" onkeyup='ajaxStuNumberCheck()' />
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuNumberCheck">
-							중복되는 학번입니다
 							</div>
 						</div>
 						
@@ -116,10 +219,9 @@
 								<label>생년월일 <span class="prime">*</span></label>
 							</div>
 							<div class="col-sm-5 col-md-5 col-lg-5">
-								<input type="text" name="stuBirthday" id="insertStuBirthday" placeholder="YYYYMMDD"/>
+								<input type="text" name="stuBirthday" id="insertStuBirthday" placeholder="ex) YYYYMMDD"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuBirthdayCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -136,7 +238,6 @@
 								</select>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuGenderCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -145,10 +246,9 @@
 								<label>연락처 <span class="prime">*</span></label>
 							</div>
 							<div class="col-sm-5 col-md-5 col-lg-5">
-								<input type="text" name="stuPhone" id="insertStuPhone"/>
+								<input type="text" name="stuPhone" id="insertStuPhone"  placeholder=" ex) 01012345678"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuPhoneCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -160,7 +260,6 @@
 								<input type="text" name="stuEmail" id="insertStuEmail"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuEmailCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -178,7 +277,6 @@
 								</select>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuEnteranceCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -195,7 +293,6 @@
 								</select>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuAuthorityCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -209,7 +306,6 @@
 								<input type="text" name="feeTotalAmount" id="insertFeeTotalAmount"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feeTotalAmountCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -221,7 +317,6 @@
 								<input type="text" name="feePaidDate" id="insertFeePaidDate" placeholder="YYYYMMDD"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feePaidDateCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -233,7 +328,6 @@
 								<input type="text" name="feePaidAmount" id="insertFeePaidAmount"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feePaidAmountCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -250,7 +344,6 @@
 								</select>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feePaidMethodCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -267,7 +360,6 @@
 								</select>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feePaidStatusCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						
@@ -279,7 +371,6 @@
 								<input type="text" name="feeContent" id="insertFeeContent"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feeContentCheck">
-							이름유효성 결과
 							</div>
 						</div>
 						

@@ -150,6 +150,29 @@ public class StudentController {
 		return studentService.getStudent(map);
 	}
 	
+	//학번 유효성 체크하기
+	@RequestMapping(value="/checkStuNumber.do")
+	public @ResponseBody HashMap<String, String> checkStuNumber (HttpServletRequest request){
+		
+		String stuNumber = request.getParameter("stuNumber");
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("stuNumber", stuNumber);
+		
+		HashMap<String,Object> checkStuNumber = studentService.checkStuNumber(map);
+		HashMap<String,String> result = new HashMap<String,String>(); 
+		
+		if(checkStuNumber != null) { //같은 학번이 존재하는 경우 1을 보냄
+			result.put("result", "1"); 
+		} else {
+			result.put("result", "0"); //같은 학번이 존재하지 않는 경우 0을 보냄
+		}
+		
+		System.out.println(checkStuNumber);
+		System.out.println((String)result.get("result"));
+		
+		return result;
+	}
 	
 	
 	//======================================================================================================

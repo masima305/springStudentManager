@@ -54,6 +54,11 @@ public class StudentDAO {
 		return this.sqlSession.selectOne("student.getStudentExpCount",map);
 	}
 	
+	public HashMap<String, Object>  checkStuNumber(HashMap<String,String> map){
+		System.out.println(">>>>>>>>checkStuNumber DAO called");
+		return this.sqlSession.selectOne("student.checkStuNumber",map);
+	}
+	
 	//=====================================================================================================
 	//=========================  INSERT METHODS  ============================================================
 	//=====================================================================================================
