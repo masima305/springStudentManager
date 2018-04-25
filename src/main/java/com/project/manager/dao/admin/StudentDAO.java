@@ -83,19 +83,22 @@ public class StudentDAO {
 	//학생 '경력' 사항 추가
 	public int updateStudent(HashMap<String,String> map){
 		System.out.println(">>>>>>>>updateStudnet DAO called");
-		
-		System.out.println(map.get("stuNumber"));
-		System.out.println(map.get("stuName"));
-		System.out.println(map.get("stuBirthday"));
-		System.out.println(map.get("stuPhone"));
-		System.out.println(map.get("stuEmail"));
-		System.out.println(map.get("stuGender"));
-		System.out.println(map.get("stuAuthority"));
-		System.out.println(map.get("stuEnterance"));
-		
-		
-	
-		return 0; //this.sqlSession.insert("student.insertExperience",map);
+		return this.sqlSession.insert("student.updateStudent",map);
 	}
+	//학생 '삭제로그 추가'
+		public int insertDeleteLog(HashMap<String,String> map){
+			System.out.println(">>>>>>>>insertDeleteLog DAO called");
+			return this.sqlSession.insert("student.insertDeleteLog",map);
+		}
+	//=====================================================================================================
+	//=========================  DELETE METHODS  ============================================================
+	//=====================================================================================================
+	//학생 '삭제' -->(삭제이지만 update)
+	public int deleteStudent(HashMap<String,String> map){
+		System.out.println(">>>>>>>>deleteStudent DAO called");
+		return this.sqlSession.insert("student.deleteStudent",map);
+	}
+	
+	
 	
 }

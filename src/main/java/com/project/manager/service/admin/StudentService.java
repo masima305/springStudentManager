@@ -105,6 +105,10 @@ public class StudentService {
 	}
 	
 	public int deleteStudent(HashMap<String,String> map) {
-		return 0;
+		//학생 '삭제로그 추가'
+		System.out.println(">>>>>>>>deleteStudent Service called");
+		studentDAO.insertDeleteLog(map);
+		
+		return studentDAO.deleteStudent(map);
 	}
 }

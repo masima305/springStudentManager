@@ -413,8 +413,7 @@ function updateInfoInput(id){
 	updateData.stuGender 	= updateStuGender;
 	updateData.stuAuthority = updateStuAuthority;
 	updateData.stuEnterance = updateStuEnterance;
-	
-	
+
 	//--------------------ajax call---------------------------
 	//------------------유효성 검사 후 ajax call-----------------------
 	
@@ -460,9 +459,9 @@ function updateInfoInput(id){
 				}
 				
 				   
-				$('#personalStuGender').html(gender);
-				$('#personalStuEnteranceValue').html(enterance);
-				$('#personalStuAuthorityValue').html(authority);
+				$('#personalStuGender'			).html(gender	);
+				$('#personalStuEnteranceValue'	).html(enterance);
+				$('#personalStuAuthorityValue'	).html(authority);
 	
 				var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeInfoInput("+id+")'>수정</button>";
 				$('#feeBtnArea').empty();
@@ -752,7 +751,7 @@ function insertExpInput(inputNumber){
 		},
 		error: function(abc){
 			alert(""+abc);
-		}
+		}//error
 	});
 }
 

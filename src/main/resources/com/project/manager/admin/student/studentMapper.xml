@@ -112,10 +112,10 @@
 	<!-- 학생 이력정보 가져오기 : getStudentExp -->
 	<select id="getStudentExp" resultType="HashMap" parameterType="HashMap">
 		 SELECT 
-		 	E.EXP_YEAR,
-		 	E.EXP_SEMESTER, 
-		 	E.EXP_CONTENT,
-   			(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'expSemester' AND COMMON_CODE = E.EXP_SEMESTER) as EXP_SEMESTER_VALUE
+		 	E.EXP_YEAR
+		 	,E.EXP_SEMESTER
+		 	,E.EXP_CONTENT
+   			,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'expSemester' AND COMMON_CODE = E.EXP_SEMESTER) as EXP_SEMESTER_VALUE
 	     FROM STUDENT S, EXPERIENCE E
 	     WHERE 
 	     	 S.STU_NUMBER = E.STU_NUMBER
@@ -133,16 +133,16 @@
 	<insert id="insertExperience" parameterType="HashMap">
 		INSERT 
     		INTO EXPERIENCE(
-           		STU_NUMBER,
-            	EXP_YEAR,
-            	EXP_SEMESTER,
-            	EXP_CONTENT
+           		STU_NUMBER
+            	,EXP_YEAR
+            	,EXP_SEMESTER
+            	,EXP_CONTENT
     		) 
     		VALUES (
-        		#{stuNumber},
-        		#{expYear},
-        		#{expSemester},
-        		#{expContent}
+        		#{stuNumber}
+        		,#{expYear}
+        		,#{expSemester}
+        		,#{expContent}
     		)
 	</insert>
 	
@@ -150,26 +150,26 @@
 	<insert id="insertStudentInfo" parameterType="HashMap" >
 		INSERT 
     		INTO STUDENT(
-           		STU_NUMBER,
-            	STU_NAME,
-            	STU_BIRTHDAY,
-            	STU_PHONE,
-            	STU_EMAIL,
-            	STU_ENTERANCE,
-            	STU_AUTHORITY,
-            	STU_GENDER,
-            	STU_PASSWORD
+           		STU_NUMBER
+            	,STU_NAME
+            	,STU_BIRTHDAY
+            	,STU_PHONE
+            	,STU_EMAIL
+            	,STU_ENTERANCE
+            	,STU_AUTHORITY
+            	,STU_GENDER
+            	,STU_PASSWORD
     		) 
     		VALUES (
-        		#{stuNumber},
-        		#{stuName},
-        		#{stuBirthday},
-        		#{stuPhone},
-        		#{stuEmail},
-        		#{stuEnterance},
-        		#{stuAuthority},
-        		#{stuGender},
-        		#{stuPassword}
+        		#{stuNumber}
+        		,#{stuName}
+        		,#{stuBirthday}
+        		,#{stuPhone}
+        		,#{stuEmail}
+        		,#{stuEnterance}
+        		,#{stuAuthority}
+        		,#{stuGender}
+        		,#{stuPassword}
     		)
 	</insert>
 	
@@ -210,4 +210,51 @@
 				</if>
     		)
 	</insert>
+	
+	<!-- '삭제 이유' 추가하기 -->
+	<insert id="insertDeleteLog" parameterType="HashMap" >
+		INSERT 
+    		INTO LOG_DELETE(
+           		STU_NUMBER
+            	,LOG_RESON
+    		) 
+    		VALUES (
+        		#{stuNumber}
+        		,#{logReason}
+    		)
+	</insert>
+	
+	<!-- ====================================================================================================================== -->
+	<!-- ========================================  UPDATE QUERY   ============================================================= -->
+	<!-- ====================================================================================================================== -->
+	<update id="updateStudent" parameterType="HashMap" >
+		
+		 UPDATE STUDENT
+		     SET 
+		        STU_NAME 		= #{stuName} 
+		        ,STU_BIRTHDAY 	= #{stuBirthday} 
+		        ,STU_PHONE 		= #{stuPhone}
+		        ,STU_EMAIL 		= #{stuEmail}
+		        ,STU_GENDER 	= #{stuGender}
+		        ,STU_AUTHORITY 	= #{stuAuthority}
+	            ,STU_ENTERANCE 	= #{stuEnterance}
+		    WHERE
+		        STU_NUMBER = #{stuNumber}
+	</update>
+	<!-- ====================================================================================================================== -->
+	<!-- ======================================== DELETE  QUERY   ============================================================= -->
+	<!-- ====================================================================================================================== -->
+	<update id="deleteStudent" parameterType="HashMap" >
+		
+	 UPDATE STUDENT
+	     SET 
+	        STU_DELETE_YN = Y
+	    WHERE
+	        STU_NUMBER = #{stuNumber}
+    	
+	</update>
+	
+	        
+	
+	
 </mapper>

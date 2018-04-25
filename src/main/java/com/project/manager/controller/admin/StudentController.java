@@ -255,12 +255,18 @@ public class StudentController {
 		return studentService.updateStudent(map);
 	}
 	
-	
-	/*
-	 * 학생 삭제하기 (del_yn= 'n' -> 'y')
-	 */
+	@RequestMapping(value="/deleteStudent.do")
 	public int deleteStudent(HttpServletRequest request) {
-		return 0;
+		System.out.println(">>>>>>>>deleteStudentController called");
+		
+		String stuNumber 	= request.getParameter("stuNumber");
+		String logReason 	= request.getParameter("logReason");
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("stuNumber", stuNumber);
+		map.put("logReason", logReason);
+		
+		return studentService.updateStudent(map);
 	}
 	
 	
