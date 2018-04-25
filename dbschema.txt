@@ -2,6 +2,10 @@
      DROP TABLE EXPERIENCE cascade CONSTRAINTS;
      DROP TABLE STUDENT_FEE cascade CONSTRAINTS;
      DROP TABLE COMMON cascade CONSTRAINTS;
+     DROP TABLE LOG_DELETE cascade CONSTRAINTS;
+     DROP TABLE LEDGER cascade CONSTRAINTS;
+     
+     
      commit;
      
      CREATE TABLE STUDENT (
@@ -16,6 +20,20 @@
      STU_PASSWORD VARCHAR2(20) NOT NULL,
      STU_DELETE_YN VARCHAR2(2) DEFAULT 'N' NOT NULL
      );
+     
+     CREATE TABLE LEDGER (
+     LEDG_NUMBER NUMBER(10) PRIMARY KEY
+     ,LEDG_DATE VARCHAR2(10) NOT NULL
+     ,LEDG_CONTENT VARCHAR2(100) NOT NULL
+     ,LEDG_TRANSE_TYPE VARCHAR2(10) NOT NULL
+     ,LEDG_TRADE_PARTNER VARCHAR2(50) NOT NULL
+     ,LEDG_METHOD NUMBER(2) NOT NULL
+     ,LEDG_CATEGORY VARCHAR2(10) NOT NULL
+     ,LEDG_BALANCE NUMBER(20) NOT NULL
+     ,LEDG_REMARK VARCHAR2(100) NOT NULL
+     ,LEDG_AMOUNT NUMBER(20) NOT NULL
+     ,LEDG_FILE VARCHAR2(20) NOT NULL
+ )
      
      CREATE TABLE LOG_DELETE(
   	 STU_NUMBER VARCHAR2(12) PRIMARY KEY,
@@ -96,6 +114,15 @@
      insert into COMMON values('feePaidStatus',01,'입금완료');
      insert into COMMON values('feePaidStatus',02,'분할입금');
      insert into COMMON values('feePaidStatus',03,'미납');
+     
+     insert into COMMON values('ledgTranseType',01,'출금');
+     insert into COMMON values('ledgTranseType',02,'입금');
+     
+     insert into COMMON values('ledgMethod',01,'카드');
+     insert into COMMON values('ledgMethod',02,'현금');
+     insert into COMMON values('ledgMethod',03,'계좌이체');
+     insert into COMMON values('ledgMethod',04,'기타');
+     
      commit;
      
      

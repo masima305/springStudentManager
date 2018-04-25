@@ -291,7 +291,7 @@ function ajaxStuDetail(stuNumber){
 				//삭제를 눌렸을 때 이 공간에 삭제 확인칸이 떠야한다.
 			str+=	"</div>"
 			str+=	"<div id='deleteBtnArea'>"
-			str+=		"<button type='button' onclick='javascript:makeDeleteInput("+stuNumber+")' class='btn btn-small btn-danger'>삭제</button><br><br>";
+			str+=		"<button type='button' onclick='javascript:makeDeleteInput("+result[0].STU_NUMBER+","+result[0].STU_NAME+")' class='btn btn-small btn-danger'>삭제</button><br><br>";
 			str+=	"</div>"
 			str+="</div>";
 			
@@ -480,7 +480,7 @@ function updateInfoInput(id){
 	}
 }
 //======================================학생정보 삭제용 script ==========================
-function makeDeleteInput(stuNumber){
+function makeDeleteInput(stuNumber,stuName){
 	var str = "";
 	str += "<hr>"
 	str += "<p><h4><strong>학번+이름</strong>을 한번 더 입력하세요</h4></p>"
@@ -495,12 +495,21 @@ function makeDeleteInput(stuNumber){
 	
 	
 	
-	str = "<button type='button' onclick='javascript:deleteStudent("+stuNumber+")' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
+	str = "<button type='button' onclick='javascript:deleteStudent("+stuNumber+","+stuName+")' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
 	$("#deleteBtnArea").html(str)	
 }
-function deleteStudent(stuNumber){
+function deleteStudent(stuNumber,stuName){
+	var inputDeleteKeyword = $("#deleteKeywordWarning").val();
+	var originalDeleteKeyword = ""+stuNumber+""+stuName+";"
+	alert(originalDeleteKeyword)
+	
+	
 	$("#deleteKeywordWarning").html("학번이름의 조합이 맞지 않습니다. 다시 입력해주세요.")	
 	$("#deleteReasonWarning").html("이유의 형식이 맞지 않거나, 입력값이 없습니다. 다시 입력해주세요")	
+
+
+
+
 }	
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
