@@ -70,6 +70,13 @@ public class StudentService {
 		return studentInfo;
 	}
 	
+	//학번 유효성 체크하기
+	public HashMap<String,Object> checkStuNumber (HashMap<String,String> map){
+		System.out.println(">>>>>>>>checkStuNumber Service called");
+		return studentDAO.checkStuNumber(map);
+	}
+	
+	
 	//=====================================================================================================
 	//=========================  INSERT METHODS  ============================================================
 	//=====================================================================================================
