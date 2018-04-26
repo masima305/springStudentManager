@@ -21,6 +21,7 @@
 
 	function ajaxStudentInsertForm(formId){
 		
+		//------------------input tag 입력----------------------------
 		
 		var insertStuName  		= $('#insertStuName').val();
 		var insertStuNumber 	= $('#insertStuNumber').val();
@@ -39,9 +40,20 @@
 		var insertFeeContent 		= $('#insertFeeContent').val();
 		
 		
+		//---------------형식 조정/입력 여부/유효성 체크----------------------------
+
+		
 		//'이름' 입력여부 검사
 		if(insertStuName == ""){
 			alert("이름을 입력하지 않았습니다.");
+			 $('#insertStuName').focus();
+			 return false;
+		}
+		
+		//'이름 형식' 유효성 검사 (2자 이상으로 구성)
+		if(insertStuName.length < 2){
+			alert("이름을 2자 이상 입력해주십시오.");
+			 $('#insertStuName').empty();
 			 $('#insertStuName').focus();
 			 return false;
 		}
@@ -56,7 +68,7 @@
 		//'학번'유효성 검사 (숫자 10개로만 구성)
 		var regStuNumber =  /^\d{10}$/;
 		if(regStuNumber.test(insertStuNumber) === false){
-			alert("학번 형식이 올바르지 않습니다.");
+			alert("학번 형식(숫자 10개로 구성)이 올바르지 않습니다.");
 			$('#insertStuNumber').empty();
 			$('#insertStuNumber').focus();
 			 return false;
@@ -76,16 +88,14 @@
 			 return false;
 		}
 		
-
 		//'연락처 형식' 유효성 검사 (숫자 11개로만 구성)
 		var regPhone =  /^\d{11}$/;
 		if(regPhone.test(insertStuPhone) === false){
-			alert("연락처 형식이 올바르지 않습니다.");
+			alert("연락처 형식(숫자 11개로 구성)이 올바르지 않습니다.");
 			$('#insertStuPhone').empty();
 			$('#insertStuPhone').focus();
 			 return false;
 		}
-		
 		
 		//'이메일' 입력여부 검사
 		if(insertStuEmail == ""){
@@ -110,7 +120,6 @@
 			 return false;
 		}
 		
-		
 		//회비금액과 납부금액 비교 검사 (회비금액 >= 납부금액)
 		if(insertFeeTotalAmount < insertFeePaidAmount ){ //납부금액이 회비금액보다 큰 경우
 			alert("납부한 금액은 회비금액과 같거나 회비금액보다 작아야 합니다.");
@@ -118,10 +127,10 @@
 			 $('#insertFeePaidAmount').focus();
 			 return false;
 		}
-		
+
+		//-----------------Insert 를 위한 데이터 json----------------------
 		
 		var insertData = {};
-		
 		insertData.stuName 			= insertStuName;
 		insertData.stuNumber  		= insertStuNumber;
 		insertData.stuBirthday 		= insertStuBirthday;
@@ -147,8 +156,9 @@
 				data: insertData,
 				success: function(result){
 					alert(result.result);
-				},
-				error: function(result){}
+				}
+				
+				, error: function(result){}
 			}).submit();
 		} else {
 			//유효성 검사에 실패하면 그에 해당하는 alert가 나오고, 전송은 하지 않는체로 종료.
@@ -219,7 +229,7 @@
 								<label>생년월일 <span class="prime">*</span></label>
 							</div>
 							<div class="col-sm-5 col-md-5 col-lg-5">
-								<input type="text" name="stuBirthday" id="insertStuBirthday" placeholder="ex) YYYYMMDD"/>
+								<input type="date" name="stuBirthday" id="insertStuBirthday" placeholder="ex) YYYYMMDD"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="stuBirthdayCheck">
 							</div>
@@ -314,7 +324,7 @@
 								<label>입금날짜</label>
 							</div>
 							<div class="col-sm-5 col-md-5 col-lg-5">
-								<input type="text" name="feePaidDate" id="insertFeePaidDate" placeholder="YYYYMMDD"/>
+								<input type="date" name="feePaidDate" id="insertFeePaidDate" placeholder="YYYYMMDD"/>
 							</div>
 							<div class="col-sm-4 col-md-4 col-lg-4 check" id="feePaidDateCheck">
 							</div>

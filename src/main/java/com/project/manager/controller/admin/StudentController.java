@@ -213,8 +213,13 @@ public class StudentController {
 		HashMap<String,String> infoMap = new HashMap<String,String>();
 		infoMap.put("stuNumber", request.getParameter("stuNumber").trim());
 		infoMap.put("stuName", request.getParameter("stuName").trim());
-		infoMap.put("stuPassword", request.getParameter("stuBirthday").trim()); //비밀번호는 생년월일로 넣어줌
-		infoMap.put("stuBirthday", request.getParameter("stuBirthday").trim());
+		
+		//생년월일 형식 조정(YYYY-MM-DD => YYYYDDMM)
+		String stuBirthday =  (String)request.getParameter("stuBirthday").trim();
+		stuBirthday = stuBirthday.substring(0,4) + stuBirthday.substring(5,7) + stuBirthday.substring(8,10);
+		
+		infoMap.put("stuBirthday", stuBirthday);
+		infoMap.put("stuPassword", stuBirthday); //비밀번호는 생년월일로 넣어줌
 		infoMap.put("stuGender", request.getParameter("stuGender").trim());
 		infoMap.put("stuPhone", request.getParameter("stuPhone").trim());
 		infoMap.put("stuEmail", request.getParameter("stuEmail").trim());
@@ -224,7 +229,12 @@ public class StudentController {
 		//학생회비 정보
 		HashMap<String,String> feeMap = new HashMap<String,String>();
 		feeMap.put("stuNumber", request.getParameter("stuNumber").trim());
-		feeMap.put("feePaidDate", request.getParameter("feePaidDate").trim());
+		
+		//입금날짜 형식 조정(YYYY-MM-DD => YYYYDDMM)
+		String feePaidDate =  (String)request.getParameter("feePaidDate").trim();
+		feePaidDate = feePaidDate.substring(0,4) + feePaidDate.substring(5,7) + feePaidDate.substring(8,10);
+		
+		feeMap.put("feePaidDate", feePaidDate);
 		feeMap.put("feeTotalAmount", request.getParameter("feeTotalAmount").trim());
 		feeMap.put("feePaidAmount", request.getParameter("feePaidAmount").trim());
 		feeMap.put("feePaidMethod", request.getParameter("feePaidMethod").trim());

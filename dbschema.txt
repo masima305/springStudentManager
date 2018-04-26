@@ -33,7 +33,7 @@
      ,LEDG_REMARK VARCHAR2(100) NOT NULL
      ,LEDG_AMOUNT NUMBER(20) NOT NULL
      ,LEDG_FILE VARCHAR2(20) NOT NULL
- )
+ );
      
      CREATE TABLE LOG_DELETE(
   	 STU_NUMBER VARCHAR2(12) PRIMARY KEY,
@@ -51,7 +51,7 @@
      CREATE TABLE STUDENT_FEE (
      
      STU_NUMBER VARCHAR2(12) PRIMARY KEY,
-     FEE_PAID_DATE VARCHAR2(8) DEFAULT '00000000' NOT NULL ,
+     FEE_PAID_DATE VARCHAR2(10) DEFAULT '00000000' NOT NULL ,
      FEE_TOTAL_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
      FEE_PAID_AMOUNT NUMBER(6) DEFAULT 0 NOT NULL ,
      FEE_PAID_METHOD NUMBER(1) DEFAULT 1 NOT NULL ,
@@ -144,7 +144,7 @@
      commit;
      --------------------insert DUMMY STUDENT-----------
      insert into STUDENT values('2005042465','이정훈','19900921','01035781942','johnathanl305@gmail.com'    ,1,1,2,'000000','N');
-     insert into STUDENT values('2007042422','신세휘','19870311','01015243982','fmsk3853@gmail.com'         ,2,2,1,'000000','N');
+     insert into STUDENT values('2013049595','윤인아','19940317','01086166450','ina-yun@hanmail.net'        ,2,2,1,'000000','N');
      insert into STUDENT values('2011042461','김형곤','19910522','01018268954','lkkkk42305@gmail.com'       ,3,3,2,'000000','N');
      insert into STUDENT values('2013042474','이만재','19941201','01012535486','mfjvn442@naver.com'         ,4,4,1,'000000','N');
      insert into STUDENT values('2013042451','강효미','19960312','01098822256','llhhh3005@naver.com'        ,3,5,2,'000000','N');
@@ -161,10 +161,10 @@
      insert into EXPERIENCE values ('2013042451',2016,1,'16년도학생회 부회장','N');
      insert into EXPERIENCE values ('2013042451',2016,1,'연극학회 부회장','N');
      
-     insert into EXPERIENCE values ('2007042422',2013,1,'학생회','N');
-     insert into EXPERIENCE values ('2007042422',2014,2,'축구학회장','N');
-     insert into EXPERIENCE values ('2007042422',2015,1,'15년도학생회 부회장','N');
-     insert into EXPERIENCE values ('2007042422',2015,1,'축구학회 부회장','N');
+     insert into EXPERIENCE values ('2013049595',2013,1,'학생회','N');
+     insert into EXPERIENCE values ('2013049595',2014,2,'축구학회장','N');
+     insert into EXPERIENCE values ('2013049595',2015,1,'15년도학생회 부회장','N');
+     insert into EXPERIENCE values ('2013049595',2015,1,'축구학회 부회장','N');
      
      insert into EXPERIENCE values ('2015042408',2017,1,'학생회','N');
      insert into EXPERIENCE values ('2015042408',2017,2,'축구학회장','N');
@@ -175,7 +175,7 @@
      -------------------insert DUMMY STUDENT_FEE ----------
      insert into STUDENT_FEE values ('2010042465',20050516,150000,150000,1,1,'','N');
      insert into STUDENT_FEE values ('2005042465',20050516,150000,150000,1,1,'','N');
-     insert into STUDENT_FEE values ('2007042422',20070316,170000,170000,1,1,'','N');
+     insert into STUDENT_FEE values ('2013049595',20070316,170000,170000,1,1,'','N');
      insert into STUDENT_FEE values ('2011042461',20110806,170000,130000,2,2,'2회차입금','N');
      insert into STUDENT_FEE values ('2013042474',20130516,150000,     0,1,3,'','N');
      insert into STUDENT_FEE values ('2013042451',20130516,150000,150000,2,1,'','N');
