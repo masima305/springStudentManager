@@ -226,7 +226,7 @@
 		INSERT 
     		INTO LOG_DELETE(
            		STU_NUMBER
-            	,LOG_RESON
+            	,LOG_REASON
     		) 
     		VALUES (
         		#{stuNumber}
@@ -258,7 +258,7 @@
 		
 	 UPDATE STUDENT
 	     SET 
-	        STU_DELETE_YN = Y
+	        STU_DELETE_YN = 'Y'
 	    WHERE
 	        STU_NUMBER = #{stuNumber}
     	

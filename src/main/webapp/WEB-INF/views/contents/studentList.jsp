@@ -291,9 +291,12 @@ function ajaxStuDetail(stuNumber){
 				//삭제를 눌렸을 때 이 공간에 삭제 확인칸이 떠야한다.
 			str+=	"</div>"
 			str+=	"<div id='deleteBtnArea'>"
-			str+=		"<button type='button' onclick='javascript:makeDeleteInput("+result[0].STU_NUMBER+","+result[0].STU_NAME+")' class='btn btn-small btn-danger'>삭제</button><br><br>";
+			str+=		"<button type='button' onclick='javascript:makeDeleteInput("+result[0].STU_NUMBER+",\""+result[0].STU_NAME+"\")' class='btn btn-small btn-danger'>삭제</button><br><br>";
 			str+=	"</div>"
 			str+="</div>";
+			
+			
+			
 			
 			$("#stuOptDetail").append(str);
 			
@@ -382,7 +385,6 @@ function makeInfoInput(stuNumber){
 
 }
 
-
 function updateInfoInput(id){
 	
 	
@@ -464,8 +466,8 @@ function updateInfoInput(id){
 				$('#personalStuAuthorityValue'	).html(authority);
 	
 				var btn = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeInfoInput("+id+")'>수정</button>";
-				$('#feeBtnArea').empty();
-				$('#feeBtnArea').append(btn);	
+				$('#infoBtnArea').empty();
+				$('#infoBtnArea').append(btn);	
 					
 				},//success
 			error: function(a,b,c){
@@ -483,33 +485,45 @@ function updateInfoInput(id){
 function makeDeleteInput(stuNumber,stuName){
 	var str = "";
 	str += "<hr>"
-	str += "<p><h4><strong>학번+이름</strong>을 한번 더 입력하세요</h4></p>"
-	str += "<div id='deleteKeywordWarning' class='text-danger'></div>"		
-	str += "<p><input type='text' id='deleteKeyword' placeholder='ex)12341234홍길동'></p>"
-	
-	str += "<p><h4>정보 삭제의 <strong>이유</strong>를 입력하세요</h4></p>"		
-	str += "<div id='deleteReasonWarning' class='text-danger'></div>"				
-	str += "<p><input type='text' id='deleteReason' placeholder='ex)타대학 편입'></p>"
-					
-	$("#deleteCheckArea").html(str)	
-	
-	
-	
-	str = "<button type='button' onclick='javascript:deleteStudent("+stuNumber+","+stuName+")' class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
-	$("#deleteBtnArea").html(str)	
+	str += "<form id='deleteStudentForm' action='deleteStudent.do'>"			
+	str +=	 "<p><h4><strong>학번+이름</strong>을 한번 더 입력하세요</h4></p>"
+	str +=	 "<div id='deleteKeywordWarning' name='' class='text-danger'></div>"		//삭제 키워드를 쓰지 않거나 옳게 쓰지 않았을때 나오는 경고문이 뜰 칸.		
+	str +=	 "<p><input type='text' id='deleteKeyword' placeholder='ex)12341234홍길동'></p>"
+	str +=	 "<p><h4>정보 삭제의 <strong>이유</strong>를 입력하세요</h4></p>"		
+	str +=	 "<div id='deleteReasonWarning' class='text-danger'></div>"			//삭제 이유를 쓰지 않거나 옳게 쓰지 않았을때 경고문이 나오는 공간 경고문 뜰 칸.	
+	str +=	 "<p><input type='text' name='logReason' id='deleteReason' placeholder='ex)타대학 편입'></p>"
+	str +=	 "<input type='hidden' name='stuNumber' value="+stuNumber+">"	
+	str += "</form>"
+							
+	$("#deleteCheckArea").html(str)		
+	str  = "<button type='button' onclick='javascript:deleteStudent("+stuNumber+",\""+stuName+"\")'"
+	str +=	 " class='btn btn-small btn-danger'>입력완료:삭제실행</button><br><br>"
+	$("#deleteBtnArea"	).html(str)	
 }
 function deleteStudent(stuNumber,stuName){
 	var inputDeleteKeyword = $("#deleteKeywordWarning").val();
-	var originalDeleteKeyword = ""+stuNumber+""+stuName+";"
-	alert(originalDeleteKeyword)
+	var originalDeleteKeyword = ""+stuNumber+""+stuName+"";
+	
+	var typedDeleteKeyword 	= $("#deleteKeyword").val();
+	var typedDeleteReason 	= $("#deleteReason"	).val();
+	
+	if(originalDeleteKeyword == typedDeleteKeyword && typedDeleteReason != undefined){
+		$("#deleteStudentForm").submit();
+				
+	
+	}else{
+		alert("삭제에 실패하였습니다. 입력칸을 확인해주세요.");
+		$("#deleteKeywordWarning").html("학번이름의 조합이 맞지 않습니다. 다시 입력해주세요."			);
+		$("#deleteReasonWarning" ).html("이유의 형식이 맞지 않거나, 입력값이 없습니다. 다시 입력해주세요"	);			
+	}	
 	
 	
-	$("#deleteKeywordWarning").html("학번이름의 조합이 맞지 않습니다. 다시 입력해주세요.")	
-	$("#deleteReasonWarning").html("이유의 형식이 맞지 않거나, 입력값이 없습니다. 다시 입력해주세요")	
-
-
-
-
+	
+		
+		
+		
+		
+	
 }	
 //======================================학생회비 수정용 script ==========================
 function makeFeeInput(stuNumber){
@@ -703,7 +717,8 @@ function makeExpInput(stuNumber){
 	var startYear = (stuNumber.toString()).substr(0,4);
 	stuNumberOption("insertExpYear",parseInt(startYear));
 }
-function resetExpInput(){
+function resetExpInput(){	
+
 	$("#addInputDiv").empty();
 	$("#expBtnArea"	).empty();
 	str = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput()'>경력추가</button>";
@@ -739,7 +754,7 @@ function insertExpInput(inputNumber){
 		success: function(result) {
 	//--------------------------------------------------success 이후
 			
-			str+=		"<tr>";
+			str+=		"<tr id=>";
 			str+=			"<td>"+expYear+"</td>";
 			str+=			"<td>"+expSemester+ "</td>";
 			str+=			"<td>"+expContent + "</td>";
