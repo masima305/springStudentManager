@@ -30,19 +30,66 @@
 		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
 		$("#ledgTransTypeFunction").click(function(){
 			var transType = $(':radio[name="ledgTransType"]:checked').val();
+			var ledgAmount = $("#ledgAmount").val(); 
+
 			
 			if(transType == "1"){ //출금일경우
 				$("#ledgAmount").css("color","red");
+				$("#ledgWithdrawalOutput").html(ledgAmount);
+				$("#ledgDepositOutput").html("0");
+			
 			} else if(transType == "2"){ //입금일경우
 				$("#ledgAmount").css("color","blue");
+				$("#ledgDepositOutput").html(ledgAmount);
+				$("#ledgWithdrawalOutput").html("0");
+			
 			}
 		});
 	
-		
-		$()
+		//'상세내역' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgContent").keyup(function(){
+			var ledgContent = $("#ledgContent").val();
+			$("#ledgContentOutput").html(ledgContent);
+		});
 	
-	});
 		
+		//'거래처' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgTradePartner").keyup(function(){
+			var ledgTradePartner = $("#ledgTradePartner").val();
+			$("#ledgTradePartnerOutput").html(ledgTradePartner);
+		});
+	
+		
+		//'날짜' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgDate").change(function(){
+			var ledgDate = $("#ledgDate").val();
+			ledgDate = ledgDate.substring(0,4) + ledgDate.substring(5,7) + ledgDate.substring(8,10);
+			$("#ledgDateOutput").html(ledgDate);
+		});
+
+		//'금액' 입력시 '구분(입금/출금) 체크 확인한 후' 입력내역에 실시간으로 출력하기
+		$("#ledgAmount").keyup(function(){
+			
+			var transType = $(':radio[name="ledgTransType"]:checked').val();
+
+			if(transType == null){
+				alert("구분(출금/입금)을 먼저 선택해주세요");
+				$("#ledgAmount").val("");
+				return false;
+			} else {
+				
+				var ledgAmount = $("#ledgAmount").val();
+				
+				if(transType == "1") { //출금일경우
+					$("#ledgWithdrawalOutput").html(ledgAmount);
+					$("#ledgDepositOutput").html("0");
+				} else { //입금일경우
+					$("#ledgDepositOutput").html(ledgAmount);
+					$("#ledgWithdrawalOutput").html("0");
+				}
+			}
+		});
+	});
 
 </script>
 
@@ -129,8 +176,6 @@
 				</div>
 				
 			</div> <!-- row (사용내역 리스트) -->
-			
-			<br><br>
 			
 			<div id="ledgerInsertSection">
 				<div class= "row">
@@ -220,7 +265,6 @@
 				
 			</div> <!-- ledgerInsertSection -->
 			
-			<br><br>
 			<div class ="row">
 				<div class="col-lg-10 col-md-12 col-sm-12">
 					<span style="font-weight:bold;"><i class="fas fa-clipboard-check"></i>&nbsp;입력 내역</span>
@@ -239,14 +283,14 @@
 								</tr>
 							
 								<tr>
-									<td id="ledgDateOutput">20180546</td>
-									<td id="ledgContentOutput">야식사업</td>
-									<td id="ledgTradePartnerOutput">도스마스</td>
-									<td id="ledgCategoryOutput">학과행사진행</td>
-									<td id="ledgMethodOutput">카드</td>
-									<td id="ledgDepositOutput">0</td>
-									<td id="ledgWithdrawalOutput">600000</td>
-									<td id="ledgBalanceOutput">500000</td>
+									<td id="ledgDateOutput"></td>
+									<td id="ledgContentOutput"></td>
+									<td id="ledgTradePartnerOutput"></td>
+									<td id="ledgCategoryOutput"></td>
+									<td id="ledgMethodOutput"></td>
+									<td id="ledgDepositOutput"></td>
+									<td id="ledgWithdrawalOutput"></td>
+									<td id="ledgBalanceOutput"></td>
 								</tr>
 						</table>
 					</div>
