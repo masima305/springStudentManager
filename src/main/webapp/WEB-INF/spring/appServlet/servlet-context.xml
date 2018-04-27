@@ -35,6 +35,7 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />	
 	
 	<!-- 인터셉터 -->
+	
 	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*.do"/>

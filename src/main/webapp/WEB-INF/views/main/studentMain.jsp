@@ -19,7 +19,7 @@
 	<!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->
 	<nav id="upperbar" class="navbar navbar-expand-lg navbar-light bg-light">
 		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
-		<span class="navbar-brand" id="sideNavTitle">기본정보1</span>
+		<span class="navbar-brand" id="sideNavTitle">학생 정보</span>
 	</nav>
 
 
@@ -186,10 +186,10 @@
 <!------------------------------------ 사이드 바 ------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll'	)">기본정보1</a> 
-		<a href="#" onclick="showTitle(this,'studentFee')">기본정보2</a> 
-		<a href="#" onclick="showTitle(this				)">기본정보3</a> 
-		<a href="#" onclick="showTitle(this				)">기본정보4</a>
+		<a href="#" onclick="showTitle(this,'listAll'	)">학생정보 열람</a> 
+		<a href="#" onclick="showTitle(this,'studentFee')">학생회비 사용내역</a> 
+		<a href="#" onclick="showTitle(this				)">학과 일정</a> 
+		<a href="#" onclick="showTitle(this				)">학과 게시판</a>
 		
 		<a href="/logout.go">로그아웃</a>
 	</div>
