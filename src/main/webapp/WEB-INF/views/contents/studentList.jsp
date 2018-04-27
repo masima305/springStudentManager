@@ -717,7 +717,8 @@ function makeExpInput(stuNumber){
 	var startYear = (stuNumber.toString()).substr(0,4);
 	stuNumberOption("insertExpYear",parseInt(startYear));
 }
-function resetExpInput(){
+function resetExpInput(){	
+
 	$("#addInputDiv").empty();
 	$("#expBtnArea"	).empty();
 	str = "<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput()'>경력추가</button>";
@@ -753,7 +754,7 @@ function insertExpInput(inputNumber){
 		success: function(result) {
 	//--------------------------------------------------success 이후
 			
-			str+=		"<tr>";
+			str+=		"<tr id=>";
 			str+=			"<td>"+expYear+"</td>";
 			str+=			"<td>"+expSemester+ "</td>";
 			str+=			"<td>"+expContent + "</td>";
