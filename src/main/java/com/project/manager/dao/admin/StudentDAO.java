@@ -101,7 +101,7 @@ public class StudentDAO {
 	//학생 '삭제' -->(삭제이지만 update)
 	public int deleteStudent(HashMap<String,String> map){
 		System.out.println(">>>>>>>>deleteStudent DAO called");
-		return this.sqlSession.insert("student.deleteStudent",map);
+		return this.sqlSession.update("student.deleteStudent",map);
 	}
 	
 	

@@ -288,18 +288,28 @@ public class StudentController {
 		return studentService.updateStudent(map);
 	}
 	
+	//======================================================================================================
+	//========================= DELETE METHODS  ============================================================
+	//======================================================================================================
+		
+	
 	@RequestMapping(value="/deleteStudent.do")
-	public int deleteStudent(HttpServletRequest request) {
+	public String deleteStudent(HttpServletRequest request) {
 		System.out.println(">>>>>>>>deleteStudentController called");
 		
 		String stuNumber 	= request.getParameter("stuNumber");
 		String logReason 	= request.getParameter("logReason");
 		
+		System.out.println(stuNumber);
+		System.out.println(logReason);
+		
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("stuNumber", stuNumber);
 		map.put("logReason", logReason);
 		
-		return studentService.updateStudent(map);
+		studentService.deleteStudent(map);
+		
+		return "redirect:adminMain";
 	}
 	
 	
