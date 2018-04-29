@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.manager.dao.admin.StudentDAO;
 
@@ -71,6 +73,7 @@ public class StudentService {
 	}
 	
 	//학번 유효성 체크하기
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public HashMap<String,Object> checkStuNumber (HashMap<String,String> map){
 		System.out.println(">>>>>>>>checkStuNumber Service called");
 		return studentDAO.checkStuNumber(map);
@@ -83,18 +86,16 @@ public class StudentService {
 		
 	
 	//학생 기본 정보 추가
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} ) 
 	public int insertStudentInfo(HashMap<String,String> map) {
 		System.out.println(">>>>>>>>insertStudentInfo Service called");
-		return studentDAO.insertStudentInfo(map);
-	}
-	
-	//학생회비 정보 추가
-	public int insertStudentFee(HashMap<String,String> map) {
-		System.out.println(">>>>>>>>insertStudentFee Service called");
-		return studentDAO.insertStudentFee(map);
+		int resultA = studentDAO.insertStudentInfo(map);
+		int resultB = studentDAO.insertStudentFee(map);
+		return resultA * resultB;
 	}
 	
 	//학생 경력 추가
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int insertExperience(HashMap<String,String> map){
 		System.out.println(">>>>>>>>insertExperience Service called");
 		return studentDAO.insertExperience(map);
@@ -105,12 +106,13 @@ public class StudentService {
 	//=====================================================================================================
 		
 	//학생 정보 수정
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int updateStudent(HashMap<String,String> map) {
 		System.out.println(">>>>>>>>updateStudent Service called");
 		return studentDAO.updateStudent(map);
 		
 	}
-	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int deleteStudent(HashMap<String,String> map) {
 		//학생 '삭제로그 추가'
 		System.out.println(">>>>>>>>deleteStudent Service called");

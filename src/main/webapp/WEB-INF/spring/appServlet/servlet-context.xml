@@ -3,11 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc
 						http://www.springframework.org/schema/mvc/spring-mvc.xsd
 						http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- 클래스 단의 컨트롤러 어노테이션 바인더와 바인딩 시켜주는 태그 -->
@@ -46,5 +49,7 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	 -->
-		 	
+	 
+	<!-- transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans:beans>

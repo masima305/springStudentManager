@@ -36,7 +36,7 @@ public class StudentController {
 	
 	
 	/*
-	 * commonCode 가져오기
+	 * commonCode 媛��졇�삤湲�
 	 */
 	@RequestMapping(value="/getCommonCode.do")
 	public @ResponseBody ModelAndView getCommonCode(HttpServletRequest request) {
@@ -56,8 +56,8 @@ public class StudentController {
 	
 	
 	/*
-	 * 전체 학생 리스트 불러오기
-	 * del_yn='n'인 학생만
+	 * �쟾泥� �븰�깮 由ъ뒪�듃 遺덈윭�삤湲�
+	 * del_yn='n'�씤 �븰�깮留�
 	 */
 	@RequestMapping(value="/listAllStudent.do")
 	public @ResponseBody ModelAndView listAllStudent(HttpServletRequest request){
@@ -67,7 +67,7 @@ public class StudentController {
 		List<HashMap<String,Object>> listAllStudent = studentService.listAllStudent();
 		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
-		// 공통코드 호출을 위한 자료구조.
+		// 怨듯넻肄붾뱶 �샇異쒖쓣 �쐞�븳 �옄猷뚭뎄議�.
 		
 		Gson gson = new Gson();
 		String listAllCommonGson = gson.toJson(listAllCommonMap);
@@ -83,8 +83,8 @@ public class StudentController {
 	}
 	
 	/*
-	 * 검색 
-	 * '특정 키워드'에 따른 학생 리스트 불러오기
+	 * 寃��깋 
+	 * '�듅�젙 �궎�썙�뱶'�뿉 �뵲瑜� �븰�깮 由ъ뒪�듃 遺덈윭�삤湲�
 	 * form.id = seachKeywordForm
 	 * 
 	 */
@@ -94,7 +94,7 @@ public class StudentController {
 		String searchCategory 	= request.getParameter("searchCategory"	);
 		String searchContent 	= request.getParameter("searchContent"	);
 		
-		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
+		//�뙆�씪誘명꽣濡� �꽆�뼱�삩 蹂��닔紐낆뿉 �빐�떦�븯�뒗 而щ읆紐낆쑝濡� 留ㅽ븨�맖 ( stuNum -> STU_NUM )
 		searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
@@ -106,8 +106,8 @@ public class StudentController {
 	
 	
 	/*
-	 * 검색 
-	 * '범위'에 따른 학생 리스트 불러오기
+	 * 寃��깋 
+	 * '踰붿쐞'�뿉 �뵲瑜� �븰�깮 由ъ뒪�듃 遺덈윭�삤湲�
 	 * form.id = searchScopeForm
 	 * 
 	 */
@@ -126,7 +126,7 @@ public class StudentController {
 		String stuAuthority = request.getParameter("stuAuthority"	);
 		
 		
-		//파라미터로 넘어온 변수명에 해당하는 컬럼명으로 매핑됨 ( stuNum -> STU_NUM )
+		//�뙆�씪誘명꽣濡� �꽆�뼱�삩 蹂��닔紐낆뿉 �빐�떦�븯�뒗 而щ읆紐낆쑝濡� 留ㅽ븨�맖 ( stuNum -> STU_NUM )
 		//searchCategory = ccodeService.CCODENAMEMAP.get(searchCategory);
 		
 		HashMap<String, String> map = new HashMap<String,String>();
@@ -138,7 +138,7 @@ public class StudentController {
 		return studentService.searchScopeStudent(map);
 	}
 	
-	//학생 개인 정보 불러오기.
+	//�븰�깮 媛쒖씤 �젙蹂� 遺덈윭�삤湲�.
 	@RequestMapping(value="/getStudent.do")
 	public @ResponseBody List<HashMap<String, Object>> getStudent (HttpServletRequest request){
 		
@@ -150,7 +150,7 @@ public class StudentController {
 		return studentService.getStudent(map);
 	}
 	
-	//학번 유효성 체크하기
+	//�븰踰� �쑀�슚�꽦 泥댄겕�븯湲�
 	@RequestMapping(value="/checkStuNumber.do")
 	public @ResponseBody HashMap<String, String> checkStuNumber (HttpServletRequest request){
 		
@@ -162,10 +162,10 @@ public class StudentController {
 		HashMap<String,Object> checkStuNumber = studentService.checkStuNumber(map);
 		HashMap<String,String> result = new HashMap<String,String>(); 
 		
-		if(checkStuNumber != null) { //같은 학번이 존재하는 경우 1을 보냄
+		if(checkStuNumber != null) { //媛숈� �븰踰덉씠 議댁옱�븯�뒗 寃쎌슦 1�쓣 蹂대깂
 			result.put("result", "1"); 
 		} else {
-			result.put("result", "0"); //같은 학번이 존재하지 않는 경우 0을 보냄
+			result.put("result", "0"); //媛숈� �븰踰덉씠 議댁옱�븯吏� �븡�뒗 寃쎌슦 0�쓣 蹂대깂
 		}
 		
 		System.out.println(checkStuNumber);
@@ -180,7 +180,7 @@ public class StudentController {
 	//======================================================================================================
 		
 	
-	//학생 개인 경험 인서트 하기.
+	//�븰�깮 媛쒖씤 寃쏀뿕 �씤�꽌�듃 �븯湲�.
 	@RequestMapping(value="/insertExperience.do")
 	public @ResponseBody int insertExperience (HttpServletRequest request){
 
@@ -203,54 +203,56 @@ public class StudentController {
 	
 	
 	/*
-	 * 학생 추가하기
+	 * �븰�깮 異붽��븯湲�
 	 */
 	
 	@RequestMapping(value="/insertStudent.do")
 	public @ResponseBody HashMap<String,String> insertStudent(HttpServletRequest request) {
 		
-		//학생 기본정보
+		//�븰�깮 湲곕낯�젙蹂�
 		HashMap<String,String> infoMap = new HashMap<String,String>();
 		infoMap.put("stuNumber", request.getParameter("stuNumber").trim());
 		infoMap.put("stuName", request.getParameter("stuName").trim());
 		
-		//생년월일 형식 조정(YYYY-MM-DD => YYYYDDMM)
+		//�깮�뀈�썡�씪 �삎�떇 議곗젙(YYYY-MM-DD => YYYYDDMM)
 		String stuBirthday =  (String)request.getParameter("stuBirthday").trim();
+		
 		stuBirthday = stuBirthday.substring(0,4) + stuBirthday.substring(5,7) + stuBirthday.substring(8,10);
 		
 		infoMap.put("stuBirthday", stuBirthday);
-		infoMap.put("stuPassword", stuBirthday); //비밀번호는 생년월일로 넣어줌
+		infoMap.put("stuPassword", stuBirthday); //鍮꾨�踰덊샇�뒗 �깮�뀈�썡�씪濡� �꽔�뼱以�
 		infoMap.put("stuGender", request.getParameter("stuGender").trim());
 		infoMap.put("stuPhone", request.getParameter("stuPhone").trim());
 		infoMap.put("stuEmail", request.getParameter("stuEmail").trim());
 		infoMap.put("stuEnterance", request.getParameter("stuEnterance").trim());
 		infoMap.put("stuAuthority", request.getParameter("stuAuthority").trim());
 		
-		//학생회비 정보
-		HashMap<String,String> feeMap = new HashMap<String,String>();
-		feeMap.put("stuNumber", request.getParameter("stuNumber").trim());
+		//�븰�깮�쉶鍮� �젙蹂�
 		
-		//입금날짜 형식 조정(YYYY-MM-DD => YYYYDDMM)
+		//�엯湲덈궇吏� �삎�떇 議곗젙(YYYY-MM-DD => YYYYDDMM)
 		String feePaidDate =  (String)request.getParameter("feePaidDate").trim();
+		//TODO : 입금내역 null예외처리 바람.
 		feePaidDate = feePaidDate.substring(0,4) + feePaidDate.substring(5,7) + feePaidDate.substring(8,10);
 		
-		feeMap.put("feePaidDate", feePaidDate);
-		feeMap.put("feeTotalAmount", request.getParameter("feeTotalAmount").trim());
-		feeMap.put("feePaidAmount", request.getParameter("feePaidAmount").trim());
-		feeMap.put("feePaidMethod", request.getParameter("feePaidMethod").trim());
-		feeMap.put("feePaidStatus", request.getParameter("feePaidStatus").trim());
-		feeMap.put("feeContent", request.getParameter("feeContent").trim());
+		infoMap.put("feePaidDate", feePaidDate);
+		infoMap.put("feeTotalAmount",request.getParameter("feeTotalAmount"	).trim());
+		infoMap.put("feePaidAmount", request.getParameter("feePaidAmount"	).trim());
+		infoMap.put("feePaidMethod", request.getParameter("feePaidMethod"	).trim());
+		infoMap.put("feePaidStatus", request.getParameter("feePaidStatus"	).trim());
+		infoMap.put("feeContent", 	 request.getParameter("feeContent"	 	).trim());
 		
-		//학생 기본정보, 학생회비 정보 DB연결
+		
+		
+		//�븰�깮 湲곕낯�젙蹂�, �븰�깮�쉶鍮� �젙蹂� DB�뿰寃�
 		int InfoResult = studentService.insertStudentInfo(infoMap);
-		int feeResult = studentService.insertStudentFee(feeMap);
-		
+
+		//-------------------------------------------------------------
 		HashMap<String,String> map = new HashMap<String,String>();
 
-		if(InfoResult!=0 && feeResult!=0) { //둘다 입력을 성공할 경우
-			map.put("result", "학생 추가를 완료하였습니다.");
+		if(InfoResult!=0) { //�몮�떎 �엯�젰�쓣 �꽦怨듯븷 寃쎌슦
+			map.put("result", "�븰�깮 異붽�瑜� �셿猷뚰븯���뒿�땲�떎.");
 		} else {
-			map.put("result", "학생 추가를 실패하였습니다.");
+			map.put("result", "�븰�깮 異붽�瑜� �떎�뙣�븯���뒿�땲�떎.");
 		}
 		return map;
 	}

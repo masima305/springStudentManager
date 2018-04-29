@@ -24,7 +24,7 @@
 
 	<!-- DBMS 설정 ################################################################################################################## -->
 	<entry key="dbms.driverClassName"	>oracle.jdbc.driver.OracleDriver</entry>						<!-- DBMS 드라이버 -->
-	<entry key="dbms.url"				>jdbc:oracle:thin:@localhost:1522:orcl</entry>	<!-- DBMS 주소 및 스키마 -->
+	<entry key="dbms.url"				>jdbc:oracle:thin:@localhost:1521:orcl</entry>	<!-- DBMS 주소 및 스키마 -->
 	<entry key="dbms.username"			>scott</entry>										<!-- 유저명 -->
 	<entry key="dbms.password"			>tiger</entry>										<!-- 비밀번호 -->
 	
@@ -34,5 +34,19 @@
 	<entry key="dbms.maxWait"			>2000</entry>										<!-- 접속 지연 ( ms ) -->
 	
 	<entry key="dbms.timeBERM"			>60000</entry>										<!-- 해당 밀리초마다 validationQuery 를 이용하여 유효성 검사 진행 -->
+	
+	<!-- <entry key="dbms.driverClassName"	>oracle.jdbc.driver.OracleDriver</entry>						DBMS 드라이버
+	<entry key="dbms.url"				>jdbc:oracle:thin:@localhost:1521:orcl</entry>	DBMS 주소 및 스키마
+	<entry key="dbms.username"			>scott</entry>										유저명
+	<entry key="dbms.password"			>tiger</entry>										비밀번호
+	
+	<entry key="dbms.initialSize"		>1</entry>											초기 접속 수
+	<entry key="dbms.maxActive"			>100</entry>										최대 접속 수
+	<entry key="dbms.maxIdle"			>16</entry>											최대 유휴 수
+	<entry key="dbms.maxWait"			>2000</entry>										접속 지연 ( ms )
+	
+	<entry key="dbms.timeBERM"			>60000</entry>										해당 밀리초마다 validationQuery 를 이용하여 유효성 검사 진행
+	 -->
+	
 	
 </properties>
