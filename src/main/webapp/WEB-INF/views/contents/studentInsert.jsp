@@ -127,6 +127,16 @@
 			 $('#insertFeePaidAmount').focus();
 			 return false;
 		}
+		
+		
+		//납부금액이 입력되지 않은 경우
+		if(insertFeePaidAmount == ""){
+			if(insertFeePaidStatus != 3) { //입금상태가 '미납'이 아닐경우 미납으로 설정해줘야함
+				alert("납부금액이 미입력일경우 입금상태를 '미납'으로 처리하여야합니다.");
+				$('#insertFeePaidStatus').focus();
+			 	return false;
+			}
+		}
 
 		//-----------------Insert 를 위한 데이터 json----------------------
 		
@@ -199,7 +209,12 @@
 		<div class="container">
 		
 			<div class="row">
-				<div class="col-lg-7">
+			
+				<div class="col-lg-3">
+				</div>
+			
+			
+				<div class="col-lg-6">
 					<form id="studentInsertForm">
 						<div class="row">
 							<div class="col-sm-3 col-md-3 col-lg-3">
@@ -394,7 +409,7 @@
 					</form>
 				</div>
 				
-				<div class="col-lg-5">
+				<div class="col-lg-3">
 				</div>
 			</div> <!-- row -->
 		</div> <!-- container -->

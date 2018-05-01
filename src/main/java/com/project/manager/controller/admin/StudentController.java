@@ -219,27 +219,30 @@ public class StudentController {
 		
 		stuBirthday = stuBirthday.substring(0,4) + stuBirthday.substring(5,7) + stuBirthday.substring(8,10);
 		
-		infoMap.put("stuBirthday", stuBirthday);
-		infoMap.put("stuPassword", stuBirthday); //鍮꾨�踰덊샇�뒗 �깮�뀈�썡�씪濡� �꽔�뼱以�
-		infoMap.put("stuGender", request.getParameter("stuGender").trim());
-		infoMap.put("stuPhone", request.getParameter("stuPhone").trim());
-		infoMap.put("stuEmail", request.getParameter("stuEmail").trim());
-		infoMap.put("stuEnterance", request.getParameter("stuEnterance").trim());
-		infoMap.put("stuAuthority", request.getParameter("stuAuthority").trim());
+		infoMap.put("stuBirthday"	, stuBirthday);
+		infoMap.put("stuPassword"	, stuBirthday); //鍮꾨�踰덊샇�뒗 �깮�뀈�썡�씪濡� �꽔�뼱以�
+		infoMap.put("stuGender"		, request.getParameter("stuGender" 		).trim());
+		infoMap.put("stuPhone"		, request.getParameter("stuPhone" 		).trim());
+		infoMap.put("stuEmail"		, request.getParameter("stuEmail"  		).trim());
+		infoMap.put("stuEnterance"	, request.getParameter("stuEnterance"	).trim());
+		infoMap.put("stuAuthority"	, request.getParameter("stuAuthority"	).trim());
 		
 		//�븰�깮�쉶鍮� �젙蹂�
 		
 		//�엯湲덈궇吏� �삎�떇 議곗젙(YYYY-MM-DD => YYYYDDMM)
 		String feePaidDate =  (String)request.getParameter("feePaidDate").trim();
-		//TODO : 입금내역 null예외처리 바람.
-		feePaidDate = feePaidDate.substring(0,4) + feePaidDate.substring(5,7) + feePaidDate.substring(8,10);
+		
+		//입금날짜가 빈값이 아닐경우 형식 변환
+		if(feePaidDate.length() > 0) {
+			feePaidDate = feePaidDate.substring(0,4) + feePaidDate.substring(5,7) + feePaidDate.substring(8,10);
+		}
 		
 		infoMap.put("feePaidDate", feePaidDate);
 		infoMap.put("feeTotalAmount",request.getParameter("feeTotalAmount"	).trim());
-		infoMap.put("feePaidAmount", request.getParameter("feePaidAmount"	).trim());
-		infoMap.put("feePaidMethod", request.getParameter("feePaidMethod"	).trim());
-		infoMap.put("feePaidStatus", request.getParameter("feePaidStatus"	).trim());
-		infoMap.put("feeContent", 	 request.getParameter("feeContent"	 	).trim());
+		infoMap.put("feePaidAmount" ,request.getParameter("feePaidAmount"	).trim());
+		infoMap.put("feePaidMethod"	,request.getParameter("feePaidMethod"	).trim());
+		infoMap.put("feePaidStatus"	,request.getParameter("feePaidStatus"	).trim());
+		infoMap.put("feeContent"	,request.getParameter("feeContent"	 	).trim());
 		
 		
 		
