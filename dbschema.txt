@@ -33,7 +33,20 @@
      ,LEDG_REMARK VARCHAR2(100) NOT NULL
      ,LEDG_AMOUNT NUMBER(20) NOT NULL
      ,LEDG_FILE VARCHAR2(20) NOT NULL
- );
+ 	);
+ 	
+ 	CREATE TABLE LEDGER_CATE (
+     LEDG_CATE_CODE NUMBER(4) PRIMARY KEY
+     ,LEDG_CATE_NAME VARCHAR2(20) NOT NULL
+     );
+     
+     CREATE SEQUENCE LEDGER_CATE_SEQ
+	START WITH 0
+	INCREMENT BY 1
+	NOMAXVALUE
+	MINVALUE 0
+	NOCYCLE
+	NOCACHE;    
      
      CREATE TABLE LOG_DELETE(
   	 STU_NUMBER VARCHAR2(12) PRIMARY KEY,
@@ -115,8 +128,8 @@
      insert into COMMON values('feePaidStatus',02,'분할입금');
      insert into COMMON values('feePaidStatus',03,'미납');
      
-     insert into COMMON values('ledgTranseType',01,'출금');
-     insert into COMMON values('ledgTranseType',02,'입금');
+     insert into COMMON values('ledgTransType',01,'출금');
+     insert into COMMON values('ledgTransType',02,'입금');
      
      insert into COMMON values('ledgMethod',01,'카드');
      insert into COMMON values('ledgMethod',02,'현금');
@@ -125,7 +138,11 @@
      
      commit;
      
-     
+     insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 회식');
+	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 운영비');
+	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학과 행사진행');
+	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '과방 비품');
+	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학회 지원금');
      
      -------------------insert--------------
    ---------맨 처음 student 넣을때-----------

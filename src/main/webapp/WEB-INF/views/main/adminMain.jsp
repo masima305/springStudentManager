@@ -13,10 +13,79 @@
 
 </head>
 <script>
+
+
 	$().ready(function(){
 		stuNumberOption("searchStuNumber1",undefined)
 		stuNumberOption("searchStuNumber2",undefined)
+		
+	
+
+		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
+		$("#ledgTransTypeFunction").click(function(){
+			var transType = $(':radio[name="ledgTransType"]:checked').val();
+			var ledgAmount = $("#ledgAmount").val(); 
+
+			
+			if(transType == "1"){ //출금일경우
+				$("#ledgAmount").css("color","red");
+				$("#ledgWithdrawalOutput").html(ledgAmount);
+				$("#ledgDepositOutput").html("0");
+			
+			} else if(transType == "2"){ //입금일경우
+				$("#ledgAmount").css("color","blue");
+				$("#ledgDepositOutput").html(ledgAmount);
+				$("#ledgWithdrawalOutput").html("0");
+			
+			}
 		});
+	
+		//'상세내역' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgContent").keyup(function(){
+			var ledgContent = $("#ledgContent").val();
+			$("#ledgContentOutput").html(ledgContent);
+		});
+	
+		
+		//'거래처' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgTradePartner").keyup(function(){
+			var ledgTradePartner = $("#ledgTradePartner").val();
+			$("#ledgTradePartnerOutput").html(ledgTradePartner);
+		});
+	
+		
+		//'날짜' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgDate").change(function(){
+			var ledgDate = $("#ledgDate").val();
+			ledgDate = ledgDate.substring(0,4) + ledgDate.substring(5,7) + ledgDate.substring(8,10);
+			$("#ledgDateOutput").html(ledgDate);
+		});
+
+		//'금액' 입력시 '구분(입금/출금) 체크 확인한 후' 입력내역에 실시간으로 출력하기
+		$("#ledgAmount").keyup(function(){
+			
+			var transType = $(':radio[name="ledgTransType"]:checked').val();
+
+			if(transType == null){
+				alert("구분(출금/입금)을 먼저 선택해주세요");
+				$("#ledgAmount").val("");
+				return false;
+			} else {
+				
+				var ledgAmount = $("#ledgAmount").val();
+				
+				if(transType == "1") { //출금일경우
+					$("#ledgWithdrawalOutput").html(ledgAmount);
+					$("#ledgDepositOutput").html("0");
+				} else { //입금일경우
+					$("#ledgDepositOutput").html(ledgAmount);
+					$("#ledgWithdrawalOutput").html("0");
+				}
+			}
+		});
+	
+	
+	});
 </script>
 <body>
 
@@ -52,7 +121,9 @@
 		<div id="studentInsert" style="display: none;">
 			<c:import url='/getCommonCode.do'></c:import>
 		</div>
-
+		<div id="ledgerInsert" style="display: none;">
+			<c:import url='/ledgerForm.do'></c:import>
+		</div>
 	</div>
 
 
@@ -63,6 +134,7 @@
 		<a href="#" onclick="showTitle(this,'listAll'	)">학생관리</a> 
 		<a href="#" onclick="showTitle(this,'studentInsert'	)">학생등록</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
+		<a href="#" onclick="showTitle(this,'ledgerInsert')">회비장부입력</a> 
 		<a href="#" onclick="showTitle(this				)">학과일정관리</a> 
 		<a href="#" onclick="showTitle(this				)">학생회의</a>
 	</div>
