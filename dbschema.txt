@@ -4,6 +4,9 @@
      DROP TABLE COMMON cascade CONSTRAINTS;
      DROP TABLE LOG_DELETE cascade CONSTRAINTS;
      DROP TABLE LEDGER cascade CONSTRAINTS;
+     DROP TABLE LEDGER_MONTHLY cascade CONSTRAINTS;
+     DROP TABLE LEDGER_CATE;
+     DROP SEQUENCE LEDGER_CATE_SEQ;
      
      
      commit;
@@ -22,17 +25,21 @@
      );
      
      CREATE TABLE LEDGER (
-     LEDG_NUMBER NUMBER(10) PRIMARY KEY
-     ,LEDG_DATE VARCHAR2(10) NOT NULL
+     LEDG_INPUT_DATE VARCHAR2(14) PRIMARY KEY
+     ,LEDG_TRADE_DATE VARCHAR2(8) NOT NULL
      ,LEDG_CONTENT VARCHAR2(100) NOT NULL
-     ,LEDG_TRANSE_TYPE VARCHAR2(10) NOT NULL
+     ,LEDG_TRADE_TYPE NUMBER(2) NOT NULL
      ,LEDG_TRADE_PARTNER VARCHAR2(50) NOT NULL
      ,LEDG_METHOD NUMBER(2) NOT NULL
-     ,LEDG_CATEGORY VARCHAR2(10) NOT NULL
-     ,LEDG_BALANCE NUMBER(20) NOT NULL
+     ,LEDG_CATEGORY NUMBER(10) NOT NULL
      ,LEDG_REMARK VARCHAR2(100) NOT NULL
      ,LEDG_AMOUNT NUMBER(20) NOT NULL
-     ,LEDG_FILE VARCHAR2(20) NOT NULL
+     ,LEDG_FILE VARCHAR2(20)
+ 	);
+ 	
+ 	CREATE TABLE LEDGER_MONTHLY(
+ 	LEDG_MONTH_DATE VARCHAR2(6) PRIMARY KEY
+ 	,LEDG_MONTH_BALANCE NUMBER(30)
  	);
  	
  	CREATE TABLE LEDGER_CATE (
@@ -40,14 +47,7 @@
      ,LEDG_CATE_NAME VARCHAR2(20) NOT NULL
      );
      
-     CREATE SEQUENCE LEDGER_CATE_SEQ
-	START WITH 0
-	INCREMENT BY 1
-	NOMAXVALUE
-	MINVALUE 0
-	NOCYCLE
-	NOCACHE;    
-     
+    
      CREATE TABLE LOG_DELETE(
   	 STU_NUMBER VARCHAR2(12) PRIMARY KEY,
      LOG_REASON VARCHAR2(100)
@@ -84,7 +84,17 @@
      );
      
      commit;
-     
+    
+    
+    -----------------시퀀스 생성------------------------
+     CREATE SEQUENCE LEDGER_CATE_SEQ
+	START WITH 0
+	INCREMENT BY 1
+	NOMAXVALUE
+	MINVALUE 0
+	NOCYCLE
+	NOCACHE;    
+         
       ---------------복합 PK 설정------------------------
      ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(COMMON_CATEGORY,COMMON_CODE);
      ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(STU_NUMBER,EXP_YEAR,EXP_SEMESTER,EXP_CONTENT);
@@ -137,12 +147,6 @@
      insert into COMMON values('ledgMethod',04,'기타');
      
      commit;
-     
-     insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 회식');
-	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 운영비');
-	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학과 행사진행');
-	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '과방 비품');
-	 insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학회 지원금');
      
      -------------------insert--------------
    ---------맨 처음 student 넣을때-----------
@@ -203,6 +207,27 @@
      insert into STUDENT_FEE values ('2016042418',20160516,150000,150000,1,1,'','N');
      
      commit;
+     
+     
+     -------------------insert DUMMY LEDGER ----------
+          
+	INSERT INTO LEDGER VALUES( '20180501122633' ,'20180501' ,'집행부 야근 식비 사용' ,2 ,'동아리식당' ,2 ,2 ,'도스마스 별도' ,'30000' ,NULL );
+	INSERT INTO LEDGER VALUES( '20180503162443' ,'20180502' ,'영문과 학생회 졸업생 지원' ,1 ,'졸업생동문회' ,2 ,2 ,'현금봉투로 주심' ,'100000' ,NULL );
+	INSERT INTO LEDGER VALUES( '20180503162453' ,'20180503' ,'상장제작' ,2 ,'한양당' ,2 ,2 ,'6/2일 수령예정' ,'300000' ,NULL );
+	
+	INSERT INTO LEDGER_MONTHLY VALUES( '201803', 220500);
+	INSERT INTO LEDGER_MONTHLY VALUES( '201804', 4750000);
+	INSERT INTO LEDGER_MONTHLY VALUES( '201805', 4350500);
+	
+	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 회식');
+	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학생회 운영비');
+	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학과 행사진행');
+	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '과방 비품');
+	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학회 지원금');
+     
+	COMMIT;
+     
+     
      --------------------select-----------------
     -------------------- 모든 학생의 정보 다 불러오기.------------------------------------
      SELECT STU_NUMBER,STU_NAME,STU_BIRTHDAY,STU_PHONE,STU_EMAIL,STU_PASSWORD
@@ -236,32 +261,6 @@
 
  	----------------- 한 학생 기본정보 불러오기 버전2 (성별,입학전형,접근권한 정보 추가 & 별칭 그냥 원래 기본에쓰던 칼럼명으로 변경-----------------------------------
 
- 	SELECT S.STU_NUMBER,S.STU_NAME,S.STU_BIRTHDAY,S.STU_PHONE,S.STU_EMAIL,S.STU_PASSWORD,F.FEE_PAID_DATE, F.FEE_TOTAL_AMOUNT, F.FEE_PAID_AMOUNT, F.FEE_PAID_METHOD, F.FEE_PAID_STATUS
-	     ,DECODE(F.FEE_CONTENT,NULL,'없음',F.FEE_CONTENT)
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidMethod' AND COMMON_CODE = FS.FEE_PAID_METHOD) as FEE_PAID_METHOD
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'feePaidStatus' AND COMMON_CODE = F.FEE_PAID_STATUS) as FEE_PAID_STATUS
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuEnterance' AND COMMON_CODE = S.STU_ENTERANCE) as STU_ENTERANCE
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuGender' AND COMMON_CODE = S.STU_GENDER) as STU_GENDER
-	     ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'stuAuthority' AND COMMON_CODE = S.STU_AUTHORITY) as STU_AUTHORITY
-	     FROM STUDENT S, STUDENT_FEE F
-	     WHERE (S.STU_NUMBER = F.STU_NUMBER)
-	     AND S.STU_DELETE_YN = 'N'
-
-
-		<choose>
-			<when test="searchCategory == 'STU_NAME'">S
-				AND S.STU_NAME = #{searchContent}	
-			</when>
-			<when test="searchCategory == 'STU_NUMBER'">
-				AND S.STU_NUMBER = #{searchContent}	
-			</when>
-			<when test="searchCategory == 'STU_PHONE'">
-				AND S.STU_PHONE = #{searchContent}	
-			</when>
-			<when test="searchCategory == 'STU_EMAIL'">
-				AND S.STU_EMAIL = #{searchContent}	
-			</when>
-	    </choose>
 
 
 
@@ -278,12 +277,28 @@
      UPDATE student SET STU_NUMBER = '00	000000' WHERE STU_NUMBER = '2014042477'  ;   
      
      
-     
-     
-     
-     
      SELECT * FROM student;
      select * from student WHERE STU_NUMBER = '2010042465';
      select * from experience;
      select * from common;
+     
+     ------------------------------LEDGER QUERY MAKING------------------
+     SELECT * FROM LEDGER_CATE;
+
+SELECT * FROM LEDGER;
+
+SELECT * FROM LEDGER_MONTHLY;
+
+INSERT INTO LEDGER VALUES(
+    '20180501122633'
+    ,'20180501'
+    ,'집행부 야근 식비 사용'
+    ,2
+    ,'동아리식당'
+    ,2
+    ,2
+    ,'도스마스 별도'
+    ,'30000'
+    ,NULL
+);
      

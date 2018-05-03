@@ -25,18 +25,26 @@ public class LedgerService {
 		System.out.println(">>>>>>>>ledgerInsert Service called");
 		//ledgerCate call..
 		List<HashMap<String,Object>> ledgerCate = ledgerDAO.listLedgerCate();
-		List<HashMap<String,Object>> ledgerList = ledgerDAO.listLedger();
 		
-				
-				
+		
 		//three latest ledger list call..
-		
+		List<HashMap<String,Object>> ledgerList = ledgerDAO.listLedger();
 		
 		//concat those two data
 		
-		return null; //ledgerDAO.loginCheck(map);
-	
-	
+		
+		//여기서 최대한 완성된 표를 만들어서 보내줘야 한다.
+		
+		HashMap<String,List<HashMap<String,Object>>> CateAndList = 
+					new HashMap<String,List<HashMap<String,Object>>>();
+		
+		CateAndList.put("ledgerCate", ledgerCate);
+		CateAndList.put("ledgerCate", ledgerList);
+		
+		return CateAndList; //return category list and three of latest ledger list.;
+
 	}
+	
+	
 	
 }

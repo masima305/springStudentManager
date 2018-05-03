@@ -8,8 +8,15 @@
 		select * from ledger_cate
 	</select>
 	
-	<select id="listLedger" resultType="HashMap">
-		select * from ledger
+	<!-- 월별 잔액을 불러오는 쿼리 -->
+	<!-- TODO : 날짜 처리 인풋할때 확실히 고쳐주자 -->
+	<select id="getMonthlyBalance" resultType="HashMap">
+		SELECT LEDG_MONTH_BALANCE FROM LEDGER_MONTHLY WHERE LEDG_MONTH_DATE == '201805'
+	</select>
+	
+	<!-- 렛저를 3개만 뽑아오는 쿼리. -->
+	<select id="listThreeLatestLedger" resultType="HashMap">
+		SELECT * FROM ledger WHERE order by LEDG_TRADE_DATE ASC
 	</select>
 
 </mapper>
