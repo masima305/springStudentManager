@@ -758,7 +758,7 @@ function insertExpInput(inputNumber){
 			str+=			"<td>"+expYear+"</td>";
 			str+=			"<td>"+expSemester+ "</td>";
 			str+=			"<td>"+expContent + "</td>";
-			str+=			"<td><button type='button' class='btn btn-small' onclick='javascript:deleteExperience("+result[0].STU_NUMBER+","+this.EXP_YEAR+","+this.EXP_SEMESTER+",\""+this.EXP_CONTENT+"\""+")'><i class='fas fa-trash-alt'></i></button></td>";
+			str+=			"<td><button type='button' class='btn btn-small' onclick='javascript:deleteExperience("+stuNumber+","+expYear+","+expSemester+",\""+expContent+"\""+")'><i class='fas fa-trash-alt'></i></button></td>";
 			str+=		"</tr>";
 			
 			var n = $("#ExpContent").html();
