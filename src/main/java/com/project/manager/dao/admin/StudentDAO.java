@@ -104,6 +104,11 @@ public class StudentDAO {
 		return this.sqlSession.update("student.deleteStudent",map);
 	}
 	
+	//학생 '경력 삭제' 
+		public int deleteExperience(HashMap<String,String> map){
+			System.out.println(">>>>>>>>deleteExperience DAO called");
+			return this.sqlSession.delete("student.deleteExperience",map);
+		}
 	
 	
 }

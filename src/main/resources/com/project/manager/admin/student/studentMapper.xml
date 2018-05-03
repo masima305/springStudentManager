@@ -254,6 +254,8 @@
 	<!-- ====================================================================================================================== -->
 	<!-- ======================================== DELETE  QUERY   ============================================================= -->
 	<!-- ====================================================================================================================== -->
+	
+	<!-- 학생 삭제 (del_yn의 값을 n -> y로) -->
 	<update id="deleteStudent" parameterType="HashMap" >
 		
 	 UPDATE STUDENT
@@ -264,7 +266,18 @@
     	
 	</update>
 	
-	        
 	
+	<!-- 학생 경력 삭제 -->
+	<delete id="deleteExperience" parameterType="HashMap">
+		
+		DELETE 
+			FROM EXPERIENCE
+			WHERE 
+				STU_NUMBER = #{stuNumber}
+				AND EXP_YEAR = #{expYear}
+				AND EXP_SEMESTER = #{expSemester}
+				AND EXP_CONTENT = #{expContent}
+		
+	</delete>
 	
 </mapper>

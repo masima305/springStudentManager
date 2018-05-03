@@ -60,11 +60,12 @@ public class StudentService {
 		String cnt = String.valueOf(studentExpCount.get("EXP_CNT"));
 		int cnt_num = Integer.parseInt(cnt);
 		
+		//학생의 경력이 하나라도 있는경우
 		if (cnt_num > 0) {
 			System.out.println(">>>>>>>>Exp List detected");
 			List<HashMap<String, Object>> studentExp= studentDAO.getStudentExp(map);
 			studentInfo.addAll(studentExp);
-		}else {
+		}else { //경력이 없는 경우 '없음'으로 출력
 			studentInfo.get(0).put("EXP_YEAR","없음");
 			studentInfo.get(0).put("EXP_SEMESTER","없음");
 			studentInfo.get(0).put("EXP_CONTENT","없음");
@@ -120,4 +121,12 @@ public class StudentService {
 		
 		return studentDAO.deleteStudent(map);
 	}
+	
+
+	//학생 경력 삭제
+	public int deleteExperience(HashMap<String,String> map) {
+		System.out.println(">>>>>>>>deleteExperience Service called");
+		return studentDAO.deleteExperience(map);
+	}
+	
 }

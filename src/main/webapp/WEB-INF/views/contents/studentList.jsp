@@ -255,7 +255,7 @@ function ajaxStuDetail(stuNumber){
 			str+=			"<td>"+this.EXP_YEAR + "</td>";
 			str+=			"<td>"+this.EXP_SEMESTER + "</td>";
 			str+=			"<td>"+this.EXP_CONTENT + "</td>";
-			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>";
+			str+=			"<td><button type='button' class='btn btn-small' onclick='javascript:deleteExperience("+result[0].STU_NUMBER+","+this.EXP_YEAR+","+this.EXP_SEMESTER+",\""+this.EXP_CONTENT+"\""+")'><i class='fas fa-trash-alt'></i></button></td>";
 								//개별 삭제를 위한 버튼
 			str+=		"</tr>";
 				}});
@@ -758,7 +758,7 @@ function insertExpInput(inputNumber){
 			str+=			"<td>"+expYear+"</td>";
 			str+=			"<td>"+expSemester+ "</td>";
 			str+=			"<td>"+expContent + "</td>";
-			str+=			"<td><button type='button' class='btn btn-small'><i class='fas fa-trash-alt'></i></button></td>";
+			str+=			"<td><button type='button' class='btn btn-small' onclick='javascript:deleteExperience("+result[0].STU_NUMBER+","+this.EXP_YEAR+","+this.EXP_SEMESTER+",\""+this.EXP_CONTENT+"\""+")'><i class='fas fa-trash-alt'></i></button></td>";
 			str+=		"</tr>";
 			
 			var n = $("#ExpContent").html();
@@ -777,6 +777,78 @@ function insertExpInput(inputNumber){
 			alert(""+abc);
 		}//error
 	});
+}
+
+function deleteExperience(delstuNumber,delExpYear,delExpSemester,delExpContent){
+	
+	//삭제 확인창에 대한 값이 true일 경우
+	if(confirm("해당 경력을 삭제하시겠습니까?")){
+		
+		var stuNumber 	= delstuNumber;
+		var expYear 	= delExpYear;
+		var expSemester = delExpSemester;
+		var expContent = delExpContent;
+		
+		var sendData ={};			   
+		sendData.stuNumber		 = stuNumber;
+		sendData.expYear		 = expYear;
+		sendData.expSemester	 = expSemester;
+		sendData.expContent	 	 = expContent;
+		
+		//--------------------------------------ajax콜로 delete문을 쏴 보낸다.
+		
+				$.ajax({
+				url: "/deleteExperience.do",
+				data: sendData,
+				method: "post",
+				dataType: "json",
+				success: function(result) {
+			//--------------------------------------------------success 이후
+			
+					//학생 경력 정보
+					$("#stuExpDetail").empty();
+					var str = "<br>";
+					str +="<table class='table table-bordered'>"
+					str +=	"<thead>";
+					str +=		"<tr><th>년도</th><th>학기</th><th>활동내용</th><th></th></tr>";
+					str +=	"</thead>";
+					str +=	"<tbody id='ExpContent'>";
+					
+					$.each(result,function(index,value){
+						if(this.EXP_YEAR != undefined ){
+					str+=		"<tr>";
+					str+=			"<td>"+this.EXP_YEAR + "</td>";
+					str+=			"<td>"+this.EXP_SEMESTER + "</td>";
+					str+=			"<td>"+this.EXP_CONTENT + "</td>";
+					str+=			"<td><button type='button' class='btn btn-small' onclick='javascript:deleteExperience("+result[0].STU_NUMBER+","+this.EXP_YEAR+","+this.EXP_SEMESTER+",\""+this.EXP_CONTENT+"\""+")'><i class='fas fa-trash-alt'></i></button></td>";
+										//개별 삭제를 위한 버튼
+					str+=		"</tr>";
+						}});
+					str+=	"</tbody>";
+					str+="</table>"	;
+					
+					str+="<div id='addInputDiv'></div>";
+					// 경력 추가란이 생성 될 자리.
+					
+					$("#stuExpDetail").append(str);
+					// 추가하기 버튼을 누르면 인풋란이 새로 생성된다.
+					
+					str  = "<hr>";
+					str += "<div id = 'expBtnArea'>";
+					str += 		"<button type='button' class='btn btn-small btn-info' onclick='javascript:makeExpInput("+result[0].STU_NUMBER+")'>경력추가</button>";
+					str += "</div>";
+					
+					
+					$("#stuExpDetail").append(str);
+					$("#stuExpDetail").append("<br><br>");
+			
+				},
+				error: function(abc){
+					alert(""+abc);
+				}//error
+			});
+	}
+
 }
 
 </script>

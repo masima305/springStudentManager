@@ -317,7 +317,30 @@ public class StudentController {
 		return "redirect:adminMain";
 	}
 	
-	
-	
+	@RequestMapping(value="deleteExperience.do")
+	public @ResponseBody List<HashMap<String,Object>> deleteExperience(HttpServletRequest request) {
+		
+		System.out.println(">>>>>>>>deleteExpController called");
+		
+		String stuNumber = request.getParameter("stuNumber");
+		String expYear = request.getParameter("expYear");
+		String expSemester = request.getParameter("expSemester");
+		String expContent = request.getParameter("expContent");
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("stuNumber", stuNumber);
+		map.put("expYear", expYear);
+		map.put("expSemester", expSemester);
+		map.put("expContent", expContent);
+		
+		int deleteResult = studentService.deleteExperience(map);
+
+		if(deleteResult > 0) {
+			System.out.println("해당 경력 삭제성공");
+		}
+		
+		//경력 삭제 후, 학생 정보 다시 가져오기
+		return studentService.getStudent(map);
+	}
 	
 }
