@@ -11,12 +11,15 @@
 	<!-- 월별 잔액을 불러오는 쿼리 -->
 	<!-- TODO : 날짜 처리 인풋할때 확실히 고쳐주자 -->
 	<select id="getLastMonthBalance" resultType="HashMap">
-		SELECT LEDG_MONTH_BALANCE FROM LEDGER_MONTHLY WHERE LEDG_MONTH_DATE = #{thisMonth}
+		SELECT LEDG_MONTH_BALANCE FROM LEDGER_MONTHLY WHERE LEDG_MONTH_DATE = #{lastMonth}
 	</select>
 	
 	<!-- 렛저를 3개만 뽑아오는 쿼리. -->
-	<select id="listThreeLatestLedger" resultType="HashMap">
-		SELECT * FROM ledger order by LEDG_TRADE_DATE ASC
+	<select id="listThisMonthLedger" resultType="HashMap">
+		SELECT * 
+		FROM ledger
+		WHERE LEDG_TRADE_DATE LIKE #{thisMonth}||'%'
+		order by LEDG_TRADE_DATE ASC
 	</select>
 
 </mapper>
