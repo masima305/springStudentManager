@@ -34,7 +34,7 @@ public class LedgerService {
 		curMonth.put("lastMonth", getLastMonth());
 		curMonth.put("thisMonth", getThisMonth());
 		
-		String balance = (String) ledgerDAO.getLastMonthBalance(curMonth).get("LEDG_MONTH_BALANCE"); // 받아온 바로 이전달의 잔액
+		String balance = ledgerDAO.getLastMonthBalance(curMonth).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
 		
 		//장부 리스트를 쭉 받아온다.
 		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(curMonth);
@@ -72,13 +72,15 @@ public class LedgerService {
 			System.out.println("---------"+i+"번 거래-----------");
 			System.out.println("타입 : "+inputList.get(i).get("LEDG_TRADE_TYPE"));
 			System.out.println("어마운트 : "+inputList.get(i).get("LEDG_AMOUNT"));
-			balance = calculateBalance((String)inputList.get(i).get("LEDG_AMOUNT"),(String)inputList.get(i).get("LEDG_TRADE_TYPE"),balance);
+			
+			
+			balance = calculateBalance(inputList.get(i).get("LEDG_AMOUNT").toString()
+									  ,inputList.get(i).get("LEDG_TRADE_TYPE").toString()
+									  ,balance);
+
+			
 			System.out.println("잔액 : "+balance);
 		}
-		
-		
-		
-		
 		
 		return null;
 	}
