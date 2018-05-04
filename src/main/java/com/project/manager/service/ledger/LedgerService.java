@@ -44,51 +44,49 @@ public class LedgerService {
 		HashMap<String,List<HashMap<String,Object>>> CateAndList = 
 				new HashMap<String,List<HashMap<String,Object>>>();
 	
-		
-		
 		//잔액 상태에서 리스트에 있는 항목들을 하나씩 연산 한 뒤 완성된 표의 형태로 만들어서 자료형에 담는다.
 		//complete list메소드가 그 역할을 한다.
 		ledgerList = completeList(ledgerList , balance);
-		
-		
+		//최신 거래내역에서 3개 이전까지의 정보만 필요하기때문에 그정도만 갖고 나갈 수 있도록 정보를 추린다.
+		ledgerList = ledgerList.subList((ledgerList.size()-3), ledgerList.size());
 		
 		//여기서 최대한 완성된 표를 만들어서 하나의 자료로 압축시킨뒤 컨트롤러에 보낸다.
-		
 		CateAndList.put("ledgerCate", ledgerCate);
-		CateAndList.put("ledgerCate", ledgerList);
+		CateAndList.put("ledgerList", ledgerList);
 		
 		return CateAndList; //return category list and three of latest ledger list.;
 
 	}
 	
-	//--------------------------------------------------------------------------------
-	//---------------------------------  TOOL METHOD  --------------------------------	
-	//--------------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------------------------------
+	//---------------------------------  TOOL METHOD  -------------------------------------------------	
+	//-------------------------------------------------------------------------------------------------	
 	
 	//잔액과 리스트를 넣어주면 완성된 리스트를 만들어서 리턴해준다.
 	public List<HashMap<String,Object>> completeList( List<HashMap<String,Object>> inputList, String balance){
 		System.out.println("---------지금 잔액 : "+balance+"-----------");
 		for (int i = 0; i < inputList.size(); i++) {
-			System.out.println("---------"+i+"번 거래-----------");
+			/*System.out.println("---------"+i+"번 거래-----------");
 			System.out.println("타입 : "+inputList.get(i).get("LEDG_TRADE_TYPE"));
-			System.out.println("어마운트 : "+inputList.get(i).get("LEDG_AMOUNT"));
+			System.out.println("어마운트 : "+inputList.get(i).get("LEDG_AMOUNT"));*/
 			
 			
 			balance = calculateBalance(inputList.get(i).get("LEDG_AMOUNT").toString()
 									  ,inputList.get(i).get("LEDG_TRADE_TYPE").toString()
 									  ,balance);
-
+			inputList.get(i).put("LEDG_BALANCE", balance); //기존의 표애서 balance컬럼 LEDG_BALANCE를 더해서 return한다.
 			
-			System.out.println("잔액 : "+balance);
+		/*	System.out.println("잔액 : "+balance);*/
+			
 		}
 		
-		return null;
+		return inputList;
 	}
 	
 	//장부 금액, 계산방법(1:입금, 2:출금), 잔액을 넣어주면 계산된 잔액이 나온다.
 	public String calculateBalance(String calculateAmount, String calculateMethod, String calculateBalance){
-		int Amount = Integer.valueOf(calculateAmount);
-		int balance = Integer.valueOf(calculateBalance);
+		int Amount 	= Integer.valueOf(calculateAmount	);
+		int balance = Integer.valueOf(calculateBalance	);
 		if(calculateMethod.equals("1")){
 			balance += Amount;
 		}
@@ -104,9 +102,9 @@ public class LedgerService {
 		Calendar currentCal = Calendar.getInstance();
 		
 		currentCal.add(currentCal.DATE, 0);
-		String year = Integer.toString(currentCal.get(Calendar.YEAR));
-		String month = df.format(currentCal.get(Calendar.MONTH));
-		String day = df.format(currentCal.get(Calendar.DAY_OF_MONTH));
+		String year	 = Integer.toString(currentCal.get(Calendar.YEAR) );
+		String month = df.format(currentCal.get(Calendar.MONTH)		  );
+		String day	 = df.format(currentCal.get(Calendar.DAY_OF_MONTH));
 	
 		return ""+year+month;
 	}

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <style>
 	table th{
@@ -46,48 +48,34 @@ alert("!!");
 							</thead>
 							
 							<tbody>
+							<c:forEach var="i" items="${ledgerList}" varStatus="status">
 								<tr>
-									<td>3</td>
-									<td>20180546</td>
-									<td>야식사업</td>
-									<td>도스마스</td>
-									<td>학과행사진행</td>
-									<td>카드</td>
-									<td>0</td>
-									<td>600000</td>
-									<td>500000</td>
+									<td>${status.count}</td>
+									<td>${i.LEDG_TRADE_DATE}</td>
+									<td>${i.LEDG_CONTENT}</td>
+									<td>${i.LEDG_TRADE_PARTNER}</td>
+									<td>${i.LEDG_CATEGORY_VALUE}</td>
+									<td>${i.LEDG_METHOD_VALUE}</td>									
+									<c:choose>
+										<c:when test="${i.LEDG_TRADE_TYPE eq '1'}">
+											<td>${i.LEDG_AMOUNT}</td>
+											<td>0</td>
+										</c:when>
+										<c:when test="${i.LEDG_TRADE_TYPE eq '2'}">
+											<td>0</td>
+											<td>${i.LEDG_AMOUNT}</td>
+										</c:when>
+									</c:choose>									
+									<td>${i.LEDG_BALANCE}</td>
 									<td><button type="button" class="btn btn-outline-secondary btn-sm">보기</button></td>
 								</tr>
+							</c:forEach>
 								
-								<tr>
-									<td>2</td>
-									<td>20180546</td>
-									<td>야식사업</td>
-									<td>도스마스</td>
-									<td>학과행사진행</td>
-									<td>카드</td>
-									<td>0</td>
-									<td>600000</td>
-									<td>500000</td>
-									<td><button type="button" class="btn btn-outline-secondary btn-sm">보기</button></td>
-								</tr>
 								
-								<tr>
-									<td>1</td>
-									<td>20180546</td>
-									<td>야식사업</td>
-									<td>도스마스</td>
-									<td>학과행사진행</td>
-									<td>카드</td>
-									<td>0</td>
-									<td>600000</td>
-									<td>500000</td>
-									<td><button type="button" class="btn btn-outline-secondary btn-sm">보기</button></td>
-								</tr>
-								
+							
 								<tr>
 									<th>통계</th>
-									<th colspan="9" style="text-align:right; ">잔액 350000원</th>
+									<th colspan="9" style="text-align:right; ">잔액 ${ledgerList[2].LEDG_BALANCE}원</th>
 								</tr>
 							</tbody>
 						</table>
@@ -134,10 +122,9 @@ alert("!!");
 							<div class="col-lg-4 col-md-4 col-sm-4">
 							
 								<select name="ledgMethod" id="ledgMethod" style="width:168px;height:30px;" >
-									<option>카드</option>
-									<option>현금</option>
-									<option>계좌이체</option>
-									<option>기타</option>
+									<c:forEach var="i" items="${listAllCommonMap.ledgMethodList}" varStatus="status">
+										<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>	
+									</c:forEach>
 								</select>
 							
 							</div>
@@ -145,9 +132,10 @@ alert("!!");
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4">
 								<select name="ledgCategory" id="ledgCategory" style="width:168px;height:30px;" >
-									<option>학과행사비</option>
-									<option>학회지원비</option>
-									<option>--추가--</option>
+									<c:forEach var="i" items="${ledgerCate}" varStatus="status">
+										<option value="${i.LEDG_CATE_CODE}">${i.LEDG_CATE_NAME}</option>	
+					
+									</c:forEach>
 								</select>
 							</div>
 						</div>
@@ -159,7 +147,9 @@ alert("!!");
 							</div>
 							<div class="col-lg-2 col-md-2 col-sm-2"><span class="bold">잔액</span></div>
 							<div class="col-lg-4 col-md-4 col-sm-4">
-								<input type="text" name="ledgBalance" id="ledgBalance" disabled="disabled" value="50000">
+								<input type="text" name="ledgBalance" id="ledgBalance" disabled="disabled" value=" ${ledgerList[2].LEDG_BALANCE}">
+								<input type="hidden" name="originalBalance" id="originalBalance" value=" ${ledgerList[2].LEDG_BALANCE}">
+							
 							</div>
 						</div>
 						

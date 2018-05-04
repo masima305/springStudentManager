@@ -13,8 +13,23 @@
 
 </head>
 <script>
-
-
+	function commaMaker(num){
+		var len, point, str; 
+	       
+	    num = num + ""; 
+	    point = num.length % 3 ;
+	    len = num.length; 
+	   
+	    str = num.substring(0, point); 
+	    while (point < len) { 
+	        if (str != "") str += ","; 
+	        str += num.substring(point, point + 3); 
+	        point += 3; 
+	    } 
+	     
+	    return str;
+	}
+	
 	$().ready(function(){
 		stuNumberOption("searchStuNumber1",undefined)
 		stuNumberOption("searchStuNumber2",undefined)
@@ -24,19 +39,23 @@
 		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
 		$("#ledgTransTypeFunction").click(function(){
 			var transType = $(':radio[name="ledgTransType"]:checked').val();
-			var ledgAmount = $("#ledgAmount").val(); 
-
+			var ledgAmount = ($("#ledgAmount").val()*1);
+			var balance = ($("#originalBalance").val())*1;
 			
 			if(transType == "1"){ //출금일경우
 				$("#ledgAmount").css("color","red");
 				$("#ledgWithdrawalOutput").html(ledgAmount);
 				$("#ledgDepositOutput").html("0");
-			
+				$("#ledgBalance").val(balance - ledgAmount);
+				$("#ledgBalanceOutput").html(balance - ledgAmount);
 			} else if(transType == "2"){ //입금일경우
 				$("#ledgAmount").css("color","blue");
 				$("#ledgDepositOutput").html(ledgAmount);
 				$("#ledgWithdrawalOutput").html("0");
-			
+				$("#ledgBalance").val(balance + ledgAmount);
+				$("#ledgBalanceOutput").html(balance + ledgAmount);
+				
+				
 			}
 		});
 	
@@ -69,23 +88,36 @@
 			if(transType == null){
 				alert("구분(출금/입금)을 먼저 선택해주세요");
 				$("#ledgAmount").val("");
+				
 				return false;
 			} else {
 				
-				var ledgAmount = $("#ledgAmount").val();
+				var ledgAmount = ($("#ledgAmount").val())*1;
+				var balance = ($("#originalBalance").val())*1;
+				
 				
 				if(transType == "1") { //출금일경우
-					$("#ledgWithdrawalOutput").html(ledgAmount);
+					$("#ledgWithdrawalOutput").html(commaMaker(ledgAmount));
+					
 					$("#ledgDepositOutput").html("0");
+					$("#ledgBalance").val(commaMaker(balance - ledgAmount));
+					$("#ledgBalanceOutput").html(commaMaker(balance - ledgAmount));
+					
 				} else { //입금일경우
-					$("#ledgDepositOutput").html(ledgAmount);
+					$("#ledgDepositOutput").html(commaMaker(ledgAmount));
+					
 					$("#ledgWithdrawalOutput").html("0");
+					$("#ledgBalance").val(commaMaker(balance + ledgAmount));
+					$("#ledgBalanceOutput").html(commaMaker(balance + ledgAmount));
+					
 				}
 			}
 		});
 	
 	
 	});
+	
+	
 </script>
 <body>
 

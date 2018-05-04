@@ -133,13 +133,12 @@
      insert into COMMON values('feePaidMethod',01,'계좌이체');
      insert into COMMON values('feePaidMethod',02,'현금');
      
-     
      insert into COMMON values('feePaidStatus',01,'입금완료');
      insert into COMMON values('feePaidStatus',02,'분할입금');
      insert into COMMON values('feePaidStatus',03,'미납');
      
-     insert into COMMON values('ledgTransType',01,'출금');
-     insert into COMMON values('ledgTransType',02,'입금');
+     insert into COMMON values('ledgTradeType',01,'출금');
+     insert into COMMON values('ledgTradeType',02,'입금');
      
      insert into COMMON values('ledgMethod',01,'카드');
      insert into COMMON values('ledgMethod',02,'현금');

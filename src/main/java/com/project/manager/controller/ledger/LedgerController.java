@@ -41,20 +41,19 @@ public class LedgerController {
 		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		HashMap<String,List<HashMap<String, Object>>> listLedgerForm = ledgerService.ledgerForm();
+		List<HashMap<String, Object>> ledgerCate = listLedgerForm.get("ledgerCate");
+		List<HashMap<String, Object>> ledgerList = listLedgerForm.get("ledgerList");
+		
 		
 		// 필요한거 : 완성된 장부내역, 공통코드들, 카테고리 목록
 		Gson gson = new Gson();
 		String listAllCommonGson = gson.toJson(listAllCommonMap);
 		
-		
-		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("listAllCommonMap"		, listAllCommonMap	 );
 		mv.addObject("listAllCommonGson"	, listAllCommonGson	 );
-		
-		
-		
-		
+		mv.addObject("ledgerCate"			, ledgerCate);
+		mv.addObject("ledgerList"			, ledgerList);
 		
 		mv.setViewName("contents/ledgerInsert");
 		return mv;

@@ -32,6 +32,10 @@ public class CcodeService {
 	    	CCODENAMEMAP.put("stuGender"	,"STU_GENDER"		);
 	    	CCODENAMEMAP.put("feePaidStatus","FEE_PAID_STATUS"	);
 	    	CCODENAMEMAP.put("feePaidMethod","FEE_PAID_METHOD"	);
+	    	CCODENAMEMAP.put("expSemester"	,"EXP_SEMESTER"	);
+	    	
+	    	CCODENAMEMAP.put("ledgTradeType","LEDG_TRADE_TYPE"	);
+	    	CCODENAMEMAP.put("ledgMethod"	,"LEDG_METHOD"		);
 	    }
 	
 
@@ -49,7 +53,7 @@ public class CcodeService {
 	 * 입학전형 : stuEnteranceList 
 	 * 접근권한 : stuAuthorityList
 	 * 성별	 : stuGenderList
-	 * 학기	 : expsemesterList
+	 * 학기	 : expSemesterList
 	 * 입금방식  : feePaidMethodList
 	 * 납부상태  : feePaidStatusList
 	 * 
@@ -76,10 +80,12 @@ public class CcodeService {
 		List<HashMap<String, Object>> stuEnteranceList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> stuAuthorityList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> stuGenderList	 	= new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> expsemesterList 	= new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> expSemesterList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> feePaidMethodList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> feePaidStatusList = new ArrayList<HashMap<String, Object>>();
-
+		List<HashMap<String, Object>> ledgTradeTypeList = new ArrayList<HashMap<String, Object>>();
+		List<HashMap<String, Object>> ledgMethodList 	= new ArrayList<HashMap<String, Object>>();
+		
 
 		//common 테이블의 catogory마다  각 리스트만들어 담기  
 		for(HashMap<String, Object> item : list) {
@@ -95,8 +101,8 @@ public class CcodeService {
 			if(commonCategoryValue.equals("stuGender")) {
 				stuGenderList.add(item);
 			}
-			if(commonCategoryValue.equals("expsemester")) {
-				expsemesterList.add(item);
+			if(commonCategoryValue.equals("expSemester")) {
+				expSemesterList.add(item);
 			}
 			if(commonCategoryValue.equals("feePaidMethod")) {
 				feePaidMethodList.add(item);
@@ -104,6 +110,14 @@ public class CcodeService {
 			if(commonCategoryValue.equals("feePaidStatus")) {
 				feePaidStatusList.add(item);
 			}
+			if(commonCategoryValue.equals("ledgTradeType")) {
+				ledgTradeTypeList.add(item);
+			}
+			if(commonCategoryValue.equals("ledgMethod")) {
+				ledgMethodList.add(item);
+			}
+			
+			
 		}
 
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = new HashMap<String,List<HashMap<String, Object>>>(); 
@@ -111,10 +125,11 @@ public class CcodeService {
 		listAllCommonMap.put("stuEnteranceList"	, stuEnteranceList	);
 		listAllCommonMap.put("stuAuthorityList"	, stuAuthorityList	);
 		listAllCommonMap.put("stuGenderList"	, stuGenderList		);
-		listAllCommonMap.put("expsemesterList"	, expsemesterList	);
+		listAllCommonMap.put("expSemesterList"	, expSemesterList	);
 		listAllCommonMap.put("feePaidMethodList", feePaidMethodList	);
 		listAllCommonMap.put("feePaidStatusList", feePaidStatusList	);
-
+		listAllCommonMap.put("ledgTradeTypeList", ledgTradeTypeList	);
+		listAllCommonMap.put("ledgMethodList"	, ledgMethodList	);
 
 		return listAllCommonMap;
 	}
