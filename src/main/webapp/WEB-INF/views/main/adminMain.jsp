@@ -73,13 +73,31 @@
 		});
 	
 		
+		//'결제수단' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgMethod").change(function(){
+			var ledgMethod = $("#ledgMethod option:selected").text();
+			var ledgMethodCode = $("#ledgMethod option:selected").val();
+			$("#ledgMethodOutput").html(ledgMethod);
+			$("#ledgMethodCodeOutput").val(ledgMethodCode);
+		});
+
+		//'분류' 입력시 입력내역에 실시간으로 출력하기
+		$("#ledgCategory").change(function(){
+			var ledgCategory = $("#ledgCategory option:selected").text();
+			var ledgCategoryCode = $("#ledgCategory option:selected").val();
+			$("#ledgCategoryOutput").html(ledgCategory);
+			$("#ledgCategoryCodeOutput").val(ledgCategoryCode);
+		
+		});
+		
 		//'날짜' 입력시 입력내역에 실시간으로 출력하기
 		$("#ledgDate").change(function(){
 			var ledgDate = $("#ledgDate").val();
 			ledgDate = ledgDate.substring(0,4) + ledgDate.substring(5,7) + ledgDate.substring(8,10);
 			$("#ledgDateOutput").html(ledgDate);
 		});
-
+		
+		
 		//'금액' 입력시 '구분(입금/출금) 체크 확인한 후' 입력내역에 실시간으로 출력하기
 		$("#ledgAmount").keyup(function(){
 			

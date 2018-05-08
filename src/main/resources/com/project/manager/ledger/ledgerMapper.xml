@@ -34,5 +34,21 @@
 		WHERE LEDG_TRADE_DATE LIKE #{thisMonth}||'%'
 		ORDER BY LEDG_TRADE_DATE ASC
 	</select>
+	<!-- =============================  insert query  ================================= -->
+	<insert id="insertLedger" parameterType="HashMap">
+		INSERT INTO LEDGER VALUES( 
+			to_char(SYSDATE, 'yyyymmddhh24miss')
+			,#{ledgDate}
+			,#{ledgContent}
+			,#{ledgTradeType}
+			,#{ledgTradePartner}
+			,#{ledgMethod}
+			,#{ledgCategory}
+			,#{ledgAmount}
+			,#{ledgRemark}
+			,NULL <!-- file 처리 해주자.. -->
+		)	
+		
+	</insert>
 
 </mapper>

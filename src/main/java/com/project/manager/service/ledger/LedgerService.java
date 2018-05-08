@@ -20,11 +20,23 @@ public class LedgerService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LedgerService.class);
 	
-	
-	
-	public HashMap<String,List<HashMap<String,Object>>> ledgerForm(){
+	//-------------------------------------------------------------------------------------------------
+	//---------------------------------  INSERT METHOD  -------------------------------------------------	
+	//-------------------------------------------------------------------------------------------------
+	public int insertLedger(HashMap<String, Object> map){
 		
 		System.out.println(">>>>>>>>ledgerInsert Service called");
+
+		return ledgerDAO.insertLedger(map);
+
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//---------------------------------  READ METHOD  -------------------------------------------------	
+	//-------------------------------------------------------------------------------------------------	
+	public HashMap<String,List<HashMap<String,Object>>> ledgerForm(){
+		
+		System.out.println(">>>>>>>>ledgerForm Service called");
 		
 		//장부 카테고리 불러오기
 		List<HashMap<String,Object>> ledgerCate = ledgerDAO.listLedgerCate();

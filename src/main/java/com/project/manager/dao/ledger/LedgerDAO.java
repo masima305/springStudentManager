@@ -33,4 +33,13 @@ public class LedgerDAO {
 			System.out.println(">>>>>>>>listThisMonthLedger DAO called");	
 			return this.sqlSession.selectList("ledger.listThisMonthLedger",map);
 		}
+		
+		//=====================================================================================================
+		//=========================  INSERT METHODS  ============================================================
+		//=====================================================================================================
+		
+		public int insertLedger(HashMap<String, Object> map){
+			System.out.println(">>>>>>>>ledgerInsert DAO called");	
+			return this.sqlSession.insert("ledger.insertLedger",map);
+		}
 }

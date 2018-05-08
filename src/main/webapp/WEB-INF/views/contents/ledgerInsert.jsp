@@ -14,9 +14,57 @@
 	
 </style>
 <script>
-function clicked(){
-alert("!!");
+function submitLedgerInsert(){
+		
+	var ledgDate 			= $("#ledgDateOutput"			).text();
+	var ledgContent 		= $("#ledgContentOutput"		).text();
+	var ledgTradePartner 	= $("#ledgTradePartnerOutput"	).text();
+	var ledgCategory 		= $("#ledgCategoryOutput"		).text();
+	var ledgCategoryCode 	= $("#ledgCategoryCodeOutput"	).val();
+	var ledgMethod 			= $("#ledgMethodOutput"			).text();
+	var ledgMethodCode 		= $("#ledgMethodCodeOutput"		).val();
+	var ledgDeposit 		= $("#ledgDepositOutput"		).text();
+	var ledgWithdrawal 		= $("#ledgWithdrawalOutput"		).text();
+	var ledgRemark			= $("#ledgRemark"				).val();
+	
+	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
+		
+		//-----------------Update를 위한 데이터 json화	-------------------
+		var insertData = {};
+		
+		insertData.ledgDate 		= ledgDate;
+		insertData.ledgContent 		= ledgContent;
+		insertData.ledgTradePartner	= ledgTradePartner;
+		insertData.ledgCategory		= ledgCategoryCode;
+		insertData.ledgMethod 		= ledgMethodCode;
+		insertData.ledgDeposit 		= ledgDeposit;
+		insertData.ledgWithdrawal 	= ledgWithdrawal;
+		insertData.ledgRemark 		= ledgRemark;
+		
+		
+		$.ajax({
+			url: "insertLedger.do",
+			data: insertData,
+			success: function( result ) {
+				alert("성공!!!");
+			
+			},
+			error: function(a,b,c){
+				alert("오류 발생");
+			}	
+		});
+						
+	}else{
+		//유효성 검사에 실패하면 그에 해당하는 alert가 나오고, 전송은 하지 않는체로 종료.
+		alert('오류발생. 입력값을 다시 확인해주세요.');
+		return;
+	}
+	
+	
+	
 }
+	
+	
 </script>
 	
 <div class="card">
@@ -134,7 +182,6 @@ alert("!!");
 								<select name="ledgCategory" id="ledgCategory" style="width:168px;height:30px;" >
 									<c:forEach var="i" items="${ledgerCate}" varStatus="status">
 										<option value="${i.LEDG_CATE_CODE}">${i.LEDG_CATE_NAME}</option>	
-					
 									</c:forEach>
 								</select>
 							</div>
@@ -161,14 +208,14 @@ alert("!!");
 						</div>
 						
 						<div class="row">
-							<div class="col-lg-2 col-md-2 col-sm-2"><span class="bold">파일첨부</span></div>
+							<div class="col-lg-2 col-md-2 col-sm-2"><span class="bold">영수증첨부</span></div>
 							<div class="col-lg-10 col-md-10 col-sm-4">
 								<input type="file" name="ledgFile" id="ledgFile">
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-12 col-md-12 col-sm-12" style="text-align:right;">
-								<button type="button" onclick="clicked()" class="btn btn-outline-info">완료</button>
+								<button type="button" onclick="submitLedgerInsert()" class="btn btn-outline-info">완료</button>
 							</div>
 						</div>
 					</div>
@@ -202,7 +249,9 @@ alert("!!");
 									<td id="ledgContentOutput"></td>
 									<td id="ledgTradePartnerOutput"></td>
 									<td id="ledgCategoryOutput"></td>
+									<input type="hidden" id="ledgCategoryCodeOutput"/>
 									<td id="ledgMethodOutput"></td>
+									<input type="hidden" id="ledgMethodCodeOutput"/>
 									<td id="ledgDepositOutput"></td>
 									<td id="ledgWithdrawalOutput"></td>
 									<td id="ledgBalanceOutput"></td>

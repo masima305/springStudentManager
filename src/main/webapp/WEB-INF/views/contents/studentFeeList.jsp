@@ -149,9 +149,9 @@ function FeeUpdateCall(id){
 				},//success
 			error: function(a,b,c){
 				alert("오류 발생");
-				console.log("====== > A : "+ JSON.stringify(a))
-				console.log("====== > B : "+ b)
-				console.log("====== > C : "+ c)
+				console.log("====== > A : "+ JSON.stringify(a));
+				console.log("====== > B : "+ b);
+				console.log("====== > C : "+ c);
 			}	
 		});
 						
