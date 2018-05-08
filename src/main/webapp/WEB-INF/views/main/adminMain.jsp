@@ -30,6 +30,24 @@
 	    return str;
 	}
 	
+	function commaDeleter(num){
+		   
+	    var commaNum = num + ""; 
+		var pureNum = "";
+		
+		for (var j= 0; j < commaNum.length ; j++){
+			if(commaNum[j] != ','){
+				alert(commaNum[j]);
+				pureNum += commaNum[j];
+			}	
+		}
+		alert(pureNum);
+	    return pureNum;
+	}
+	
+	
+	
+	
 	$().ready(function(){
 		stuNumberOption("searchStuNumber1",undefined)
 		stuNumberOption("searchStuNumber2",undefined)

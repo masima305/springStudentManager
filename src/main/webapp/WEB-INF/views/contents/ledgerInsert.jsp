@@ -23,8 +23,8 @@ function submitLedgerInsert(){
 	var ledgCategoryCode 	= $("#ledgCategoryCodeOutput"	).val();
 	var ledgMethod 			= $("#ledgMethodOutput"			).text();
 	var ledgMethodCode 		= $("#ledgMethodCodeOutput"		).val();
-	var ledgDeposit 		= $("#ledgDepositOutput"		).text();
-	var ledgWithdrawal 		= $("#ledgWithdrawalOutput"		).text();
+	var ledgDeposit 		= commaDeleter($("#ledgDepositOutput"	).text());
+	var ledgWithdrawal 		= commaDeleter($("#ledgWithdrawalOutput").text());
 	var ledgRemark			= $("#ledgRemark"				).val();
 	
 	if(true){ //추후 유효성 검사 메서드를 여기 넣는다. ( validator(paidContentUpdate) )
