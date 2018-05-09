@@ -1,7 +1,11 @@
 package com.project.manager.service.ledger;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,6 +38,33 @@ public class LedgerService {
 	//-------------------------------------------------------------------------------------------------
 	//---------------------------------  READ METHOD  -------------------------------------------------	
 	//-------------------------------------------------------------------------------------------------	
+	
+	
+	//특정 달의 장부를 가지고 온다.
+	public List<HashMap<String,Object>> listMonthlyLedger(String month){
+		System.out.println(">>>>>>>>listMonthlyLedger Service called");
+		//장부 카테고리 불러오기
+		
+		//지금 날짜를 알아내서 직전월의 잔액을 알아온다.
+		HashMap<String, Object> curMonth = new HashMap();
+		curMonth.put("lastMonth", getLastMonth(month));
+		curMonth.put("thisMonth", month);
+		
+		String balance = ledgerDAO.getLastMonthBalance(curMonth).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
+		
+		//장부 리스트를 쭉 받아온다.
+		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(curMonth);
+		
+		//잔액 상태에서 리스트에 있는 항목들을 하나씩 연산 한 뒤 완성된 표의 형태로 만들어서 자료형에 담는다.
+		//complete list메소드가 그 역할을 한다.
+		ledgerList = completeList(ledgerList , balance);
+		
+		//return CateAndList; //return category list and three of latest ledger list.;
+		
+		return ledgerList;
+	}
+	
+	//인서트 폼에 보여줄 최근 기록 3개를 보여준다.
 	public HashMap<String,List<HashMap<String,Object>>> ledgerForm(){
 		
 		System.out.println(">>>>>>>>ledgerForm Service called");
@@ -120,6 +151,23 @@ public class LedgerService {
 	
 		return ""+year+month;
 	}
+	//파라메터로 들어온값보다 1달 이전의 값을 리턴해 준다.
+	public String getLastMonth(String month) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+		Date date = null;
+		try {
+			date = dateFormat.parse(month);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MONTH,-1);
+		String result = dateFormat.format(cal.getTime());
+		
+		return result;
+	}
 	public String getThisMonth() {
 		DecimalFormat df = new DecimalFormat("00");
 		Calendar currentCal = Calendar.getInstance();
@@ -131,4 +179,7 @@ public class LedgerService {
 	
 		return ""+year+month;
 	}
+	
+	
+	
 }

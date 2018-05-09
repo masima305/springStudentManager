@@ -21,6 +21,7 @@ public class LedgerDAO {
 			System.out.println(">>>>>>>>listLedgerCate DAO called");	
 			return this.sqlSession.selectList("ledger.listLedgerCate");
 		}
+		
 		public List<HashMap<String, Object>> listLedger(){
 			System.out.println(">>>>>>>>listLedger DAO called");	
 			return this.sqlSession.selectList("ledger.listThreeLatestLedger");

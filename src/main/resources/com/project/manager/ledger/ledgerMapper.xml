@@ -36,7 +36,18 @@
 	</select>
 	<!-- =============================  insert query  ================================= -->
 	<insert id="insertLedger" parameterType="HashMap">
-		INSERT INTO LEDGER VALUES( 
+		INSERT INTO LEDGER(
+			LEDG_INPUT_DATE
+     		,LEDG_TRADE_DATE
+    		,LEDG_CONTENT
+    		,LEDG_TRADE_TYPE
+    		,LEDG_TRADE_PARTNER
+    		,LEDG_METHOD
+    		,LEDG_CATEGORY
+    		,LEDG_REMARK
+    		,LEDG_AMOUNT
+    		,LEDG_FILE
+		) VALUES( 
 			to_char(SYSDATE, 'yyyymmddhh24miss')
 			,#{ledgDate}
 			,#{ledgContent}
@@ -44,8 +55,8 @@
 			,#{ledgTradePartner}
 			,#{ledgMethod}
 			,#{ledgCategory}
-			,#{ledgAmount}
 			,#{ledgRemark}
+			,#{ledgAmount}
 			,NULL <!-- file 처리 해주자.. -->
 		)	
 		

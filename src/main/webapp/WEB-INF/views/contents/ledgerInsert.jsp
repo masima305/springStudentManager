@@ -47,7 +47,7 @@ function submitLedgerInsert(){
 			data: insertData,
 			success: function( result ) {
 				alert("성공!!!");
-			
+				window.location.replace("/adminMain?loc=ledgerInsert");
 			},
 			error: function(a,b,c){
 				alert("오류 발생");
@@ -170,6 +170,7 @@ function submitLedgerInsert(){
 							<div class="col-lg-4 col-md-4 col-sm-4">
 							
 								<select name="ledgMethod" id="ledgMethod" style="width:168px;height:30px;" >
+									<option value="">거래 방식</option>	
 									<c:forEach var="i" items="${listAllCommonMap.ledgMethodList}" varStatus="status">
 										<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>	
 									</c:forEach>
@@ -180,6 +181,7 @@ function submitLedgerInsert(){
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4">
 								<select name="ledgCategory" id="ledgCategory" style="width:168px;height:30px;" >
+									<option value="">거래 분류</option>	
 									<c:forEach var="i" items="${ledgerCate}" varStatus="status">
 										<option value="${i.LEDG_CATE_CODE}">${i.LEDG_CATE_NAME}</option>	
 									</c:forEach>

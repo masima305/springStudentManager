@@ -13,6 +13,22 @@
 
 </head>
 <script>
+	var getUrlParameter = function getUrlParameter(sParam) {
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+	 
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+	 
+	        if (sParameterName[0] === sParam) {
+	            return sParameterName[1] === undefined ? true : sParameterName[1];
+	        }
+	    }
+	};
+
+
 	function commaMaker(num){
 		var len, point, str; 
 	       
@@ -37,11 +53,9 @@
 		
 		for (var j= 0; j < commaNum.length ; j++){
 			if(commaNum[j] != ','){
-				alert(commaNum[j]);
 				pureNum += commaNum[j];
 			}	
 		}
-		alert(pureNum);
 	    return pureNum;
 	}
 	
@@ -52,7 +66,13 @@
 		stuNumberOption("searchStuNumber1",undefined)
 		stuNumberOption("searchStuNumber2",undefined)
 		
-	
+		//---------------특정 페이지로의 새로고침을 url로 명령 받으면, 그 페이지를 보여준다.
+		
+		if(getUrlParameter('loc') != undefined){
+			showTitle(this,getUrlParameter('loc'));
+		}
+		
+		
 
 		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
 		$("#ledgTransTypeFunction").click(function(){
@@ -72,9 +92,8 @@
 				$("#ledgWithdrawalOutput").html("0");
 				$("#ledgBalance").val(balance + ledgAmount);
 				$("#ledgBalanceOutput").html(balance + ledgAmount);
-				
-				
 			}
+				
 		});
 	
 		//'상세내역' 입력시 입력내역에 실시간으로 출력하기
@@ -92,7 +111,8 @@
 	
 		
 		//'결제수단' 입력시 입력내역에 실시간으로 출력하기
-		$("#ledgMethod").change(function(){
+		$("#ledgMethod").
+		change(function(){
 			var ledgMethod = $("#ledgMethod option:selected").text();
 			var ledgMethodCode = $("#ledgMethod option:selected").val();
 			$("#ledgMethodOutput").html(ledgMethod);
@@ -192,6 +212,9 @@
 		<div id="ledgerInsert" style="display: none;">
 			<c:import url='/ledgerForm.do'></c:import>
 		</div>
+		<div id="listLedger" style="display: none;">
+			<c:import url='/listLedger.do'></c:import>
+		</div>
 	</div>
 
 
@@ -203,7 +226,7 @@
 		<a href="#" onclick="showTitle(this,'studentInsert'	)">학생등록</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
 		<a href="#" onclick="showTitle(this,'ledgerInsert')">회비장부입력</a> 
-		<a href="#" onclick="showTitle(this				)">학과일정관리</a> 
+		<a href="#" onclick="showTitle(this,'listLedger')">회비장부보기</a> 
 		<a href="#" onclick="showTitle(this				)">학생회의</a>
 	</div>
 	<!------------------------------------------------------------------------>
@@ -227,6 +250,11 @@
       
       function showTitle(id,contentId,preContendId){
 			var value = id.innerHTML;
+			if(value == undefined){
+				if (contentId == 'ledgerInsert'){
+					value = '회비장부 입력';
+					}
+			}
 			document.getElementById("sideNavTitle").innerHTML = value;
 			$("#"+preContentId).css('display','none');
 			preContentId = contentId;

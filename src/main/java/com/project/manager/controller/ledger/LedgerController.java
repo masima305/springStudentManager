@@ -1,5 +1,8 @@
 package com.project.manager.controller.ledger;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +38,52 @@ public class LedgerController {
 	//=========================  READ METHODS  ============================================================
 	//=====================================================================================================
 	
+	@RequestMapping(value="/listMonthlyLedger.do")
+	public @ResponseBody ModelAndView listMonthlyLedger(HttpServletRequest request) {
+		
+		String searchMonth		= request.getParameter("11"	);
+		//
+		if(searchMonth == null) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+			Date date = new Date();
+			searchMonth = dateFormat.format(date).toString();  //  201611
+		}
+		
+		List<HashMap<String, Object>> map = ledgerService.listMonthlyLedger(searchMonth);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("ledgerList"			, map);
+		
+		mv.setViewName("contents/listMonthlyLedger");
+		return mv;
+
+	}
+	@RequestMapping(value="/listLedger.do")
+	public @ResponseBody ModelAndView listLedger(HttpServletRequest request) {
+		
+		String searchMonth		= request.getParameter("11"	);
+		//
+		if(searchMonth == null) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+			Date date = new Date();
+			searchMonth = dateFormat.format(date).toString();//2016/11/16 12:08:43
+		}
+		
+		System.out.println("SearchMonth :"		+ searchMonth );
+		
+		//List<HashMap<String, Object>> listLedger = ledgerService();
+
+		ModelAndView mv = new ModelAndView();
+		//mv.addObject("ledgerList"			, ledgerList);
+		
+		mv.setViewName("contents/ledgerList");
+		return mv;
+
+	}
 	
+	
+	
+	//인서트 폼에 들어갈 리스트들과 공통코드들을 호출한다.
 	@RequestMapping(value="/ledgerForm.do")
 	public @ResponseBody ModelAndView ledgerForm(HttpServletRequest request) {
 		
@@ -43,7 +91,6 @@ public class LedgerController {
 		HashMap<String,List<HashMap<String, Object>>> listLedgerForm = ledgerService.ledgerForm();
 		List<HashMap<String, Object>> ledgerCate = listLedgerForm.get("ledgerCate");
 		List<HashMap<String, Object>> ledgerList = listLedgerForm.get("ledgerList");
-		
 		
 		// 필요한거 : 완성된 장부내역, 공통코드들, 카테고리 목록
 		Gson gson = new Gson();
@@ -59,8 +106,13 @@ public class LedgerController {
 		return mv;
 	}
 	
+	
+	//=====================================================================================================
+	//=========================  INSERT	 METHODS  =========================================================
+	//=====================================================================================================
+		
 	@RequestMapping(value="/insertLedger.do")
-	public int insertLedger(HttpServletRequest request) {
+	public @ResponseBody int insertLedger(HttpServletRequest request) {
 		
 		String ledgDate			= request.getParameter("ledgDate"			);
 		String ledgContent		= request.getParameter("ledgContent"		);
@@ -99,26 +151,6 @@ public class LedgerController {
 		
 	}
 	
-	
-	
-	/*
-	 * commonCode 媛��졇�삤湲�
-	 */
-	/*@RequestMapping(value="/getCommonCode.do")
-	public @ResponseBody ModelAndView getCommonCode(HttpServletRequest request) {
-		
-		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
-		Gson gson = new Gson();
-		String listAllCommonGson = gson.toJson(listAllCommonMap);
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("listAllCommonMap"		, listAllCommonMap	 );
-		mv.addObject("listAllCommonGson"	, listAllCommonGson	 );
-		
-		mv.setViewName("contents/studentInsert");
-		
-		return mv;
-	}*/
 	
 	
 }

@@ -1,16 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-</head>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <style>
 	table th{
 		text-align: center;
@@ -95,12 +86,13 @@
 			</div> <!-- row (사용내역 리스트) -->
 
 			<div class ="row">
-				<div>
-					<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					
 						<div id = ledgerContentSection>
+							<c:import url='/listMonthlyLedger.do'></c:import>
 						</div>
+					
 					</div> 
-				</div>
 			
 			</div> <!-- 동적으로 통계내주는 섹션-->	
 			<br><br>
@@ -108,6 +100,3 @@
 	</div> <!-- card-body -->
 </div>
 
-
-</body>
-</html>
