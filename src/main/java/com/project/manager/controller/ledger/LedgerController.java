@@ -31,9 +31,6 @@ public class LedgerController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LedgerController.class);
 	
-	
-	
-	
 	//=====================================================================================================
 	//=========================  READ METHODS  ============================================================
 	//=====================================================================================================
@@ -42,27 +39,45 @@ public class LedgerController {
 	public @ResponseBody ModelAndView listMonthlyLedger(HttpServletRequest request) {
 		
 		String searchMonth		= request.getParameter("11"	);
-		//
 		if(searchMonth == null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 			Date date = new Date();
-			searchMonth = dateFormat.format(date).toString();  //  201611
+			searchMonth = dateFormat.format(date).toString();  //201611
 		}
 		
-		List<HashMap<String, Object>> map = ledgerService.listMonthlyLedger(searchMonth);
+		HashMap<String,Object> map = ledgerService.listMonthlyLedger(searchMonth);
+		/*						^
+		 *						|
+		 * 				map에 들어가있는 자료들 형태....
+		 * 
+		 * 	{
+		 * 		ledgMonthBalance 	: 지난달 잔액 값. 	(String) ,
+		 * 		ledgerList			: 완성된 이번달 장부	(List<HashMap<String,Object>>)
+		 * 		ledgerStat			: 이번달 거래 분석	(HashMap<String,String>) 
+		 *			{
+		 *				balance,			= 총계 칸에 들어갈 잔액
+		 *				totalIncome,		= 수입합계
+		 *				totalOutcome,		= 지출합계
+		 *				maxIncome,			= 최대수입건
+		 *				maxOutcome,			= 최대지출건
+		 *				finalBalance		= 이달 최종 잔액
+		 * 			}
+		 * }
+		 *
+		 * */
+		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("ledgerList"			, map);
-		
+		mv.addObject("ledgerListData"	, map);
 		mv.setViewName("contents/listMonthlyLedger");
+		
 		return mv;
-
 	}
 	@RequestMapping(value="/listLedger.do")
 	public @ResponseBody ModelAndView listLedger(HttpServletRequest request) {
 		
 		String searchMonth		= request.getParameter("11"	);
-		//
+		
 		if(searchMonth == null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 			Date date = new Date();
@@ -71,17 +86,12 @@ public class LedgerController {
 		
 		System.out.println("SearchMonth :"		+ searchMonth );
 		
-		//List<HashMap<String, Object>> listLedger = ledgerService();
-
 		ModelAndView mv = new ModelAndView();
-		//mv.addObject("ledgerList"			, ledgerList);
 		
 		mv.setViewName("contents/ledgerList");
 		return mv;
 
 	}
-	
-	
 	
 	//인서트 폼에 들어갈 리스트들과 공통코드들을 호출한다.
 	@RequestMapping(value="/ledgerForm.do")
@@ -105,7 +115,6 @@ public class LedgerController {
 		mv.setViewName("contents/ledgerInsert");
 		return mv;
 	}
-	
 	
 	//=====================================================================================================
 	//=========================  INSERT	 METHODS  =========================================================
@@ -150,7 +159,5 @@ public class LedgerController {
 	
 		
 	}
-	
-	
 	
 }

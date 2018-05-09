@@ -2,7 +2,6 @@ package com.project.manager.service.ledger;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,39 +31,57 @@ public class LedgerService {
 		System.out.println(">>>>>>>>ledgerInsert Service called");
 
 		return ledgerDAO.insertLedger(map);
-
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//---------------------------------  READ METHOD  -------------------------------------------------	
 	//-------------------------------------------------------------------------------------------------	
 	
-	
 	//특정 달의 장부를 가지고 온다.
-	public List<HashMap<String,Object>> listMonthlyLedger(String month){
+	public HashMap<String,Object> listMonthlyLedger(String month){
+		
+		/*
+		 * 만드려는 자료 형태 :
+		 * 	{
+		 * 		ledgMonthBalance 	: 지난달 잔액 값. 	(String) ,
+		 * 		ledgerList	: 완성된 이번달 장부	(List<HashMap<String,Object>>)
+		 * 		ledgerStat	: 이번달 거래 분석	(HashMap<String,String>) 
+		 * 	}
+		 * 
+		 * */
+		
 		System.out.println(">>>>>>>>listMonthlyLedger Service called");
 		//장부 카테고리 불러오기
 		
-		//지금 날짜를 알아내서 직전월의 잔액을 알아온다.
-		HashMap<String, Object> curMonth = new HashMap();
-		curMonth.put("lastMonth", getLastMonth(month));
-		curMonth.put("thisMonth", month);
-		
-		String balance = ledgerDAO.getLastMonthBalance(curMonth).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
+		//지금 날짜를 알아내서 직전월의 잔액을 알아온다
+		//hash map 이름을 미리 result로 만들어서 재활용하자 메모리 아끼고...
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("lastMonth", getLastMonth(month));
+		result.put("thisMonth", month);
+		String balance = ledgerDAO.getLastMonthBalance(result).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
 		
 		//장부 리스트를 쭉 받아온다.
-		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(curMonth);
+		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(result);
+		
+		//다쓴 hash는 결과값 저장을 위해 비워주자.
+		result.clear();
 		
 		//잔액 상태에서 리스트에 있는 항목들을 하나씩 연산 한 뒤 완성된 표의 형태로 만들어서 자료형에 담는다.
 		//complete list메소드가 그 역할을 한다.
 		ledgerList = completeList(ledgerList , balance);
 		
-		//return CateAndList; //return category list and three of latest ledger list.;
+		//이번달 장부 내역을 분석한다.
+		HashMap<String, String>ledgerStat = analyzeList(ledgerList,balance);
 		
-		return ledgerList;
+		//다 담아서 한번에 보낸다.
+		result.put("ledgerList"			, ledgerList);		//완성된 장부 리스트
+		result.put("ledgMonthBalance"	, balance	);		//지난달 장부상 잔액(이월금액)
+		result.put("ledgerStat"			, ledgerStat);		//완성된 분석내역
+		
+		return result;
 	}
 	
-	//인서트 폼에 보여줄 최근 기록 3개를 보여준다.
+	//장부 인서트 폼에 보여줄 최근 기록 3개를 보여준다.
 	public HashMap<String,List<HashMap<String,Object>>> ledgerForm(){
 		
 		System.out.println(">>>>>>>>ledgerForm Service called");
@@ -73,7 +90,7 @@ public class LedgerService {
 		List<HashMap<String,Object>> ledgerCate = ledgerDAO.listLedgerCate();
 		
 		//지금 날짜를 알아내서 직전월의 잔액을 알아온다.
-		HashMap<String, Object> curMonth = new HashMap();
+		HashMap<String, Object> curMonth = new HashMap<String, Object>();
 		curMonth.put("lastMonth", getLastMonth());
 		curMonth.put("thisMonth", getThisMonth());
 		
@@ -98,7 +115,6 @@ public class LedgerService {
 		CateAndList.put("ledgerList", ledgerList);
 		
 		return CateAndList; //return category list and three of latest ledger list.;
-
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -107,12 +123,7 @@ public class LedgerService {
 	
 	//잔액과 리스트를 넣어주면 완성된 리스트를 만들어서 리턴해준다.
 	public List<HashMap<String,Object>> completeList( List<HashMap<String,Object>> inputList, String balance){
-		System.out.println("---------지금 잔액 : "+balance+"-----------");
 		for (int i = 0; i < inputList.size(); i++) {
-			/*System.out.println("---------"+i+"번 거래-----------");
-			System.out.println("타입 : "+inputList.get(i).get("LEDG_TRADE_TYPE"));
-			System.out.println("어마운트 : "+inputList.get(i).get("LEDG_AMOUNT"));*/
-			
 			
 			balance = calculateBalance(inputList.get(i).get("LEDG_AMOUNT").toString()
 									  ,inputList.get(i).get("LEDG_TRADE_TYPE").toString()
@@ -125,16 +136,66 @@ public class LedgerService {
 		
 		return inputList;
 	}
+	//리스트를 분석해서 그 결과를 HashMap형태로 내보내준다.
+	public HashMap<String,String> analyzeList( List<HashMap<String,Object>> inputList, String balance){
+		
+		int totalIncome 	= 0;	//수입 종합
+		int totalOutcome 	= 0;	//지출 종합
+		int maxIncome 		= 0;	//최대 수입
+		int maxOutcome 		= 0;	//최대 지출
+		String finalBalance	= "";	//장부상 최종 잔액
+		HashMap<String, String> result = new HashMap<String, String> ();
+		
+		int tempAmount		= 0;	//입출금	임시 변수
+		String tempType		= null;	//지출타입 	임시변수
+		
+		//최종 잔액부터 받아두
+		finalBalance = String.valueOf(inputList.get(inputList.size()-1).get("LEDG_BALANCE"));
+		
+		for (int i = 0; i < inputList.size(); i++) {
+			
+			//반복적인 메서드 사용 방지를 위한 temp변수 사용.
+			tempAmount = Integer.parseInt(String.valueOf(inputList.get(i).get("LEDG_AMOUNT")));
+			tempType = (String.valueOf(inputList.get(i).get("LEDG_TRADE_TYPE")));
+			
+			//지출건이면
+			if((tempType).equals("1")) {
+				//지출 종합에 일단 더해주고
+				totalOutcome += tempAmount;
+				//최대 지출값보다 크면 갱신
+				if(tempAmount > maxOutcome) {
+					maxOutcome = tempAmount;
+				}
+			//수입건이면
+			}else if((tempType).equals("2")) {
+				//수입 종합에 일단 더해주고
+				totalIncome += tempAmount;
+				//최대 수입값보다 크면 갱신
+				if(tempAmount > maxIncome) {
+					maxIncome = tempAmount;
+				}
+			} 
+		}
+		
+		result.put("balance"		, balance						);
+		result.put("finalBalance"	, finalBalance					);
+		result.put("totalIncome"	, Integer.toString(totalIncome)	);
+		result.put("totalOutcome"	, Integer.toString(totalOutcome));
+		result.put("maxIncome"		, Integer.toString(maxIncome)	);
+		result.put("maxOutcome"		, Integer.toString(maxOutcome)	);
+		
+		return result;
+	}
 	
-	//장부 금액, 계산방법(1:입금, 2:출금), 잔액을 넣어주면 계산된 잔액이 나온다.
+	//장부 금액, 계산방법(1:출금, 2:입금), 잔액을 넣어주면 계산된 잔액이 나온다.
 	public String calculateBalance(String calculateAmount, String calculateMethod, String calculateBalance){
 		int Amount 	= Integer.valueOf(calculateAmount	);
 		int balance = Integer.valueOf(calculateBalance	);
 		if(calculateMethod.equals("1")){
-			balance += Amount;
+			balance -= Amount;
 		}
 		else if(calculateMethod.equals("2")){
-			balance -= Amount;
+			balance += Amount;
 		}
 		return String.valueOf(balance);
 	}
@@ -147,7 +208,6 @@ public class LedgerService {
 		currentCal.add(currentCal.DATE, 0);
 		String year	 = Integer.toString(currentCal.get(Calendar.YEAR) );
 		String month = df.format(currentCal.get(Calendar.MONTH)		  );
-		String day	 = df.format(currentCal.get(Calendar.DAY_OF_MONTH));
 	
 		return ""+year+month;
 	}
@@ -175,11 +235,8 @@ public class LedgerService {
 		currentCal.add(currentCal.DATE, 0);
 		String year = Integer.toString(currentCal.get(Calendar.YEAR));
 		String month = df.format(currentCal.get(Calendar.MONTH)+1);
-		String day = df.format(currentCal.get(Calendar.DAY_OF_MONTH));
 	
 		return ""+year+month;
 	}
-	
-	
-	
+		
 }
