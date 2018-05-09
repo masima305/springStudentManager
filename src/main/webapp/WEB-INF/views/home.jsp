@@ -91,6 +91,8 @@
 	             	 	<div class="col-lg-12">
 	             	 		 <a href = "/adminMain">관리자페이지로 이동</a>
              	 			 <a href = "/getUser.do">유저메인페이지로 이동</a>
+         	 			     <a href = "/listAllScheduler.do">스케줄러로 이동</a>
+
 	             	 	</div>
              	 	</div>
              	 	
