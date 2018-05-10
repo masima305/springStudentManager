@@ -7,7 +7,7 @@
      DROP TABLE LEDGER_MONTHLY cascade CONSTRAINTS;
      DROP TABLE LEDGER_CATE;
      DROP SEQUENCE LEDGER_CATE_SEQ;
-     
+     DROP TABLE SCHEDULER;
      
      commit;
      
@@ -42,7 +42,7 @@
  	,LEDG_MONTH_BALANCE NUMBER(30)
  	);
  	
- 	CREATE TABLE LEDGER_CATE (
+ 	 CREATE TABLE LEDGER_CATE (
      LEDG_CATE_CODE NUMBER(4) PRIMARY KEY
      ,LEDG_CATE_NAME VARCHAR2(20) NOT NULL
      );
@@ -84,6 +84,20 @@
      );
      
      commit;
+    
+    
+    CREATE TABLE SCHEDULER (
+
+	SCHE_ID VARCHAR2(100) PRIMARY KEY,
+	SCHE_CONTENT VARCHAR2(100) NOT NULL,
+	SCHE_STARTDATE VARCHAR2(100) NOT NULL,
+	SCHE_ENDDATE VARCHAR2(100) NOT NULL
+	
+	);
+	    
+    
+    
+    
     
     
     -----------------시퀀스 생성------------------------

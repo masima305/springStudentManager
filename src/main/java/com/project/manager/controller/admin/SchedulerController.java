@@ -70,11 +70,11 @@ public class SchedulerController {
 		map.put("scheStartdate" , scheStartdate	);
 		map.put("scheEnddate"  	, scheEnddate	);
 		
-		int dbresult = schedulerService.insertScheduler(map);
+		int dbResult = schedulerService.insertScheduler(map);
 		
 		HashMap<String, String> result = new HashMap<String,String>();
 		
-		if(dbresult > 0) {
+		if(dbResult > 0) {
 			result.put("message","일정 입력 성공");
 		} else {
 			result.put("message","일정 입력 실패");
@@ -89,33 +89,31 @@ public class SchedulerController {
 	//======================================================================================================
 		
 	
-/*	@RequestMapping(value="/updateScheduler.do")
-	public @ResponseBody int updateScheduler (HttpServletRequest request){
+	@RequestMapping(value="/updateScheduler.do")
+	public @ResponseBody HashMap<String, String> updateScheduler (HttpServletRequest request){
 
-		System.out.println(">>>>>>>>updateScheduler called");
+		System.out.println(">>>>>>>>updateScheduler Controller called");
 		
-		String stuNumber 	= request.getParameter("stuNumber"		);
-		String stuName 		= request.getParameter("stuName"		);
-		String stuBirthday 	= request.getParameter("stuBirthday"	);
-		String stuPhone 	= request.getParameter("stuPhone"		);
-		String stuEmail 	= request.getParameter("stuEmail"		);
-		String stuGender 	= request.getParameter("stuGender"		);
-		String stuAuthority = request.getParameter("stuAuthority"	);
-		String stuEnterance = request.getParameter("stuEnterance"	);
+		String scheId 		= request.getParameter("scheId"	);
+		String scheContent 	= request.getParameter("scheContent");
+		
 		
 		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("scheId"	  	, scheId		);
+		map.put("scheContent"	, scheContent	);
 		
+		int dbResult = schedulerService.updateScheduler(map);
 		
-		map.put("stuNumber"	  	, stuNumber		);
-		map.put("stuName"	  	, stuName		);
-		map.put("stuBirthday"	, stuBirthday	);
-		map.put("stuPhone"	  	, stuPhone		);
-		map.put("stuEmail"	  	, stuEmail		);
-		map.put("stuGender"	  	, stuGender		);
-		map.put("stuAuthority"	, stuAuthority	);
-		map.put("stuEnterance"	, stuEnterance	);
+		HashMap<String, String> result = new HashMap<String,String>();
 		
-		return studentService.updateStudent(map);
+		if(dbResult > 0) {
+			result.put("message","일정 수정 성공");
+		} else {
+			result.put("message","일정 수정 실패");
+		}
+		
+		return result;
+		
 	}
 	
 	//======================================================================================================
@@ -124,23 +122,26 @@ public class SchedulerController {
 		
 	
 	@RequestMapping(value="/deleteScheduler.do")
-	public String deleteScheduler(HttpServletRequest request) {
-		System.out.println(">>>>>>>>deleteScheduler called");
+	public @ResponseBody HashMap<String, String> deleteScheduler(HttpServletRequest request) {
 		
-		String stuNumber 	= request.getParameter("stuNumber");
-		String logReason 	= request.getParameter("logReason");
+		System.out.println(">>>>>>>>deleteScheduler Controller called");
 		
-		System.out.println(stuNumber);
-		System.out.println(logReason);
+		String scheId	= request.getParameter("scheId");
 		
 		HashMap<String,String> map = new HashMap<String,String>();
-		map.put("stuNumber", stuNumber);
-		map.put("logReason", logReason);
+		map.put("scheId", scheId);
 		
-		studentService.deleteStudent(map);
+		int dbResult = schedulerService.deleteScheduler(map);
+		HashMap<String, String> result = new HashMap<String,String>();
 		
-		return "redirect:adminMain";
-	}*/
+		if(dbResult > 0) {
+			result.put("message","일정 삭제 완료");
+		} else {
+			result.put("message","일정 삭제 실패");
+		}
+		
+		return result;
+	}
 	
 	
 }

@@ -46,10 +46,9 @@
 		
 		 UPDATE SCHEDULER
 		     SET 
-		        SCHE_ID 		= #{scheId} 
-		        ,SCHE_CONTENT 	= #{scheContent} 
-		        ,SCHE_STARTDATE	= #{scheStartdate}
-		        ,SCHE_ENDDATE 	= #{scheEnddate}
+		        SCHE_CONTENT 	= #{scheContent}
+		     WHERE 
+		    	 SCHE_ID = #{scheId}
 	</update>
 	
 	<!-- ====================================================================================================================== -->
