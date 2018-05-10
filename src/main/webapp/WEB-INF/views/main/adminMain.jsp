@@ -194,7 +194,7 @@
 
 	<!---파비콘 만들어 보기- https://www.favicon-generator.org/search/---/N -->
 	<nav id="upperbar" class="navbar navbar-expand-lg navbar-light bg-light">
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;</span>
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;&nbsp;</span>
 
 
 		<span class="navbar-brand" id="sideNavTitle">학생관리</span>
@@ -229,6 +229,7 @@
 		<div id="listLedger" style="display: none;">
 			<c:import url='/listLedger.do'></c:import>
 		</div>
+		
 	</div>
 
 
@@ -236,12 +237,12 @@
 	<!------------------------------------ 사이드 바 --------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll'	)">학생관리</a> 
-		<a href="#" onclick="showTitle(this,'studentInsert'	)">학생등록</a> 
+		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> 
+		<a href="#" onclick="showTitle(this,'studentInsert')">학생등록</a> 
 		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
 		<a href="#" onclick="showTitle(this,'ledgerInsert')">회비장부입력</a> 
 		<a href="#" onclick="showTitle(this,'listLedger')">회비장부보기</a> 
-		<a href="#" onclick="showTitle(this				)">학생회의</a>
+		<a href="#" onclick="window.open('/listAllScheduler.do','popUpWindow','height=700,width=1200,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')">학과 일정</a>
 	</div>
 	<!------------------------------------------------------------------------>
 
