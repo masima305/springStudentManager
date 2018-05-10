@@ -30,6 +30,72 @@
 </style>
 
 <script type="text/javascript">
+	function searchByMonthly(){
+		var keyword = $("#ledgerDateTitleForm").val()
+		var keywordChunk = keyword.split('-') 
+		//keywordChunk[0] : YYYY
+		//keywordChunk[1] : MM
+		keyword = ""+keywordChunk[0]+keywordChunk[1];
+			
+		
+		alert(keyword);
+		var sendData = {};
+		sendData.keyword = keyword;
+		
+		$.ajax({
+			  url: "/listMonthlyLedger.do",
+			  data: sendData,
+			  success: function( result ) {
+			    alert();
+			    $( "#ledgerContentSection" ).empty;
+			    $( "#ledgerContentSection" ).html(result);
+			  },
+			  error: function(err){
+				  $( "#ledgerContentSection" ).empty;
+				  $( "#ledgerContentSection" ).html(
+						  '<br>'+
+						  '<h1>'+keywordChunk[0]+'년'+keywordChunk[0]+'월의 자료는 없습니다.<h1>'
+						  +'<br>'
+				  );
+			  }
+			});
+		
+	}
+	function searchByCondition(){
+		
+		var searchLedgCategory = $("#searchLedgCategory option:selected").val();
+		var searchLedgTradeType = $("#searchLedgTradeType option:selected").val();
+		var ledgStartMonth = ($("#ledgStartMonth").val()).replace('-','');
+		var ledgEndMonth = ($("#ledgEndMonth").val()).replace('-','');
+		
+		var sendData = {}
+		
+		sendData.searchLedgCategory 	= searchLedgCategory;
+		sendData.searchLedgTradeType 	= searchLedgTradeType;
+		sendData.ledgStartMonth 		= ledgStartMonth;
+		sendData.ledgEndMonth 			= ledgEndMonth;
+		
+		$.ajax({
+			  url: "/listSearchMonthlyLedger.do",
+			  data: sendData,
+			  success: function( result ) {
+			    alert();
+			    $( "#ledgerContentSection" ).empty;
+			    $( "#ledgerContentSection" ).html(result);
+			  },
+			  error: function(err){
+				  $( "#ledgerContentSection" ).empty;
+				  $( "#ledgerContentSection" ).html(
+						  '<br>'+
+						  '<h1>'+keywordChunk[0]+'년'+keywordChunk[0]+'월의 자료는 없습니다.<h1>'
+						  +'<br>'
+				  );
+			  }
+			});
+		
+		
+	}
+	
 	
 </script>
 
@@ -48,7 +114,7 @@
 					<div id="ledgerlabel">
 						<!-- 날짜 타이틀 -->
 						<div id="ledgerDateTitle">
-							<input id="ledgerDateTitleForm" type="month" >
+							<input id="ledgerDateTitleForm" type="month" onchange="searchByMonthly()">
 						</div>
 				
 						<br><br>
@@ -59,26 +125,28 @@
 							
 							<form id="ledgSearchScopeForm">
 								<label>날짜별로</label> 
-								<input type="month"  style="width:130px;" >&nbsp;~&nbsp;<input type="month"  style="width:130px;" >
+								<input type="month" id="ledgStartMonth" style="width:130px;" >&nbsp;~&nbsp;
+								<input type="month" id="ledgEndMonth" style="width:130px;" >
+								
 								&nbsp;
 									
 								<label>입금/출금별로</label> 
-								<select name="ledgTransType">
-									<option value="null">선택없음</option>
-									<%-- <c:forEach var="i" items="${}">
+								<select name="ledgTradeType" id="searchLedgTradeType">
+									<option value="">선택없음</option>
+									<c:forEach var="i" items="${listAllCommonMap.ledgTradeTypeList}">
 										<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
-									</c:forEach> --%>
+									</c:forEach>
 								</select>&nbsp; 
 								
 								<label>카테고리별로</label> 
-								<select name="ledgCategory">
-									<option value="null">선택없음</option>
-									<%-- <c:forEach var="i" items="${}">
-										<option value="${i.COMMON_CODE}">${i.COMMON_VALUE}</option>
-									</c:forEach>	 --%>
+								<select name="ledgCategory" id="searchLedgCategory">
+									<option value="">선택없음</option>
+									<c:forEach var="i" items="${ledgerCate}">
+										<option value="${i.LEDG_CATE_CODE}">${i.LEDG_CATE_NAME}</option>
+									</c:forEach>
 								</select>&nbsp; 
 								
-								<input type="button" value="검색" onclick="javascript:ajaxLedgSearchScope('ledgSearchScopeForm')" />
+								<input type="button" value="검색" onclick="searchByCondition()" />
 							</form> <!-- searchScopeForm -->
 						</div> <!-- 범위폼 -->
 					</div>	
@@ -89,7 +157,7 @@
 				<div class="col-lg-12 col-md-12 col-sm-12">
 					
 						<div id = ledgerContentSection>
-							<c:import url='/listMonthlyLedger.do'></c:import>
+							<c:import url='/listMonthlyLedger.do'></c:import> 
 						</div>
 					
 					</div> 

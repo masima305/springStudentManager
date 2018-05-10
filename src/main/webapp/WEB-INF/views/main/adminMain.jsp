@@ -72,6 +72,20 @@
 			showTitle(this,getUrlParameter('loc'));
 		}
 		
+		//---------------장부에 날짜 오늘짜로 우선 맞춰주기
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd = '0'+dd
+		} 
+		if(mm<10) {
+		    mm = '0'+mm
+		} 
+		$("#ledgerDateTitleForm").val(yyyy+"-"+mm)
+		
 		
 
 		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기

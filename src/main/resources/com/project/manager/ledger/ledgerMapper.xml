@@ -9,7 +9,6 @@
 	</select>
 	
 	<!-- 월별 잔액을 불러오는 쿼리 -->
-	<!-- TODO : 날짜 처리 인풋할때 확실히 고쳐주자 -->
 	<select id="getLastMonthBalance" resultType="HashMap">
 		SELECT LEDG_MONTH_BALANCE FROM LEDGER_MONTHLY WHERE LEDG_MONTH_DATE = #{lastMonth}
 	</select>
@@ -34,6 +33,32 @@
 		WHERE LEDG_TRADE_DATE LIKE #{thisMonth}||'%'
 		ORDER BY LEDG_TRADE_DATE ASC
 	</select>
+	
+	<select id="listMultiMonthLedger" resultType="HashMap">
+		SELECT 
+			    LEDG_INPUT_DATE
+			    ,LEDG_TRADE_DATE
+			    ,LEDG_TRADE_PARTNER
+			    ,LEDG_CONTENT
+			    ,LEDG_TRADE_TYPE
+			    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'ledgTradeType' AND COMMON_CODE = L.LEDG_TRADE_TYPE) as LEDG_TRADE_TYPE_VALUE
+			    ,LEDG_METHOD
+			    ,(SELECT COMMON_VALUE FROM COMMON WHERE COMMON_CATEGORY = 'ledgMethod' AND COMMON_CODE = L.LEDG_METHOD) as LEDG_METHOD_VALUE
+			    ,LEDG_CATEGORY
+			    ,(SELECT LEDG_CATE_NAME FROM LEDGER_CATE WHERE LEDG_CATE_CODE = L.LEDG_CATEGORY) as LEDG_CATEGORY_VALUE
+			    ,LEDG_REMARK
+			    ,LEDG_AMOUNT
+			    ,LEDG_FILE
+			FROM LEDGER L
+			WHERE 
+	        	<foreach collection="keywordList" item="type" index="index"  open="(" close=")" separator="or">
+          			LEDG_TRADE_DATE LIKE #{type}||'%'
+	        	</foreach>
+			ORDER BY LEDG_TRADE_DATE ASC
+	</select>
+	
+	
+	
 	<!-- =============================  insert query  ================================= -->
 	<insert id="insertLedger" parameterType="HashMap">
 		INSERT INTO LEDGER(
@@ -59,7 +84,6 @@
 			,#{ledgAmount}
 			,NULL <!-- file 처리 해주자.. -->
 		)	
-		
 	</insert>
 
 </mapper>

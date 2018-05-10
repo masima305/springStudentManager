@@ -35,10 +35,12 @@ public class LedgerController {
 	//=========================  READ METHODS  ============================================================
 	//=====================================================================================================
 	
+	//월별 장부의 검색결과를 호출하는 컨트롤러. 키워드(yyyyMM)의 형식에 맞지 않는 값이 들어오거나, 값이 넘어오지 않을 시, default값으로 실행당시 월의 장부들을
+	//return한다/ 
 	@RequestMapping(value="/listMonthlyLedger.do")
 	public @ResponseBody ModelAndView listMonthlyLedger(HttpServletRequest request) {
 		
-		String searchMonth		= request.getParameter("11"	);
+		String searchMonth		= request.getParameter("keyword");
 		if(searchMonth == null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
 			Date date = new Date();
@@ -73,25 +75,70 @@ public class LedgerController {
 		
 		return mv;
 	}
-	@RequestMapping(value="/listLedger.do")
-	public @ResponseBody ModelAndView listLedger(HttpServletRequest request) {
+	
+	
+	//검색 결과를 월별 결산 형태로 보여줌.
+	@RequestMapping(value="/listSearchMonthlyLedger.do")
+	public @ResponseBody ModelAndView listSearchMonthlyLedger(HttpServletRequest request) {
 		
-		String searchMonth		= request.getParameter("11"	);
+		String searchMonth		= request.getParameter("keyword");
 		
-		if(searchMonth == null) {
-			DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
-			Date date = new Date();
-			searchMonth = dateFormat.format(date).toString();//2016/11/16 12:08:43
-		}
+		String searchLedgCategory 	= request.getParameter("searchLedgCategory"	);
+		String searchLedgTradeType 	= request.getParameter("searchLedgTradeType");
+		String ledgStartMonth 		= request.getParameter("ledgStartMonth"		);
+		String ledgEndMonth 		= request.getParameter("ledgEndMonth"		);
 		
-		System.out.println("SearchMonth :"		+ searchMonth );
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("searchLedgCategory"	, searchLedgCategory	);
+		map.put("searchLedgTradeType"	, searchLedgTradeType 	);
+		map.put("ledgStartMonth"		, ledgStartMonth		);
+		map.put("ledgEndMonth"			, ledgEndMonth			);
+		
+		
+			map = ledgerService.listSearchMonthlyLedger(map);
+		/*   ^
+		 *   |
+		 * 	 map에 들어가있는 자료들 형태....
+		 * 
+		 * 	{
+		 * 		ledgMonthBalance 	: 지난달 잔액 값. 	(String) ,
+		 * 		ledgerList			: 완성된 이번달 장부	(List<HashMap<String,Object>>)
+		 * 		ledgerStat			: 이번달 거래 분석	(HashMap<String,String>) 
+		 *			{
+		 *				balance,			= 총계 칸에 들어갈 잔액
+		 *				totalIncome,		= 수입합계
+		 *				totalOutcome,		= 지출합계
+		 *				maxIncome,			= 최대수입건
+		 *				maxOutcome,			= 최대지출건
+		 *				finalBalance		= 이달 최종 잔액
+		 * 			}
+		 * }
+		 *
+		 * */
 		
 		ModelAndView mv = new ModelAndView();
 		
+		mv.addObject("ledgerListData"	, map);
+		mv.setViewName("contents/listMonthlyLedger");
+		
+		return mv;
+	}
+	
+	//장부 년월과 검색란을 표시하는 페이지의 컨트롤러...
+	@RequestMapping(value="/listLedger.do")
+	public @ResponseBody ModelAndView listLedger(HttpServletRequest request) {
+		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
+		List<HashMap<String, Object>> ledgerCate = ledgerService.listLedgerCate();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("listAllCommonMap", listAllCommonMap);
+		mv.addObject("ledgerCate", ledgerCate);
 		mv.setViewName("contents/ledgerList");
 		return mv;
 
 	}
+	
+	
 	
 	//인서트 폼에 들어갈 리스트들과 공통코드들을 호출한다.
 	@RequestMapping(value="/ledgerForm.do")
@@ -155,9 +202,6 @@ public class LedgerController {
 		map.put("ledgTradeType" 	, ledgTradeType		);
 		map.put("ledgAmount" 		, ledgAmount		);
 				
-		return ledgerService.insertLedger(map);
-	
-		
+		return ledgerService.insertLedger(map);	
 	}
-	
 }

@@ -3,6 +3,7 @@ package com.project.manager.service.ledger;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,15 @@ public class LedgerService {
 	//-------------------------------------------------------------------------------------------------
 	//---------------------------------  READ METHOD  -------------------------------------------------	
 	//-------------------------------------------------------------------------------------------------	
+	
+	public List<HashMap<String,Object>> listLedgerCate(){
+		System.out.println(">>>>>>>>listLedgerCate Service called");
+		
+		//지금 저장되어있는 분류 리스트를 뽑아내준다.
+		List<HashMap<String,Object>> LedgerCate = ledgerDAO.listLedgerCate();
+	
+		return LedgerCate;
+	}
 	
 	//특정 달의 장부를 가지고 온다.
 	public HashMap<String,Object> listMonthlyLedger(String month){
@@ -81,6 +91,89 @@ public class LedgerService {
 		return result;
 	}
 	
+	
+	//특정 여러달의 장부를 한번에 가지고 와서 조건에 맞게 분류한다.
+	/*
+	 * 검색 조건에는 총 3개가 있는데, 검색 대상 기간, 입출금 여부, 분류별 이렇게 있음.
+	 * 디비가 많이 커질 수 있기때문에 일단 검색 대상 기간은 무조건 산정하는걸로 하고,대상 기간안에 있는 입출금 내역을 DB에서 꺼내온다.
+	 * 입출금 여부와 분류 여부는 일단 잔액이 보함된 내역서가 완성된 후에 분류를 할 수 있기 때문에 일단 잔액이 포함된 입출금 내역을 완성한 후에
+	 * 다시 함수를 거쳐 입출금 여부와 분류별 산정의 조건을 거친 행만 제외하고 나머지를 다 삭제시키는 작업을 해주어야 한다.
+	 * 따라서, 기간별 내역은 DB로, 나머지 조건은 JAVA 서비스단에서 실행하여 완성된 테이블을 view에 뿌리는 과정을 거쳐야 한다.
+	 *  
+	 * */
+	
+	public HashMap<String,Object> listSearchMonthlyLedger(HashMap<String,Object> map){
+		System.out.println(">>>>>>>>listSearchMonthlyLedger Service called");
+		
+		String startMonth 			= String.valueOf(map.get("ledgStartMonth")		); 
+		String endMonth 			= String.valueOf(map.get("ledgEndMonth")		); 
+		String searchLedgCategory 	= String.valueOf(map.get("searchLedgCategory")	);
+		String searchLedgTradeType 	= String.valueOf(map.get("searchLedgTradeType")	);
+		
+		
+		/*
+		 * 
+		 * 만드려는 자료 형태 :
+		 * 	{
+		 * 		ledgMonthBalance 	: 기간에서 최초 월의 전액 값. 	(String) ,
+		 * 		ledgerList	: 완성된 이번달 장부	(List<HashMap<String,Object>>)
+		 * 		ledgerStat	: 이번달 거래 분석	(HashMap<String,String>) 
+		 * 	}
+		 * 
+		 * */
+		
+		//장부 카테고리 불러오기
+		
+		//지금 날짜를 알아내서 직전월의 잔액을 알아온다
+		//hash map 이름을 미리 result로 만들어서 재활용하자 메모리 아끼고...
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
+		
+		
+		//startMonth ~ endMonth까지 중간에 끼인 기간을 월단위로 만들어서 해줘야함.
+		List <String> monthList = makeMonthPeriodList(startMonth,endMonth);
+		
+		//가공한 자료를 전부 맵에 담아준다.
+		result.put("lastMonth"	, getLastMonth(startMonth)	);
+		result.put("keywordList", monthList 				);
+		
+		
+		String balance = 												// 받아온 바로 이전달의 잔액
+				ledgerDAO.getLastMonthBalance(result).get("LEDG_MONTH_BALANCE").toString(); 
+		if(balance == null){
+			balance = "0";
+		}
+		
+		
+		//장부 리스트를 쭉 받아온다.
+		List<HashMap<String,Object>> ledgerList = ledgerDAO.listMultiMonthLedger(result);
+		
+		
+		//다쓴 hash는 결과값 저장을 위해 비워주자.
+		result.clear();
+		
+		//잔액 상태에서 리스트에 있는 항목들을 하나씩 연산 한 뒤 완성된 표의 형태로 만들어서 자료형에 담는다.
+		//complete list메소드가 그 역할을 한다.
+		ledgerList = completeList(ledgerList , balance);
+		//이번달 장부 내역을 분석한다.
+		HashMap<String, String>ledgerStat = analyzeList(ledgerList,balance);
+				
+		//완성된 표에서 조건들을 다시 한번 거른다.
+		ledgerList = selectList(ledgerList, searchLedgCategory,searchLedgTradeType);
+		
+		
+		
+		
+		
+		//다 담아서 한번에 보낸다.
+		result.put("ledgerList"			, ledgerList);		//완성된 장부 리스트
+		result.put("ledgMonthBalance"	, balance	);		//지난달 장부상 잔액(이월금액)
+		result.put("ledgerStat"			, ledgerStat);		//완성된 분석내역
+		
+		return result;
+	}
+	
+
 	//장부 인서트 폼에 보여줄 최근 기록 3개를 보여준다.
 	public HashMap<String,List<HashMap<String,Object>>> ledgerForm(){
 		
@@ -136,7 +229,8 @@ public class LedgerService {
 		
 		return inputList;
 	}
-	//리스트를 분석해서 그 결과를 HashMap형태로 내보내준다.
+	
+	//완성된 장부 리스트를 분석해서 그 결과를 HashMap형태로 내보내준다.
 	public HashMap<String,String> analyzeList( List<HashMap<String,Object>> inputList, String balance){
 		
 		int totalIncome 	= 0;	//수입 종합
@@ -187,6 +281,51 @@ public class LedgerService {
 		return result;
 	}
 	
+	public List<HashMap<String,Object>> selectList( List<HashMap<String,Object>> inputList, String searchLedgCategory, String searchLedgTradeType){
+		String tempCate = "";
+		String tempType = "";
+		List<HashMap<String,Object>> outputList = new ArrayList<HashMap<String, Object>>();
+		
+		//System.out.println("=============================걸름망 진입=============================");
+		//System.out.println("카테고리 번호                         :"+searchLedgCategory);
+		//System.out.println("입출금 번호                         :"+searchLedgTradeType);
+		
+		
+		for (int i = 0; i < inputList.size(); i++) {
+			//System.out.println("=============================라운드 : "+i+"=============================");	
+			if(!(searchLedgCategory.equals("")) && (!(searchLedgTradeType.equals("")))) {
+				//System.out.println("=============================둘다있네 진입=============================");
+				tempType = inputList.get(i).get("LEDG_TRADE_TYPE").toString();
+				tempCate = inputList.get(i).get("LEDG_CATEGORY").toString();
+				
+				if(tempType.equals(searchLedgTradeType )&& tempCate.equals(searchLedgCategory)){
+					//System.out.println("=============================둘다맞았네 진입=============================");	
+					outputList.add(inputList.get(i));
+				}
+				
+			}else if(searchLedgCategory.equals("") && (!(searchLedgTradeType.equals("")))){
+				//System.out.println("=============================입출만있네 진입=============================");
+				
+				tempType = inputList.get(i).get("LEDG_TRADE_TYPE").toString();
+				if(tempType.equals(searchLedgTradeType )){
+					outputList.add(inputList.get(i));
+				}
+				
+			}else if(!(searchLedgCategory.equals("")) && (searchLedgTradeType.equals(""))){
+				//System.out.println("=============================분류만있네 진입=============================");
+				tempCate = inputList.get(i).get("LEDG_CATEGORY").toString();
+				if(tempCate.equals(searchLedgCategory)){
+					outputList.add(inputList.get(i));
+				}
+			}
+			
+			
+		}
+		
+		return outputList;
+	}
+	
+	
 	//장부 금액, 계산방법(1:출금, 2:입금), 잔액을 넣어주면 계산된 잔액이 나온다.
 	public String calculateBalance(String calculateAmount, String calculateMethod, String calculateBalance){
 		int Amount 	= Integer.valueOf(calculateAmount	);
@@ -211,6 +350,7 @@ public class LedgerService {
 	
 		return ""+year+month;
 	}
+	
 	//파라메터로 들어온값보다 1달 이전의 값을 리턴해 준다.
 	public String getLastMonth(String month) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
@@ -228,6 +368,8 @@ public class LedgerService {
 		
 		return result;
 	}
+	
+	//메소드를 부른 시점의 달을 리턴해준다.
 	public String getThisMonth() {
 		DecimalFormat df = new DecimalFormat("00");
 		Calendar currentCal = Calendar.getInstance();
@@ -239,4 +381,33 @@ public class LedgerService {
 		return ""+year+month;
 	}
 		
+	//startMonth ~ endMonth까지 중간에 끼인 기간을 List형태로 월단위로 만들준다.
+	public static List<String> makeMonthPeriodList(String startMonth, String endMonth){
+		List<String> periodList = new ArrayList<String>();
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+		
+		Date startDate 	= null;
+		String tempDate = startMonth;
+		
+		Calendar cal = Calendar.getInstance();
+		
+		try {
+			periodList.add(tempDate);
+			while(!tempDate.equals(endMonth)) {
+				startDate	= dateFormat.parse(tempDate);
+				cal.setTime(startDate);
+				cal.add(Calendar.MONTH,+1);
+				tempDate = dateFormat.format(cal.getTime());
+				periodList.add(tempDate);
+			}
+	
+			 
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return periodList;
+	}
 }
