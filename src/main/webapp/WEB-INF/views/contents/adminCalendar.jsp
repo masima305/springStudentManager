@@ -12,6 +12,10 @@
 <link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css"
 	rel="stylesheet"></link>
 
+<!-- Jquery -->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
 <div class="card">
