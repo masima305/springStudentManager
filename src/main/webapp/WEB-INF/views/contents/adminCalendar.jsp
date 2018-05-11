@@ -4,20 +4,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Say hello using the People API</title>
-<meta charset='utf-8' />
+<title>admin Main</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<!-- Alloy ui (스케줄러용) -->
 <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
 <link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css"
 	rel="stylesheet"></link>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>	
 
 </head>
 <body>
+<div class="card">
 
-	<div id="wrapper">
-		<div id="myScheduler"></div>
+	<div class="card-header">일반 학생은 일정 삽입/수정/삭제 불가</div>
+
+	<div class="card-body">
+		<div id="wrapper">
+			<div id="myScheduler"></div>
+		</div>
 	</div>
+	
+</div>
 
 
 <script>
