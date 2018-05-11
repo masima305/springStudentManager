@@ -318,10 +318,7 @@ public class LedgerService {
 					outputList.add(inputList.get(i));
 				}
 			}
-			
-			
 		}
-		
 		return outputList;
 	}
 	

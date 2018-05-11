@@ -209,25 +209,16 @@
  		<div id="listAll" style="display: block;">
 			<c:import url="/listAllStudent.do"></c:import>
 		</div>
-
 		<div id="studentFee" style="display: none;">
-			<c:import url='/listAllFee.do'></c:import>
 		</div>
 		<div id="else">
 		
 		</div>
-<%-- 	
-		<c:import url='../contents/studentInsert.jsp'></c:import>
-	    <c:import url='../contents/studentUpdate.jsp'></c:import>
---%>
 		<div id="studentInsert" style="display: none;">
-			<c:import url='/getCommonCode.do'></c:import>
 		</div>
 		<div id="ledgerInsert" style="display: none;">
-			<c:import url='/ledgerForm.do'></c:import>
 		</div>
 		<div id="listLedger" style="display: none;">
-			<c:import url='/listLedger.do'></c:import>
 		</div>
 	</div>
 
@@ -264,15 +255,52 @@
       
       function showTitle(id,contentId,preContendId){
 			var value = id.innerHTML;
+			var linkUrl;
+			alert(contentId);
+			
 			if(value == undefined){
 				if (contentId == 'ledgerInsert'){
 					value = '회비장부 입력';
 					}
 			}
-			document.getElementById("sideNavTitle").innerHTML = value;
-			$("#"+preContentId).css('display','none');
-			preContentId = contentId;
-			$("#"+contentId).css('display','block');
+			if(contentId == 'listAll'){
+				linkUrl = '/listAllStudent.do';
+			}else if(contentId == 'studentFee'){
+				linkUrl = '/listAllFee.do';
+			}else if(contentId == 'studentInsert'){
+				linkUrl = '/getCommonCode.do';
+			}else if(contentId == 'ledgerInsert'){
+				linkUrl = '/ledgerForm.do';
+			}else if(contentId == 'listLedger'){
+				linkUrl = '/listLedger.do';
+			}else if(contentId == ''){
+				linkUrl = '';
+			}else if(contentId == ''){
+				linkUrl = '';
+			}
+			
+			//이후 해당 디브에 호출. 근데 해당 디브가 비어있을 경우에만 호출하도록 한다.
+			
+			$.ajax({
+			  url: linkUrl,
+			  //data: sendData,
+			  success: function( result ) {
+			    
+				$( "#"+contentId ).empty;
+				$( "#"+contentId ).html(result);	    	
+			    
+				document.getElementById("sideNavTitle").innerHTML = value;
+				$("#"+preContentId).css('display','none');
+				preContentId = contentId;
+				$("#"+contentId).css('display','block');
+	      	  
+			  },
+			  error: function(err){
+				  
+			  }
+			});
+
+      
       }
       
       
