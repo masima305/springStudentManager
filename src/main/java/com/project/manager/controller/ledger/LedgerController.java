@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.project.manager.dao.ledger.LedgerDAO;
 import com.project.manager.service.ccode.CcodeService;
 import com.project.manager.service.ledger.LedgerService;
 
@@ -34,6 +35,23 @@ public class LedgerController {
 	//=====================================================================================================
 	//=========================  READ METHODS  ============================================================
 	//=====================================================================================================
+	
+	//장부 정산 페이지
+	//장부 년월과 검색란을 표시하는 페이지의 컨트롤러...
+		@RequestMapping(value="/closeLedgerMonthly.do")
+		public @ResponseBody ModelAndView closeLedgerMonthly(HttpServletRequest request) {
+			ModelAndView mv = new ModelAndView();
+				String ledgerDate = ledgerService.getAfterMonth(
+										ledgerService.getLatestMonthBalance().get("LEDG_MONTH_DATE").toString()
+									);
+				mv.addObject("ledgerYear",ledgerDate.substring(0, 4)); //year
+				mv.addObject("ledgerMonth",ledgerDate.substring(4, 6)); //year
+				mv.setViewName("contents/closeLedgerMonthly");
+			return mv;
+		}
+	
+	
+	
 	
 	//월별 장부의 검색결과를 호출하는 컨트롤러. 키워드(yyyyMM)의 형식에 맞지 않는 값이 들어오거나, 값이 넘어오지 않을 시, default값으로 실행당시 월의 장부들을
 	//return한다/ 
@@ -124,25 +142,37 @@ public class LedgerController {
 		return mv;
 	}
 	
+	
 	//장부 년월과 검색란을 표시하는 페이지의 컨트롤러...
 	@RequestMapping(value="/listLedger.do")
 	public @ResponseBody ModelAndView listLedger(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		List<HashMap<String, Object>> ledgerCate = ledgerService.listLedgerCate();
+		String ledgerDate = ledgerService.getAfterMonth(
+				ledgerService.getLatestMonthBalance().get("LEDG_MONTH_DATE").toString()
+			);
 		
-		ModelAndView mv = new ModelAndView();
+		ledgerDate = (ledgerDate.substring(0, 4))+"-"+(ledgerDate.substring(4, 6));
+		
+		
+		boolean isClosed = isClosedLedger();
+
+		mv.addObject("ledgerDate",ledgerDate); //year
+		mv.addObject("isClosed", isClosed);
 		mv.addObject("listAllCommonMap", listAllCommonMap);
 		mv.addObject("ledgerCate", ledgerCate);
+			
 		mv.setViewName("contents/ledgerList");
 		return mv;
-
 	}
-	
-	
 	
 	//인서트 폼에 들어갈 리스트들과 공통코드들을 호출한다.
 	@RequestMapping(value="/ledgerForm.do")
 	public @ResponseBody ModelAndView ledgerForm(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		boolean isClosed = isClosedLedger(); //true면 정산이 완료 된 상태, false면 정산이 아직 완벽히 진행되지 않은 상태.
 		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		HashMap<String,List<HashMap<String, Object>>> listLedgerForm = ledgerService.ledgerForm();
@@ -153,13 +183,15 @@ public class LedgerController {
 		Gson gson = new Gson();
 		String listAllCommonGson = gson.toJson(listAllCommonMap);
 		
-		ModelAndView mv = new ModelAndView();
 		mv.addObject("listAllCommonMap"		, listAllCommonMap	 );
 		mv.addObject("listAllCommonGson"	, listAllCommonGson	 );
 		mv.addObject("ledgerCate"			, ledgerCate);
 		mv.addObject("ledgerList"			, ledgerList);
+		mv.addObject("isClosed"				, isClosed); 
 		
 		mv.setViewName("contents/ledgerInsert");
+		
+		
 		return mv;
 	}
 	
@@ -204,4 +236,43 @@ public class LedgerController {
 				
 		return ledgerService.insertLedger(map);	
 	}
+	
+	
+	//월별 정산을 입력한다.
+			@RequestMapping(value="/insertLedgerMonthly.do")
+			public @ResponseBody int insertLedgerMonthly(HttpServletRequest request) {
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>insertLedgerMonthly Controller called");
+				String ledgMonthDate			= request.getParameter("ledgMonthDate"		);
+				String ledgMonthBalance			= request.getParameter("ledgMonthBalance"	);
+				System.out.println(ledgMonthDate);
+				System.out.println(ledgMonthBalance);
+				
+				HashMap<String, Object> map= new HashMap<String, Object>();
+			
+				map.put("ledgMonthDate" 		, ledgMonthDate		);
+				map.put("ledgMonthBalance" 	, ledgMonthBalance	);
+				
+			return ledgerService.insertLedgerMonthly(map);	
+		}
+	
+	
+	
+	//=====================================================================================================
+	//=========================  TOOL METHODS  =========================================================
+	//=====================================================================================================
+		
+	// 가장 마지막에 정산된 달의 정산금과 정산일을 가지고 와서 당일의 월 바로 전달(정상적인 경우라면 정산 되어 있어야 함)
+	//과 비교, 일치하면 true, 불일치하면false 를 반환한다.
+	public boolean isClosedLedger() {
+		String thisMonth = ledgerService.getLastMonth();
+		String latestMonth = ledgerService.getLatestMonthBalance().get("LEDG_MONTH_DATE").toString();
+		if(thisMonth.equals(latestMonth)) {
+			System.out.println("thisMonth : "+thisMonth+ " == "+ "latestMonth : " + latestMonth);
+			return true;
+		}else {
+			System.out.println("thisMonth : "+thisMonth+ " != "+ "latestMonth : " + latestMonth);
+			return false;
+		}
+	}
+	
 }

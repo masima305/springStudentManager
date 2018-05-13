@@ -34,14 +34,28 @@ public class LedgerService {
 		return ledgerDAO.insertLedger(map);
 	}
 	
+	public int insertLedgerMonthly(HashMap<String, Object> map){
+		
+		System.out.println(">>>>>>>>insertLedgerMonthly Service called");
+
+		return ledgerDAO.insertLedgerMonthly(map);
+	}
+	
 	//-------------------------------------------------------------------------------------------------
 	//---------------------------------  READ METHOD  -------------------------------------------------	
 	//-------------------------------------------------------------------------------------------------	
 	
+	
+	//가장 마지막으로 정산된 항목을 날짜와 금액을 쌍으로 해서 불러낸다.
+	public HashMap<String, Object> getLatestMonthBalance(){
+		return ledgerDAO.getLatestMonthBalance();
+	}
+		
+		
+	//지금 저장되어있는 분류 리스트를 뽑아내준다.		
 	public List<HashMap<String,Object>> listLedgerCate(){
 		System.out.println(">>>>>>>>listLedgerCate Service called");
 		
-		//지금 저장되어있는 분류 리스트를 뽑아내준다.
 		List<HashMap<String,Object>> LedgerCate = ledgerDAO.listLedgerCate();
 	
 		return LedgerCate;
@@ -63,15 +77,25 @@ public class LedgerService {
 		System.out.println(">>>>>>>>listMonthlyLedger Service called");
 		//장부 카테고리 불러오기
 		
-		//지금 날짜를 알아내서 직전월의 잔액을 알아온다
-		//hash map 이름을 미리 result로 만들어서 재활용하자 메모리 아끼고...
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		result.put("lastMonth", getLastMonth(month));
-		result.put("thisMonth", month);
-		String balance = ledgerDAO.getLastMonthBalance(result).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
+		
+		
+		//마지막으로 정산 완료된 월과 balance를 알아온다.
+		
+		HashMap<String, Object> result = getLatestMonthBalance();
+		if(result == null) {
+			//TODO : db에 아무런 컬럼이 들어있지 않을때를 처리한다.
+		}
+		String thisMonth 	= result.get("LEDG_MONTH_DATE"	).toString(); // 가장 마지막으로 정산된 월
+		String balance 		= result.get("LEDG_MONTH_BALANCE"	).toString(); // 가장 마지막 월의 정산액
+		
+		result = new HashMap<String, Object>();
+		result.put("thisMonth", getAfterMonth(thisMonth)); //정산완료된 달 그 다음달의 지출 리스트를 뽑아오기 위해
+															// 1달 이후를 넣어준다.
+		
 		
 		//장부 리스트를 쭉 받아온다.
-		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(result);
+		List<HashMap<String,Object>> ledgerList 
+								= ledgerDAO.listThisMonthLedger(result);
 		
 		//다쓴 hash는 결과값 저장을 위해 비워주자.
 		result.clear();
@@ -87,7 +111,7 @@ public class LedgerService {
 		result.put("ledgerList"			, ledgerList);		//완성된 장부 리스트
 		result.put("ledgMonthBalance"	, balance	);		//지난달 장부상 잔액(이월금액)
 		result.put("ledgerStat"			, ledgerStat);		//완성된 분석내역
-		
+		result.put("ledgerDate"			, getAfterMonth(thisMonth)); //장부상 날짜(월단위)
 		return result;
 	}
 	
@@ -161,11 +185,6 @@ public class LedgerService {
 		//완성된 표에서 조건들을 다시 한번 거른다.
 		ledgerList = selectList(ledgerList, searchLedgCategory,searchLedgTradeType);
 		
-		
-		
-		
-		
-		//다 담아서 한번에 보낸다.
 		result.put("ledgerList"			, ledgerList);		//완성된 장부 리스트
 		result.put("ledgMonthBalance"	, balance	);		//지난달 장부상 잔액(이월금액)
 		result.put("ledgerStat"			, ledgerStat);		//완성된 분석내역
@@ -182,15 +201,30 @@ public class LedgerService {
 		//장부 카테고리 불러오기
 		List<HashMap<String,Object>> ledgerCate = ledgerDAO.listLedgerCate();
 		
-		//지금 날짜를 알아내서 직전월의 잔액을 알아온다.
+		//지금 날짜를 알아내서 직전월의 잔액을 알아온다. --X
+		/*
 		HashMap<String, Object> curMonth = new HashMap<String, Object>();
 		curMonth.put("lastMonth", getLastMonth());
 		curMonth.put("thisMonth", getThisMonth());
+		*/
+		//마지막으로 정산 완료된 월과 balance를 알아온다.
 		
-		String balance = ledgerDAO.getLastMonthBalance(curMonth).get("LEDG_MONTH_BALANCE").toString(); // 받아온 바로 이전달의 잔액
+		HashMap<String, Object> curMonth = getLatestMonthBalance();
+		if(curMonth == null) {
+			//TODO : db에 아무런 컬럼이 들어있지 않을때를 처리한다.
+		}
+		String thisMonth 	= curMonth.get("LEDG_MONTH_DATE"	).toString(); // 가장 마지막으로 정산된 월
+		String balance 		= curMonth.get("LEDG_MONTH_BALANCE"	).toString(); // 가장 마지막 월의 정산액
+		
+		curMonth = new HashMap<String, Object>();
+		curMonth.put("thisMonth", getAfterMonth(thisMonth)); //정산완료된 달 그 다음달의 지출 리스트를 뽑아오기 위해
+															// 1달 이후를 넣어준다.
+		
 		
 		//장부 리스트를 쭉 받아온다.
-		List<HashMap<String,Object>> ledgerList = ledgerDAO.listThisMonthLedger(curMonth);
+		List<HashMap<String,Object>> ledgerList 
+								= ledgerDAO.listThisMonthLedger(curMonth);
+		
 		
 		
 		//리턴할 새 자료형을 선언해준다.
@@ -317,6 +351,8 @@ public class LedgerService {
 				if(tempCate.equals(searchLedgCategory)){
 					outputList.add(inputList.get(i));
 				}
+			}else {
+				outputList = inputList;
 			}
 		}
 		return outputList;
@@ -361,6 +397,23 @@ public class LedgerService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.MONTH,-1);
+		String result = dateFormat.format(cal.getTime());
+		
+		return result;
+	}
+	//파라메터로 들어온 값보다 1달 이후의 값을 리턴해 준다.
+	public String getAfterMonth(String month) {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+		Date date = null;
+		try {
+			date = dateFormat.parse(month);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MONTH,+1);
 		String result = dateFormat.format(cal.getTime());
 		
 		return result;

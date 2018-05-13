@@ -24,7 +24,7 @@
 
 	<!-- DBMS 설정 ################################################################################################################## -->
 	<entry key="dbms.driverClassName"	>oracle.jdbc.driver.OracleDriver</entry>						<!-- DBMS 드라이버 -->
-	<entry key="dbms.url"				>jdbc:oracle:thin:@localhost:1522:orcl</entry>		<!-- DBMS 주소 및 스키마 -->
+	<entry key="dbms.url"				>jdbc:oracle:thin:@localhost:1521:orcl</entry>		<!-- DBMS 주소 및 스키마 -->
 	<entry key="dbms.username"			>scott</entry>										<!-- 유저명 -->
 	<entry key="dbms.password"			>tiger</entry>										<!-- 비밀번호 -->
 	

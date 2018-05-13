@@ -31,35 +31,46 @@
 
 <script type="text/javascript">
 	function searchByMonthly(){
-		var keyword = $("#ledgerDateTitleForm").val()
-		var keywordChunk = keyword.split('-') 
-		//keywordChunk[0] : YYYY
-		//keywordChunk[1] : MM
-		keyword = ""+keywordChunk[0]+keywordChunk[1];
+		if($("#isClosed").val()){
+			var txt;
+		    if (confirm("대기중인 월말 정산이 있습니다. 월말정산을 완료하지 않을 시, 다른 달의 입출금 현황 확인 및 입력이 불가능합니다. \n 월말 정산 페이지로 이동하시겠습니까?")){
+		        openClosing();
+		    } else {
+		        
+		    }
+		}else{
+			 
+			var keyword = $("#ledgerDateTitleForm").val()
+			var keywordChunk = keyword.split('-') 
+			//keywordChunk[0] : YYYY
+			//keywordChunk[1] : MM
+			keyword = ""+keywordChunk[0]+keywordChunk[1];
+				
 			
-		
-		alert(keyword);
-		var sendData = {};
-		sendData.keyword = keyword;
-		
-		$.ajax({
-			  url: "/listMonthlyLedger.do",
-			  data: sendData,
-			  success: function( result ) {
-			    alert();
-			    $( "#ledgerContentSection" ).empty;
-			    $( "#ledgerContentSection" ).html(result);
-			  },
-			  error: function(err){
-				  $( "#ledgerContentSection" ).empty;
-				  $( "#ledgerContentSection" ).html(
-						  '<br>'+
-						  '<h1>'+keywordChunk[0]+'년'+keywordChunk[0]+'월의 자료는 없습니다.<h1>'
-						  +'<br>'
-				  );
-			  }
-			});
-		
+			alert($("#isClosed").val());
+			alert($("#ledgerDateTitleForm").val());
+			
+			var sendData = {};
+			sendData.keyword = keyword;
+			
+			$.ajax({
+				  url: "/listMonthlyLedger.do",
+				  data: sendData,
+				  success: function( result ) {
+				    alert();
+				    $( "#ledgerContentSection" ).empty;
+				    $( "#ledgerContentSection" ).html(result);
+				  },
+				  error: function(err){
+					  $( "#ledgerContentSection" ).empty;
+					  $( "#ledgerContentSection" ).html(
+							  '<br>'+
+							  '<h1>'+keywordChunk[0]+'년'+keywordChunk[0]+'월의 자료는 없습니다.<h1>'
+							  +'<br>'
+					  );
+				  }
+				});
+			}
 	}
 	function searchByCondition(){
 		
@@ -79,9 +90,10 @@
 			  url: "/listSearchMonthlyLedger.do",
 			  data: sendData,
 			  success: function( result ) {
-			    alert();
+			
 			    $( "#ledgerContentSection" ).empty;
 			    $( "#ledgerContentSection" ).html(result);
+			
 			  },
 			  error: function(err){
 				  $( "#ledgerContentSection" ).empty;
@@ -104,9 +116,14 @@
 <div class="card">
 
 	<div class="card-header">
+		<c:if test="${isClosed eq false}">
+			<p id="closingWorning" style="color:red; font-size:1em;">미승인된 월말결산이 남아있으므로, 다른 날짜의 장부 조회가 제한됩니다.</p>
+		</c:if>
 	</div>
 	
 	<div class="card-body">
+	<!-- 정산 완료 여부를 알기 위한 히든값 -->
+	<input id="isClosed" type="hidden" value="${isClosed}">	
 		<div class="container">
 			<div class="row">
 			
@@ -114,8 +131,11 @@
 					<div id="ledgerlabel">
 						<!-- 날짜 타이틀 -->
 						<div id="ledgerDateTitle">
-							<input id="ledgerDateTitleForm" type="month" onchange="searchByMonthly()">
+							<input id="ledgerDateTitleForm" type="month" onchange="searchByMonthly()" value="${ledgerDate}">
 						</div>
+						
+
+						
 				
 						<br><br>
 						

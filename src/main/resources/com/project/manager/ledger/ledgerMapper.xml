@@ -5,14 +5,27 @@
 <mapper namespace="ledger">
 	<!-- 장부 분류정보들을 불러오기 위한 쿼리-->
 	<select id="listLedgerCate" resultType="HashMap">
-		select * from ledger_cate
+		SELECT * FROM LEDGER_CATE
+	</select>
+	
+	
+	<!-- 가장 마지막 월의 정산금과 정산일을 출력한다. -->
+	<select id="getLatestMonthBalance" resultType="HashMap">
+		SELECT  
+			LEDG_MONTH_DATE
+			,LEDG_MONTH_BALANCE
+		FROM 
+			LEDGER_MONTHLY
+		WHERE
+			ROWNUM=1
+		ORDER BY
+			LEDG_MONTH_DATE DESC
 	</select>
 	
 	<!-- 월별 잔액을 불러오는 쿼리 -->
 	<select id="getLastMonthBalance" resultType="HashMap">
 		SELECT LEDG_MONTH_BALANCE FROM LEDGER_MONTHLY WHERE LEDG_MONTH_DATE = #{lastMonth}
 	</select>
-	
 	<!-- 들어온 thisMonth에 해당하는 달의 거래 내역을 뽑아온다. -->
 	<select id="listThisMonthLedger" resultType="HashMap">
 		SELECT 
@@ -84,6 +97,16 @@
 			,#{ledgAmount}
 			,NULL <!-- file 처리 해주자.. -->
 		)	
+	</insert>
+
+	<insert id="insertLedgerMonthly" parameterType="HashMap">
+		INSERT INTO LEDGER_MONTHLY(
+			LEDG_MONTH_DATE
+			,LEDG_MONTH_BALANCE
+		) VALUES( 
+			#{ledgMonthDate}
+			,#{ledgMonthBalance}
+		)
 	</insert>
 
 </mapper>

@@ -84,7 +84,7 @@
 				<td id="">${ledgerListData.ledgerStat.balance}</td>
 				<td id="">${ledgerListData.ledgerStat.totalIncome}</td>
 				<td id="">${ledgerListData.ledgerStat.totalOutcome}</td>
-				<td id="">${ledgerListData.ledgerStat.finalBalance}</td>
+				<td id="ledgMonthBalance">${ledgerListData.ledgerStat.finalBalance}</td>
 				<td id="">${ledgerListData.ledgerStat.maxIncome}</td>
 				<td id="">${ledgerListData.ledgerStat.maxOutcome}</td>
 			</tr>
