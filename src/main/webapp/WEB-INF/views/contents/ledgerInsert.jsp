@@ -15,9 +15,9 @@
 </style>
 <script>
 $(document).ready(function(){
-	if($("#isClosed").val()){
-		var txt;
-	    if (confirm("대기중인 월말 정산이 있습니다. 월말정산을 완료하지 않을 시, 다른 달의 입출금 현황 확인 및 입력이 불가능합니다. \n 월말 정산 페이지로 이동하시겠습니까?")){
+	alert(($("#isClosed").val()))
+	if($("#isClosed").val() == "false"){
+		if (confirm("대기중인 월말 정산이 있습니다. 월말정산을 완료하지 않을 시, 다른 달의 입출금 현황 확인 및 입력이 불가능합니다. \n 월말 정산 페이지로 이동하시겠습니까?")){
 	        openClosing();
 	    } else {
 	        
@@ -25,6 +25,203 @@ $(document).ready(function(){
 	}else{
 		return;
 	}
+}); 
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+ 
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+ 
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+
+function openClosing(){
+	window.open('/closeLedgerMonthly.do'
+				,'popUpWindow'
+				,'height=700'
+				+',width=800'
+				+',left=10,top=10'
+				+',resizable=yes'
+				+',scrollbars=yes'
+				+',toolbar=yes'
+				+',menubar=no'
+				+',location=no'
+				+',directories=no'
+				+',status=yes')
+	
+}
+
+function commaMaker(num){
+	var len, point, str; 
+       
+    num 	= num + ""; 
+    point 	= num.length % 3 ;
+    len 	= num.length; 
+   
+    str = num.substring(0, point); 
+    while (point < len) { 
+        if (str != "") str += ","; 
+        str += num.substring(point, point + 3); 
+        point += 3; 
+    } 
+     
+    return str;
+}
+
+function commaDeleter(num){
+	   
+    var commaNum = num + ""; 
+	var pureNum  = "";
+	
+	for (var j= 0; j < commaNum.length ; j++){
+		if(commaNum[j] != ','){
+			pureNum += commaNum[j];
+		}	
+	}
+    return pureNum;
+}
+
+
+
+
+$().ready(function(){
+	stuNumberOption("searchStuNumber1",undefined)
+	stuNumberOption("searchStuNumber2",undefined)
+	
+	//---------------특정 페이지로의 새로고침을 url로 명령 받으면, 그 페이지를 보여준다.
+	
+	if(getUrlParameter('loc') != undefined){
+		showTitle(this,getUrlParameter('loc'));
+	}
+	
+	//---------------장부에 날짜 오늘짜로 우선 맞춰주기
+	var today = new Date();
+	var dd 	  = today.getDate();
+	var mm 	  = today.getMonth()+1; //January is 0!
+	var yyyy  = today.getFullYear();
+
+	if(dd<10) {
+	    dd = '0'+dd
+	} 
+	if(mm<10) {
+	    mm = '0'+mm
+	} 
+	$("#ledgerDateTitleForm").val(yyyy+"-"+mm)
+	
+	
+
+	//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
+	$("#ledgTransTypeFunction").click(function(){
+		var transType 	= $(':radio[name="ledgTransType"]:checked').val();
+		var ledgAmount 	= ($("#ledgAmount").val()*1);
+		var balance 	= ($("#originalBalance").val())*1;
+		
+		if(transType == "1"){ //출금일경우
+			
+			$("#ledgAmount"				).css("color","red"			);
+			$("#ledgWithdrawalOutput"	).html(ledgAmount			);
+			$("#ledgDepositOutput"		).html("0"					);
+			$("#ledgBalance"			).val(balance - ledgAmount	);
+			$("#ledgBalanceOutput"		).html(balance - ledgAmount	);
+			
+		} else if(transType == "2"){ //입금일경우
+			
+			$("#ledgAmount"				).css("color","blue"		);
+			$("#ledgDepositOutput"		).html(ledgAmount			);
+			$("#ledgWithdrawalOutput"	).html("0"					);
+			$("#ledgBalance"			).val(balance + ledgAmount	);
+			$("#ledgBalanceOutput"		).html(balance + ledgAmount	);
+		
+		}
+			
+	});
+
+	//'상세내역' 입력시 입력내역에 실시간으로 출력하기
+	$("#ledgContent").keyup(function(){
+		var ledgContent = $("#ledgContent").val();
+		$("#ledgContentOutput").html(ledgContent);
+	});
+
+	
+	//'거래처' 입력시 입력내역에 실시간으로 출력하기
+	$("#ledgTradePartner").keyup(function(){
+		var ledgTradePartner = $("#ledgTradePartner").val();
+		$("#ledgTradePartnerOutput").html(ledgTradePartner);
+	});
+
+	
+	//'결제수단' 입력시 입력내역에 실시간으로 출력하기
+	$("#ledgMethod").change(function(){
+		
+		var ledgMethod 		= $("#ledgMethod option:selected").text();
+		var ledgMethodCode 	= $("#ledgMethod option:selected").val();
+		
+		$("#ledgMethodOutput"		).html(ledgMethod);
+		$("#ledgMethodCodeOutput"	).val(ledgMethodCode);
+	
+	});
+
+	//'분류' 입력시 입력내역에 실시간으로 출력하기
+	$("#ledgCategory").change(function(){
+		
+		var ledgCategory 		= $("#ledgCategory option:selected").text();
+		var ledgCategoryCode 	= $("#ledgCategory option:selected").val();
+		
+		$("#ledgCategoryOutput"		).html(ledgCategory);
+		$("#ledgCategoryCodeOutput"	).val(ledgCategoryCode);
+	
+	});
+	
+	//'날짜' 입력시 입력내역에 실시간으로 출력하기
+	$("#ledgDate").change(function(){
+		var ledgDate = $("#ledgDate").val();
+		ledgDate = ledgDate.substring(0,4) + ledgDate.substring(5,7) + ledgDate.substring(8,10);
+		$("#ledgDateOutput").html(ledgDate);
+	});
+	
+	
+	//'금액' 입력시 '구분(입금/출금) 체크 확인한 후' 입력내역에 실시간으로 출력하기
+	$("#ledgAmount").keyup(function(){
+		
+		var transType = $(':radio[name="ledgTransType"]:checked').val();
+
+		if(transType == null){
+			alert("구분(출금/입금)을 먼저 선택해주세요");
+			$("#ledgAmount").val("");
+			
+			return false;
+		} else {
+			
+			var ledgAmount 	= ($("#ledgAmount"		).val())*1;//숫자 자료형으로 만들어준다.
+			var balance 	= ($("#originalBalance"	).val())*1;
+			
+			
+			if(transType == "1") { //출금일경우
+				$("#ledgWithdrawalOutput").html(commaMaker(ledgAmount));
+				
+				$("#ledgDepositOutput"	).html("0");
+				$("#ledgBalance"		).val(commaMaker(balance - ledgAmount));
+				$("#ledgBalanceOutput"	).html(commaMaker(balance - ledgAmount));
+				
+			} else { //입금일경우
+				$("#ledgDepositOutput").html(commaMaker(ledgAmount));
+				
+				$("#ledgWithdrawalOutput").html("0");
+				$("#ledgBalance"		 ).val(commaMaker(balance + ledgAmount));
+				$("#ledgBalanceOutput"	 ).html(commaMaker(balance + ledgAmount));
+				
+			}
+		}
+	});
+
+
 });
 
 

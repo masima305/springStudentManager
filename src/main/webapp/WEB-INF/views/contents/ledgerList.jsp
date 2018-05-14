@@ -31,13 +31,15 @@
 
 <script type="text/javascript">
 	function searchByMonthly(){
-		if($("#isClosed").val()){
+		if($("#isClosed").val() == "false"){
 			var txt;
 		    if (confirm("대기중인 월말 정산이 있습니다. 월말정산을 완료하지 않을 시, 다른 달의 입출금 현황 확인 및 입력이 불가능합니다. \n 월말 정산 페이지로 이동하시겠습니까?")){
 		        openClosing();
 		    } else {
 		        
 		    }
+		
+		
 		}else{
 			 
 			var keyword = $("#ledgerDateTitleForm").val()

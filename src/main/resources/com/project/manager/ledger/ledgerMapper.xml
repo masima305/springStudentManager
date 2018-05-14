@@ -15,11 +15,13 @@
 			LEDG_MONTH_DATE
 			,LEDG_MONTH_BALANCE
 		FROM 
-			LEDGER_MONTHLY
+			(SELECT LEDG_MONTH_DATE
+                    ,LEDG_MONTH_BALANCE
+            FROM LEDGER_MONTHLY
+            ORDER BY LEDG_MONTH_DATE DESC
+            )
 		WHERE
-			ROWNUM=1
-		ORDER BY
-			LEDG_MONTH_DATE DESC
+			ROWNUM=1	
 	</select>
 	
 	<!-- 월별 잔액을 불러오는 쿼리 -->

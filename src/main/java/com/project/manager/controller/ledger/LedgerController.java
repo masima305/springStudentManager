@@ -158,7 +158,7 @@ public class LedgerController {
 		
 		
 		boolean isClosed = isClosedLedger();
-
+		System.out.println("isClosed???????????? : "+ isClosed);
 		mv.addObject("ledgerDate",ledgerDate); //year
 		mv.addObject("isClosed", isClosed);
 		mv.addObject("listAllCommonMap", listAllCommonMap);
@@ -173,6 +173,7 @@ public class LedgerController {
 	public @ResponseBody ModelAndView ledgerForm(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		boolean isClosed = isClosedLedger(); //true면 정산이 완료 된 상태, false면 정산이 아직 완벽히 진행되지 않은 상태.
+		System.out.println("isClosed??????????????  : "+isClosed);
 		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
 		HashMap<String,List<HashMap<String, Object>>> listLedgerForm = ledgerService.ledgerForm();
@@ -266,7 +267,7 @@ public class LedgerController {
 	public boolean isClosedLedger() {
 		String thisMonth = ledgerService.getLastMonth();
 		String latestMonth = ledgerService.getLatestMonthBalance().get("LEDG_MONTH_DATE").toString();
-		if(thisMonth.equals(latestMonth)) {
+		if(Integer.valueOf(thisMonth) <= Integer.valueOf(latestMonth)) {
 			System.out.println("thisMonth : "+thisMonth+ " == "+ "latestMonth : " + latestMonth);
 			return true;
 		}else {

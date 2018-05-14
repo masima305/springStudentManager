@@ -28,6 +28,7 @@
 	    }
 	};
 	
+	
 	function openClosing(){
 		window.open('/closeLedgerMonthly.do'
 					,'popUpWindow'
