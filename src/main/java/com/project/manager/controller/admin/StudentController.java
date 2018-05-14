@@ -317,7 +317,7 @@ public class StudentController {
 		return "redirect:adminMain";
 	}
 	
-	@RequestMapping(value="deleteExperience.do")
+	@RequestMapping(value="/deleteExperience.do")
 	public @ResponseBody List<HashMap<String,Object>> deleteExperience(HttpServletRequest request) {
 		
 		System.out.println(">>>>>>>>deleteExpController called");

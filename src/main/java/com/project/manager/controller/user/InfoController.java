@@ -43,17 +43,20 @@ public class InfoController {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("stuNumber", stuNumber);
 	
-		//학번에 따른 비밀번호 가져오기
+		//학번에 따른 '비밀번호','접근권한' 가져오기
 		HashMap<String, Object> loginMap = infoService.loginCheck(map);
 		
 		//학번과 비밀번호가 일치하는 경우
 		if(stuPassword.equals(loginMap.get("STU_PASSWORD"))) { 
 		//getUser.do 로 파라미터랑 같이 보내기
 
-			request.setAttribute("stuNumber", stuNumber);
+			request.setAttribute("stuNumber", stuNumber); 
 			
 			//세션 생성
-			request.getSession().setAttribute("loginCheck", stuNumber);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginCheck", stuNumber); 					  //비밀번호
+			session.setAttribute("stuAuthority",loginMap.get("STU_AUTHORITY")); //접근권한
+			
 			url="forward:/getUser.do";
 		} else {
 		//로그인 실패시 home.jsp(루트)로 리다이렉트

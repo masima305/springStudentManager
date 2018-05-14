@@ -20,11 +20,21 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 		logger.info("loginCheck 세션의 유무 확인");
 		System.out.println("loginCheck intercepter 진입");
 		
+		String loginCheck = (String)request.getSession().getAttribute("loginCheck");
+		String stuAuthority = (String)request.getSession().getAttribute("stuAuthority");
+		
+		System.out.println("loginCheck: " + loginCheck);
+		System.out.println("stuAuthority: " + stuAuthority);
+		
+		
+		
+		
 		try {
 			//loginCheck 세션이 없는경우 로그인페이지로 이동
-			if(request.getSession().getAttribute("loginCheck")==null) { 
+			if(loginCheck==null) { 
 				response.sendRedirect("/"); 
 				return false;
+				
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

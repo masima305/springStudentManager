@@ -96,7 +96,12 @@
 	);
 	    
     
-    
+    	    
+    CREATE TABLE AUTHORITY_MANAGER (
+    AUTHOR_URL VARCHAR2(100) NOT NULL,
+    AUTHOR_CODE NUMBER(1) NOT NULL,
+    AUTHOR_YN VARCHAR2(2) NOT NULL
+    );
     
     
     
@@ -110,6 +115,7 @@
 	NOCACHE;    
          
       ---------------복합 PK 설정------------------------
+     ALTER TABLE AUTHORITY_MANAGER ADD CONSTRAINT AUTHORITY_MANAGER_PK PRIMARY KEY(AUTHOR_URL,AUTHOR_CODE);
      ALTER TABLE COMMON ADD CONSTRAINT COMMON_PK PRIMARY KEY(COMMON_CATEGORY,COMMON_CODE);
      ALTER TABLE EXPERIENCE ADD CONSTRAINT EXPERIENCE_PK PRIMARY KEY(STU_NUMBER,EXP_YEAR,EXP_SEMESTER,EXP_CONTENT);
      
@@ -251,6 +257,157 @@
 	insert into LEDGER_CATE values(LEDGER_CATE_SEQ.NEXTVAL, '학회 지원금');
      
 	COMMIT;
+     
+      -------------insert AUTHORITY_MANAGER data --------------
+     
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/listAllStudent.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/getStudent.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/getStudent.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/insertExperience.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/insertStudent.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/updateStudent.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/deleteStudent.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/deleteExperience.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/listAllFee.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/updateFee.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/updateFee.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',7,'N');
+     insert into AUTHORITY_MANAGER values('/listAllScheduler.do',8,'N');
+     
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/insertScheduler.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/updateScheduler.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/deleteScheduler.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/closeLedgerMonthly.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/listMonthlyLedger.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/listLedger.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/listLedger.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/insertLedger.do',7,'N');
+     
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',1,'Y');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',2,'N');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',3,'N');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',4,'N');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',5,'N');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',6,'N');
+     insert into AUTHORITY_MANAGER values('/insertMonthlyBalance.do',7,'N');
+     
+     
+     COMMIT;
+     
      
      
      --------------------select-----------------
