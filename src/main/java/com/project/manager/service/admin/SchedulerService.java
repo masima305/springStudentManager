@@ -1,11 +1,7 @@
 package com.project.manager.service.admin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,15 +28,15 @@ public class SchedulerService {
 		
 	
 	//모든 스케줄 불러오기
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public List<HashMap<String, Object>> listAllScheduler(){
 		
-		System.out.println(">>>>>>>>listAllScheduler Service called");	
-		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		logger.info(">>>>>>>>listAllScheduler Service called");	
+		List<HashMap<String, Object>> list = null;
 		
 		try {
 			list = schedulerDAO.listAllScheduler();
 		} catch (Exception e) {
-			//TODO 사용자 에러 정의 
 			e.printStackTrace();
 		}
 		
@@ -53,14 +49,15 @@ public class SchedulerService {
 		
 	
 	//스케줄 추가
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int insertScheduler(HashMap<String,String> map) {
-		System.out.println(">>>>>>>>insertScheduler Service called");
+		
+		logger.info(">>>>>>>>insertScheduler Service called");
 		int result = 0;
 		
 		try {
 			result = schedulerDAO.insertScheduler(map);
 		} catch (Exception e) {
-			//TODO 사용자 에러 정의 
 			e.printStackTrace();
 		}
 		return result;
@@ -72,14 +69,15 @@ public class SchedulerService {
 	//=====================================================================================================
 		
 	//스케줄 수정
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int updateScheduler(HashMap<String,String> map) {
-		System.out.println(">>>>>>>>updateScheduler Service called");
+		
+		logger.info(">>>>>>>>updateScheduler Service called");
 		int result = 0;
 		
 		try {
 			result = schedulerDAO.updateScheduler(map);
 		} catch (Exception e) {
-			//TODO 사용자 에러 정의 
 			e.printStackTrace();
 		}
 		return result;
@@ -92,14 +90,15 @@ public class SchedulerService {
 		
 	
 	//스케줄 삭제
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public int deleteScheduler(HashMap<String,String> map) {
-		System.out.println(">>>>>>>>deleteScheduler Service called");
+		
+		logger.info(">>>>>>>>deleteScheduler Service called");
 		int result = 0;
 		
 		try {
 			result = schedulerDAO.deleteScheduler(map);
 		} catch (Exception e) {
-			//TODO 사용자 에러 정의 
 			e.printStackTrace();
 		}
 		return result;

@@ -8,16 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.project.manager.dao.ccode.CcodeDAO;
 
 @Service
 public class CcodeService {
 
-	
-	
-	
 	@Autowired
 	CcodeDAO ccodeDAO;
+	
+	private static final Logger logger = LoggerFactory.getLogger(CcodeService.class);
 	
 	
     public static final HashMap<String, String> CCODENAMEMAP = new HashMap<String, String>();
@@ -38,9 +40,6 @@ public class CcodeService {
 	    	CCODENAMEMAP.put("ledgMethod"	,"LEDG_METHOD"		);
 	    }
 	
-
-	
-	private static final Logger logger = LoggerFactory.getLogger(CcodeService.class);
 	
 	/*
 	 * 
@@ -72,11 +71,10 @@ public class CcodeService {
 	 * 
 	 */
 	
-	
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class} )
 	public HashMap<String,List<HashMap<String, Object>>> listAllCommon(){
 
-		List<HashMap<String, Object>> list = ccodeDAO.listAllCommon();
-
+		List<HashMap<String, Object>> list = null;
 		List<HashMap<String, Object>> stuEnteranceList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> stuAuthorityList 	= new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> stuGenderList	 	= new ArrayList<HashMap<String, Object>>();
@@ -86,54 +84,57 @@ public class CcodeService {
 		List<HashMap<String, Object>> ledgTradeTypeList = new ArrayList<HashMap<String, Object>>();
 		List<HashMap<String, Object>> ledgMethodList 	= new ArrayList<HashMap<String, Object>>();
 		
-
-		//common 테이블의 catogory마다  각 리스트만들어 담기  
-		for(HashMap<String, Object> item : list) {
-
-			String commonCategoryValue = (String)item.get("COMMON_CATEGORY");
-
-			if(commonCategoryValue.equals("stuEnterance")) {
-				stuEnteranceList.add(item);
-			}
-			if(commonCategoryValue.equals("stuAuthority")) {
-				stuAuthorityList.add(item);
-			}
-			if(commonCategoryValue.equals("stuGender")) {
-				stuGenderList.add(item);
-			}
-			if(commonCategoryValue.equals("expSemester")) {
-				expSemesterList.add(item);
-			}
-			if(commonCategoryValue.equals("feePaidMethod")) {
-				feePaidMethodList.add(item);
-			}
-			if(commonCategoryValue.equals("feePaidStatus")) {
-				feePaidStatusList.add(item);
-			}
-			if(commonCategoryValue.equals("ledgTradeType")) {
-				ledgTradeTypeList.add(item);
-			}
-			if(commonCategoryValue.equals("ledgMethod")) {
-				ledgMethodList.add(item);
-			}
+		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap 
+		= new HashMap<String,List<HashMap<String, Object>>>(); 
+		
+		try {
 			
+			list = ccodeDAO.listAllCommon();
+
+			//common 테이블의 catogory마다  각 리스트만들어 담기  
+			for(HashMap<String, Object> item : list) {
+
+				String commonCategoryValue = (String)item.get("COMMON_CATEGORY");
+
+				if(commonCategoryValue.equals("stuEnterance")) {
+					stuEnteranceList.add(item);
+				}
+				if(commonCategoryValue.equals("stuAuthority")) {
+					stuAuthorityList.add(item);
+				}
+				if(commonCategoryValue.equals("stuGender")) {
+					stuGenderList.add(item);
+				}
+				if(commonCategoryValue.equals("expSemester")) {
+					expSemesterList.add(item);
+				}
+				if(commonCategoryValue.equals("feePaidMethod")) {
+					feePaidMethodList.add(item);
+				}
+				if(commonCategoryValue.equals("feePaidStatus")) {
+					feePaidStatusList.add(item);
+				}
+				if(commonCategoryValue.equals("ledgTradeType")) {
+					ledgTradeTypeList.add(item);
+				}
+				if(commonCategoryValue.equals("ledgMethod")) {
+					ledgMethodList.add(item);
+				}
+			}
+
+			listAllCommonMap.put("stuEnteranceList"	, stuEnteranceList	);
+			listAllCommonMap.put("stuAuthorityList"	, stuAuthorityList	);
+			listAllCommonMap.put("stuGenderList"	, stuGenderList		);
+			listAllCommonMap.put("expSemesterList"	, expSemesterList	);
+			listAllCommonMap.put("feePaidMethodList", feePaidMethodList	);
+			listAllCommonMap.put("feePaidStatusList", feePaidStatusList	);
+			listAllCommonMap.put("ledgTradeTypeList", ledgTradeTypeList	);
+			listAllCommonMap.put("ledgMethodList"	, ledgMethodList	);
 			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
-		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = new HashMap<String,List<HashMap<String, Object>>>(); 
-
-		listAllCommonMap.put("stuEnteranceList"	, stuEnteranceList	);
-		listAllCommonMap.put("stuAuthorityList"	, stuAuthorityList	);
-		listAllCommonMap.put("stuGenderList"	, stuGenderList		);
-		listAllCommonMap.put("expSemesterList"	, expSemesterList	);
-		listAllCommonMap.put("feePaidMethodList", feePaidMethodList	);
-		listAllCommonMap.put("feePaidStatusList", feePaidStatusList	);
-		listAllCommonMap.put("ledgTradeTypeList", ledgTradeTypeList	);
-		listAllCommonMap.put("ledgMethodList"	, ledgMethodList	);
 
 		return listAllCommonMap;
 	}
-
-
-
 }
