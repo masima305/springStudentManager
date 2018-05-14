@@ -57,9 +57,9 @@ function submitLedgerInsert(){
 		
 		
 		$.ajax({
-			url: "insertLedger.do",
-			data: insertData,
-			success: function( result ) {
+			url		: "insertLedger.do",
+			data	: insertData,
+			success	: function( result ) {
 				alert("성공!!!");
 				window.location.replace("/adminMain?loc=ledgerInsert");
 			},

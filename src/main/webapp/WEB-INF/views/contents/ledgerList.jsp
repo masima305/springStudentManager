@@ -74,10 +74,10 @@
 	}
 	function searchByCondition(){
 		
-		var searchLedgCategory = $("#searchLedgCategory option:selected").val();
+		var searchLedgCategory 	= $("#searchLedgCategory option:selected").val();
 		var searchLedgTradeType = $("#searchLedgTradeType option:selected").val();
-		var ledgStartMonth = ($("#ledgStartMonth").val()).replace('-','');
-		var ledgEndMonth = ($("#ledgEndMonth").val()).replace('-','');
+		var ledgStartMonth 		= ($("#ledgStartMonth").val()).replace('-','');
+		var ledgEndMonth 		= ($("#ledgEndMonth").val()).replace('-','');
 		
 		var sendData = {}
 		

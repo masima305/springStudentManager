@@ -308,10 +308,10 @@ function ajaxStuDetail(stuNumber){
 //======================================학생정보 수정용 script ==========================
 function makeInfoInput(stuNumber){
 	
-	var listAllCommonJsonMap = ${listAllCommonGson}
-	var stuGenderList = listAllCommonJsonMap.stuGenderList
-	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList
-	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList
+	var listAllCommonJsonMap = ${listAllCommonGson};
+	var stuGenderList 	 = listAllCommonJsonMap.stuGenderList;
+	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList;
+	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList;
 	
 	var personalStuName	 			= $("#personalStuName"	 		).html();
 	var personalStuBirthday 		= $("#personalStuBirthday"	 	).html();
@@ -381,28 +381,28 @@ function makeInfoInput(stuNumber){
 	
 	str = "<button type='button' onclick='javascript:updateInfoInput("+stuNumber+")' class='btn btn-small btn-warning'>수정완료</button>"
 	$('#infoBtnArea').empty();
-	$("#infoBtnArea").append(str)
+	$("#infoBtnArea").append(str);
 
 }
 
 function updateInfoInput(id){
 	
 	
-	var listAllCommonJsonMap = ${listAllCommonGson}
-	var stuGenderList = listAllCommonJsonMap.stuGenderList
-	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList
-	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList
+	var listAllCommonJsonMap = ${listAllCommonGson};
+	var stuGenderList 	 = listAllCommonJsonMap.stuGenderList;
+	var stuAuthorityList = listAllCommonJsonMap.stuAuthorityList;
+	var stuEnteranceList = listAllCommonJsonMap.stuEnteranceList;
 	
 
 	//------------------input tag 입력-----------------------------------------
 	
-	var updateStuName = $('#updateStuName').val()
-	var updateStuBirthday = $('#updateStuBirthday').val()
-	var updateStuPhone = $('#updateStuPhone').val()
-	var updateStuEmail = $('#updateStuEmail').val()
-	var updateStuGender = $('#updateStuGender').val()
-	var updateStuAuthority = $('#updateStuAuthority').val()
-	var updateStuEnterance = $('#updateStuEnterance').val()
+	var updateStuName 		= $('#updateStuName'	 ).val();
+	var updateStuBirthday 	= $('#updateStuBirthday' ).val();
+	var updateStuPhone 		= $('#updateStuPhone'	 ).val();
+	var updateStuEmail 		= $('#updateStuEmail'	 ).val();
+	var updateStuGender 	= $('#updateStuGender'	 ).val();
+	var updateStuAuthority 	= $('#updateStuAuthority').val();
+	var updateStuEnterance 	= $('#updateStuEnterance').val();
 	
 	//-----------------Update를 위한 데이터 json화	-------------------
 	var updateData = {};
@@ -431,9 +431,9 @@ function updateInfoInput(id){
 				
 				
 	
-				$("#personalStuPhone"			).html(updateStuPhone);
-				$("#personalStuEmail"			).html(updateStuEmail);
-				$("#personalStuName"	 		).html(updateStuName);
+				$("#personalStuPhone"			).html(updateStuPhone	);
+				$("#personalStuEmail"			).html(updateStuEmail	);
+				$("#personalStuName"	 		).html(updateStuName	);
 				$("#personalStuBirthday"	 	).html(updateStuBirthday);
 				
 				
@@ -787,7 +787,7 @@ function deleteExperience(delstuNumber,delExpYear,delExpSemester,delExpContent){
 		var stuNumber 	= delstuNumber;
 		var expYear 	= delExpYear;
 		var expSemester = delExpSemester;
-		var expContent = delExpContent;
+		var expContent 	= delExpContent;
 		
 		var sendData ={};			   
 		sendData.stuNumber		 = stuNumber;

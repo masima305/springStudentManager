@@ -23,21 +23,21 @@
 		
 		//------------------input tag 입력----------------------------
 		
-		var insertStuName  		= $('#insertStuName').val();
-		var insertStuNumber 	= $('#insertStuNumber').val();
-		var insertStuBirthday 	= $('#insertStuBirthday').val();
-		var insertStuGender 	= $('#insertStuGender').val();
-		var insertStuPhone 		= $('#insertStuPhone').val();
-		var insertStuEmail  	= $('#insertStuEmail').val();
-		var insertStuEnterance 	= $('#insertStuEnterance').val();
-		var insertStuAuthority 	= $('#insertStuAuthority').val();
+		var insertStuName  		= $('#insertStuName'		).val();
+		var insertStuNumber 	= $('#insertStuNumber'		).val();
+		var insertStuBirthday 	= $('#insertStuBirthday'	).val();
+		var insertStuGender 	= $('#insertStuGender'		).val();
+		var insertStuPhone 		= $('#insertStuPhone'		).val();
+		var insertStuEmail  	= $('#insertStuEmail'		).val();
+		var insertStuEnterance 	= $('#insertStuEnterance'	).val();
+		var insertStuAuthority 	= $('#insertStuAuthority'	).val();
 		
-		var insertFeeTotalAmount 	= $('#insertFeeTotalAmount').val();
-		var insertFeePaidDate		= $('#insertFeePaidDate').val();
-		var insertFeePaidAmount 	= $('#insertFeePaidAmount').val();
-		var insertFeePaidMethod 	= $('#insertFeePaidMethod').val();
-		var insertFeePaidStatus 	= $('#insertFeePaidStatus').val();
-		var insertFeeContent 		= $('#insertFeeContent').val();
+		var insertFeeTotalAmount 	= $('#insertFeeTotalAmount'	).val();
+		var insertFeePaidDate		= $('#insertFeePaidDate'	).val();
+		var insertFeePaidAmount 	= $('#insertFeePaidAmount'	).val();
+		var insertFeePaidMethod 	= $('#insertFeePaidMethod'	).val();
+		var insertFeePaidStatus 	= $('#insertFeePaidStatus'	).val();
+		var insertFeeContent 		= $('#insertFeeContent'		).val();
 		
 		
 		//---------------형식 조정/입력 여부/유효성 체크----------------------------

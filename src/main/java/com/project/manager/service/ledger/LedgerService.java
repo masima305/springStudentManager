@@ -106,6 +106,10 @@ public class LedgerService {
 		
 		//이번달 장부 내역을 분석한다.
 		HashMap<String, String>ledgerStat = analyzeList(ledgerList,balance);
+			
+			
+		
+		
 		
 		//다 담아서 한번에 보낸다.
 		result.put("ledgerList"			, ledgerList);		//완성된 장부 리스트
@@ -234,8 +238,12 @@ public class LedgerService {
 		//잔액 상태에서 리스트에 있는 항목들을 하나씩 연산 한 뒤 완성된 표의 형태로 만들어서 자료형에 담는다.
 		//complete list메소드가 그 역할을 한다.
 		ledgerList = completeList(ledgerList , balance);
+		
 		//최신 거래내역에서 3개 이전까지의 정보만 필요하기때문에 그정도만 갖고 나갈 수 있도록 정보를 추린다.
-		ledgerList = ledgerList.subList((ledgerList.size()-3), ledgerList.size());
+		//최신 거래내역이 없을수도 있기 때문에 0일때의 예외처리를 반드시 해준다.
+		if(ledgerList.size() > 3 ) {
+			ledgerList = ledgerList.subList((ledgerList.size()-3), ledgerList.size());
+		}
 		
 		//여기서 최대한 완성된 표를 만들어서 하나의 자료로 압축시킨뒤 컨트롤러에 보낸다.
 		CateAndList.put("ledgerCate", ledgerCate);
@@ -277,32 +285,37 @@ public class LedgerService {
 		int tempAmount		= 0;	//입출금	임시 변수
 		String tempType		= null;	//지출타입 	임시변수
 		
-		//최종 잔액부터 받아두
-		finalBalance = String.valueOf(inputList.get(inputList.size()-1).get("LEDG_BALANCE"));
+		if(inputList.size() != 0) {
 		
-		for (int i = 0; i < inputList.size(); i++) {
+			//최종 잔액부터 받아두
+			finalBalance = String.valueOf(inputList.get(inputList.size()-1).get("LEDG_BALANCE"));
 			
-			//반복적인 메서드 사용 방지를 위한 temp변수 사용.
-			tempAmount = Integer.parseInt(String.valueOf(inputList.get(i).get("LEDG_AMOUNT")));
-			tempType = (String.valueOf(inputList.get(i).get("LEDG_TRADE_TYPE")));
-			
-			//지출건이면
-			if((tempType).equals("1")) {
-				//지출 종합에 일단 더해주고
-				totalOutcome += tempAmount;
-				//최대 지출값보다 크면 갱신
-				if(tempAmount > maxOutcome) {
-					maxOutcome = tempAmount;
-				}
-			//수입건이면
-			}else if((tempType).equals("2")) {
-				//수입 종합에 일단 더해주고
-				totalIncome += tempAmount;
-				//최대 수입값보다 크면 갱신
-				if(tempAmount > maxIncome) {
-					maxIncome = tempAmount;
-				}
-			} 
+			for (int i = 0; i < inputList.size(); i++) {
+				
+				//반복적인 메서드 사용 방지를 위한 temp변수 사용.
+				tempAmount = Integer.parseInt(String.valueOf(inputList.get(i).get("LEDG_AMOUNT")));
+				tempType = (String.valueOf(inputList.get(i).get("LEDG_TRADE_TYPE")));
+				
+				//지출건이면
+				if((tempType).equals("1")) {
+					//지출 종합에 일단 더해주고
+					totalOutcome += tempAmount;
+					//최대 지출값보다 크면 갱신
+					if(tempAmount > maxOutcome) {
+						maxOutcome = tempAmount;
+					}
+				//수입건이면
+				}else if((tempType).equals("2")) {
+					//수입 종합에 일단 더해주고
+					totalIncome += tempAmount;
+					//최대 수입값보다 크면 갱신
+					if(tempAmount > maxIncome) {
+						maxIncome = tempAmount;
+					}
+				} 
+			}
+		}else {
+			finalBalance = balance;
 		}
 		
 		result.put("balance"		, balance						);

@@ -47,9 +47,9 @@
 	function commaMaker(num){
 		var len, point, str; 
 	       
-	    num = num + ""; 
-	    point = num.length % 3 ;
-	    len = num.length; 
+	    num 	= num + ""; 
+	    point 	= num.length % 3 ;
+	    len 	= num.length; 
 	   
 	    str = num.substring(0, point); 
 	    while (point < len) { 
@@ -64,7 +64,7 @@
 	function commaDeleter(num){
 		   
 	    var commaNum = num + ""; 
-		var pureNum = "";
+		var pureNum  = "";
 		
 		for (var j= 0; j < commaNum.length ; j++){
 			if(commaNum[j] != ','){
@@ -89,9 +89,9 @@
 		
 		//---------------장부에 날짜 오늘짜로 우선 맞춰주기
 		var today = new Date();
-		var dd = today.getDate();
-		var mm = today.getMonth()+1; //January is 0!
-		var yyyy = today.getFullYear();
+		var dd 	  = today.getDate();
+		var mm 	  = today.getMonth()+1; //January is 0!
+		var yyyy  = today.getFullYear();
 
 		if(dd<10) {
 		    dd = '0'+dd
@@ -105,22 +105,26 @@
 
 		//구분(입금/출금)에 따라 금액 인풋 값 색 바꾸기
 		$("#ledgTransTypeFunction").click(function(){
-			var transType = $(':radio[name="ledgTransType"]:checked').val();
-			var ledgAmount = ($("#ledgAmount").val()*1);
-			var balance = ($("#originalBalance").val())*1;
+			var transType 	= $(':radio[name="ledgTransType"]:checked').val();
+			var ledgAmount 	= ($("#ledgAmount").val()*1);
+			var balance 	= ($("#originalBalance").val())*1;
 			
 			if(transType == "1"){ //출금일경우
-				$("#ledgAmount").css("color","red");
-				$("#ledgWithdrawalOutput").html(ledgAmount);
-				$("#ledgDepositOutput").html("0");
-				$("#ledgBalance").val(balance - ledgAmount);
-				$("#ledgBalanceOutput").html(balance - ledgAmount);
+				
+				$("#ledgAmount"				).css("color","red"			);
+				$("#ledgWithdrawalOutput"	).html(ledgAmount			);
+				$("#ledgDepositOutput"		).html("0"					);
+				$("#ledgBalance"			).val(balance - ledgAmount	);
+				$("#ledgBalanceOutput"		).html(balance - ledgAmount	);
+				
 			} else if(transType == "2"){ //입금일경우
-				$("#ledgAmount").css("color","blue");
-				$("#ledgDepositOutput").html(ledgAmount);
-				$("#ledgWithdrawalOutput").html("0");
-				$("#ledgBalance").val(balance + ledgAmount);
-				$("#ledgBalanceOutput").html(balance + ledgAmount);
+				
+				$("#ledgAmount"				).css("color","blue"		);
+				$("#ledgDepositOutput"		).html(ledgAmount			);
+				$("#ledgWithdrawalOutput"	).html("0"					);
+				$("#ledgBalance"			).val(balance + ledgAmount	);
+				$("#ledgBalanceOutput"		).html(balance + ledgAmount	);
+			
 			}
 				
 		});
@@ -140,20 +144,24 @@
 	
 		
 		//'결제수단' 입력시 입력내역에 실시간으로 출력하기
-		$("#ledgMethod").
-		change(function(){
-			var ledgMethod = $("#ledgMethod option:selected").text();
-			var ledgMethodCode = $("#ledgMethod option:selected").val();
-			$("#ledgMethodOutput").html(ledgMethod);
-			$("#ledgMethodCodeOutput").val(ledgMethodCode);
+		$("#ledgMethod").change(function(){
+			
+			var ledgMethod 		= $("#ledgMethod option:selected").text();
+			var ledgMethodCode 	= $("#ledgMethod option:selected").val();
+			
+			$("#ledgMethodOutput"		).html(ledgMethod);
+			$("#ledgMethodCodeOutput"	).val(ledgMethodCode);
+		
 		});
 
 		//'분류' 입력시 입력내역에 실시간으로 출력하기
 		$("#ledgCategory").change(function(){
-			var ledgCategory = $("#ledgCategory option:selected").text();
-			var ledgCategoryCode = $("#ledgCategory option:selected").val();
-			$("#ledgCategoryOutput").html(ledgCategory);
-			$("#ledgCategoryCodeOutput").val(ledgCategoryCode);
+			
+			var ledgCategory 		= $("#ledgCategory option:selected").text();
+			var ledgCategoryCode 	= $("#ledgCategory option:selected").val();
+			
+			$("#ledgCategoryOutput"		).html(ledgCategory);
+			$("#ledgCategoryCodeOutput"	).val(ledgCategoryCode);
 		
 		});
 		
@@ -177,23 +185,23 @@
 				return false;
 			} else {
 				
-				var ledgAmount = ($("#ledgAmount").val())*1;
-				var balance = ($("#originalBalance").val())*1;
+				var ledgAmount 	= ($("#ledgAmount"		).val())*1;//숫자 자료형으로 만들어준다.
+				var balance 	= ($("#originalBalance"	).val())*1;
 				
 				
 				if(transType == "1") { //출금일경우
 					$("#ledgWithdrawalOutput").html(commaMaker(ledgAmount));
 					
-					$("#ledgDepositOutput").html("0");
-					$("#ledgBalance").val(commaMaker(balance - ledgAmount));
-					$("#ledgBalanceOutput").html(commaMaker(balance - ledgAmount));
+					$("#ledgDepositOutput"	).html("0");
+					$("#ledgBalance"		).val(commaMaker(balance - ledgAmount));
+					$("#ledgBalanceOutput"	).html(commaMaker(balance - ledgAmount));
 					
 				} else { //입금일경우
 					$("#ledgDepositOutput").html(commaMaker(ledgAmount));
 					
 					$("#ledgWithdrawalOutput").html("0");
-					$("#ledgBalance").val(commaMaker(balance + ledgAmount));
-					$("#ledgBalanceOutput").html(commaMaker(balance + ledgAmount));
+					$("#ledgBalance"		 ).val(commaMaker(balance + ledgAmount));
+					$("#ledgBalanceOutput"	 ).html(commaMaker(balance + ledgAmount));
 					
 				}
 			}
@@ -243,11 +251,11 @@
 	<!------------------------------------ 사이드 바 --------------------------->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="#" onclick="showTitle(this,'listAll')">학생관리</a> 
-		<a href="#" onclick="showTitle(this,'studentInsert')">학생등록</a> 
-		<a href="#" onclick="showTitle(this,'studentFee')">학생회비관리</a> 
-		<a href="#" onclick="showTitle(this,'ledgerInsert')">회비장부입력</a> 
-		<a href="#" onclick="showTitle(this,'listLedger')">회비장부보기</a> 
+		<a href="#" onclick="showTitle(this,'listAll'		)">학생관리</a> 
+		<a href="#" onclick="showTitle(this,'studentInsert'	)">학생등록</a> 
+		<a href="#" onclick="showTitle(this,'studentFee'	)">학생회비관리</a> 
+		<a href="#" onclick="showTitle(this,'ledgerInsert'	)">회비장부입력</a> 
+		<a href="#" onclick="showTitle(this,'listLedger'	)">회비장부보기</a> 
 		<a href="#" onclick="window.open('/listAllScheduler.do','popUpWindow','height=700,width=1200,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes')">학과 일정</a>
 	</div>
 	<!------------------------------------------------------------------------>

@@ -22,9 +22,9 @@
 		
 		
 		$.ajax({
-			  url: "/insertLedgerMonthly.do",
-			  data: sendData,
-			  success: function( result ) {
+			  url		: "/insertLedgerMonthly.do",
+			  data		: sendData,
+			  success	: function( result ) {
 			    alert("정산 완료");
 			    self.close();
 			  },
