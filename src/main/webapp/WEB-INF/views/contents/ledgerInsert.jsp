@@ -14,8 +14,7 @@
 	
 </style>
 <script>
-$(document).ready(function(){
-	alert(($("#isClosed").val()))
+function closeLocator(){
 	if($("#isClosed").val() == "false"){
 		if (confirm("대기중인 월말 정산이 있습니다. 월말정산을 완료하지 않을 시, 다른 달의 입출금 현황 확인 및 입력이 불가능합니다. \n 월말 정산 페이지로 이동하시겠습니까?")){
 	        openClosing();
@@ -23,9 +22,9 @@ $(document).ready(function(){
 	        
 	    }
 	}else{
-		return;
+		
 	}
-}); 
+}
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -92,6 +91,7 @@ function commaDeleter(num){
 
 
 $().ready(function(){
+	
 	stuNumberOption("searchStuNumber1",undefined)
 	stuNumberOption("searchStuNumber2",undefined)
 	
@@ -220,6 +220,8 @@ $().ready(function(){
 			}
 		}
 	});
+	
+	closeLocator();
 
 
 });
@@ -258,7 +260,7 @@ function submitLedgerInsert(){
 			data	: insertData,
 			success	: function( result ) {
 				alert("성공!!!");
-				window.location.replace("/adminMain?loc=ledgerInsert");
+				window.location.reload()
 			},
 			error: function(a,b,c){
 				alert("오류 발생");

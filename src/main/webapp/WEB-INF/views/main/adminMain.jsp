@@ -80,7 +80,7 @@
 	
 	$().ready(function(){
 		stuNumberOption("searchStuNumber1",undefined)
-		stuNumberOption("searchStuNumber2",undefined)
+		
 		
 		//---------------특정 페이지로의 새로고침을 url로 명령 받으면, 그 페이지를 보여준다.
 		
@@ -281,7 +281,6 @@
       function showTitle(id,contentId,preContendId){
 			var value = id.innerHTML;
 			var linkUrl;
-			alert(contentId);
 			
 			if(value == undefined){
 				if (contentId == 'ledgerInsert'){

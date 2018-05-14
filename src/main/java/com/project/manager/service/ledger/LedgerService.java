@@ -298,7 +298,7 @@ public class LedgerService {
 			e.printStackTrace();
 		}
 		
-		return CateAndList; //return category list and three of latest ledger list.;
+		return CateAndList; //return category list and three of ` ledger list.;
 	}
 	
 	//-------------------------------------------------------------------------------------------------

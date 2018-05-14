@@ -16,7 +16,6 @@
 	function closingConfirm(){
 		var sendData = {};
 		var date = ""+$("#ledgMonthDate"	).val(	);
-		alert(date);
 		sendData.ledgMonthDate 		= date;
 		sendData.ledgMonthBalance 	= $("#ledgMonthBalance"	).text(	);
 		

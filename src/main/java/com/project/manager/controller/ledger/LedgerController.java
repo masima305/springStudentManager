@@ -245,6 +245,13 @@ public class LedgerController {
 				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>insertLedgerMonthly Controller called");
 				String ledgMonthDate			= request.getParameter("ledgMonthDate"		);
 				String ledgMonthBalance			= request.getParameter("ledgMonthBalance"	);
+				/*
+				 * 파라메터로 받은 값 말고, 서버에서 다시 조회를 해서 최종 balance값을 출력해서 넘기도록 하자.
+				 * 
+				 * 
+				 * */
+				
+				
 				System.out.println(ledgMonthDate);
 				System.out.println(ledgMonthBalance);
 				

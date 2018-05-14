@@ -9,7 +9,20 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<style>
+	div{ 	
+		text-align : center;
+		margin-bottom : 4px;
+		}
+	.row {
+		border-bottom : 1px dashed black;
+		width : 100%;
+		overflow : hidden;
+	}	
+</style>
+
 </head>
+		
 <body>
 
 
@@ -31,186 +44,188 @@
 			<option>집행부</option>
 			<option>일반</option>
 		</select>
+		<br>
+		<br>
 		
 		
-		<div class="row">
-			<div class="col-lg-6">
-				<div style="background-color:#eff3f9;">
-					학생 기본 정보
-					<br><br>
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 조회
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 등록
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 수정
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 삭제
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-				</div>
-			</div> <!-- col-lg-6 -->
-			<hr>
-			<div class="col-lg-6">
-			
-				<div style="background-color:#eff3f9;">
-					학생회비 납부정보
+		<div id="controllPan">	
+			<div class="row">
+				<div class="col-lg-6">
+					<div style="background-color:#eff3f9;">
+						학생 기본 정보
 						<br><br>
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 조회
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 조회
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 등록
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 수정
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 삭제
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
 					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 등록
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 수정
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 삭제
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
+				</div> <!-- col-lg-6 -->
+				<hr>
+				<div class="col-lg-6">
+				
+					<div style="background-color:#eff3f9;">
+						학생회비 납부정보
+							<br><br>
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 조회
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 등록
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 수정
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 삭제
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		<hr>
-		
-		<div class="row">
-			<div class="col-lg-6">
-				<div style="background-color:#eff3f9;">
-				학생회비 사용내역 장부
-					<br><br>
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 조회
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
+			
+			<hr>
+			
+			<div class="row">
+				<div class="col-lg-6">
+					<div style="background-color:#eff3f9;">
+					학생회비 사용내역 장부
+						<br><br>
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 조회
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 등록
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 수정
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 삭제
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
 					</div>
 					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 등록
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 수정
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 삭제
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
 				</div>
 				
-			</div>
-			
-			<div class="col-lg-6">
-				<div style="background-color:#eff3f9;">
-					학과 일정
-						<br><br>
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 조회
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 등록
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 수정
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
-					</div>
-					
-					<div class="row">
-					 	<div class="col-lg-6">
-					 		정보 삭제
-					 	</div>
-					 	<div class="col-lg-6">
-					 		<input type="button" value="on">
-					 	</div>
+				<div class="col-lg-6">
+					<div style="background-color:#eff3f9;">
+						학과 일정
+							<br><br>
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 조회
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 등록
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 수정
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
+						
+						<div class="row">
+						 	<div class="col-lg-6">
+						 		정보 삭제
+						 	</div>
+						 	<div class="col-lg-6">
+						 		<input type="button" value="on">
+						 	</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
 	</div>
-
 </div>
 
 

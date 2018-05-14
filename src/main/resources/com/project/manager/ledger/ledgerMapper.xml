@@ -9,7 +9,7 @@
 	</select>
 	
 	
-	<!-- 가장 마지막 월의 정산금과 정산일을 출력한다. -->
+	<!-- 가장 마지막 월의 정산금과 정산일을 출력한다.  TODO: max()사용으로 고치기 -->
 	<select id="getLatestMonthBalance" resultType="HashMap">
 		SELECT  
 			LEDG_MONTH_DATE

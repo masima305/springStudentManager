@@ -49,9 +49,6 @@
 			keyword = ""+keywordChunk[0]+keywordChunk[1];
 				
 			
-			alert($("#isClosed").val());
-			alert($("#ledgerDateTitleForm").val());
-			
 			var sendData = {};
 			sendData.keyword = keyword;
 			
@@ -59,7 +56,6 @@
 				  url: "/listMonthlyLedger.do",
 				  data: sendData,
 				  success: function( result ) {
-				    alert();
 				    $( "#ledgerContentSection" ).empty;
 				    $( "#ledgerContentSection" ).html(result);
 				  },
