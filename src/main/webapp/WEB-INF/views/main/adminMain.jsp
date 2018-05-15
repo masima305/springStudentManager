@@ -292,7 +292,7 @@
 			}else if(contentId == 'studentFee'){
 				linkUrl = '/listAllFee.do';
 			}else if(contentId == 'studentInsert'){
-				linkUrl = '/getCommonCode.do';
+				linkUrl = '/insertStudentForm.do';
 			}else if(contentId == 'ledgerInsert'){
 				linkUrl = '/ledgerForm.do';
 			}else if(contentId == 'listLedger'){
@@ -318,6 +318,9 @@
 				preContentId = contentId;
 				$("#"+contentId).css('display','block');
 	      	  
+				stuNumberOption("searchStuNumber1",undefined);				
+				stuNumberOption("searchStuNumber2",undefined);
+				
 			  },
 			  error: function(err){
 				  

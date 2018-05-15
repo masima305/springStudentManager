@@ -38,7 +38,7 @@ public class StudentController {
 	/*
 	 * commonCode 媛��졇�삤湲�
 	 */
-	@RequestMapping(value="/getCommonCode.do")
+	@RequestMapping(value="/insertStudentForm.do")
 	public @ResponseBody ModelAndView getCommonCode(HttpServletRequest request) {
 		
 		HashMap<String,List<HashMap<String, Object>>> listAllCommonMap = ccodeService.listAllCommon();
